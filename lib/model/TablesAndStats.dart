@@ -1,7 +1,7 @@
 
 class TablesAndStats {
 
-  String id;
+  int id;
   String playerName;
   int matchesPlayed;
   int goalsScored;

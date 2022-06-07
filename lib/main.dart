@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sfdatagrid_template/api/tables_and_stats_api.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -54,7 +55,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
 
-    tablesAndStatsNotifier = Provider.of<TablesAndStatsNotifier>(context, listen: false);
+    tablesAndStatsNotifier = Provider.of<TablesAndStatsNotifier>(context, listen: true);
+    getTablesAndStats(tablesAndStatsNotifier);
 
     super.initState();
   }
@@ -63,6 +65,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
+    tablesAndStatsNotifier = Provider.of<TablesAndStatsNotifier>(context, listen: true);
+    
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
@@ -92,65 +96,125 @@ class _MyAppState extends State<MyApp> {
               allowSorting: true,
               columnWidthMode: ColumnWidthMode.fill,
               columns: <GridColumn>[
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.id,
+                //     width: 40,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text(
+                //           'ID',
+                //         ))),
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.playerName,
+                //     width: 100,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text('Player\nName'))),
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.matchesPlayed.toString(),
+                //     width: 70,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text(
+                //           'Matches\nPlayed',
+                //           overflow: TextOverflow.ellipsis,
+                //         ))),
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.goalsScored.toString(),
+                //     width: 70,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text('Goals\nScored'))),
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.assists.toString(),
+                //     width: 70,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text('Assists'))),
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.playerPosition,
+                //     width: 70,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text('Player\nPosition'))),
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.yellowCard.toString(),
+                //     width: 70,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text('Yellow\nCard'))),
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.redCard.toString(),
+                //     width: 70,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text('Red\nCard'))),
+                // GridColumn(
+                //     columnName: tablesAndStatsNotifier.currentTablesAndStats.nationality,
+                //     width: 80,
+                //     label: Container(
+                //         alignment: Alignment.center,
+                //         child: const Text('Nationality '))),
+
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.id,
+                    columnName: 'id',
                     width: 40,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text(
+                        child: Text(
                           'ID',
                         ))),
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.playerName,
+                    columnName: 'player_name',
                     width: 100,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text('Player\nName'))),
+                        child: Text('Player\nName'))),
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.matchesPlayed.toString(),
+                    columnName: 'matches_played',
                     width: 70,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text(
+                        child: Text(
                           'Matches\nPlayed',
                           overflow: TextOverflow.ellipsis,
                         ))),
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.goalsScored.toString(),
+                    columnName: 'goals_scored',
                     width: 70,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text('Goals\nScored'))),
+                        child: Text('Goals\nScored'))),
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.assists.toString(),
+                    columnName: 'assists',
                     width: 70,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text('Assists'))),
+                        child: Text('Assists'))),
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.playerPosition,
+                    columnName: 'player_position',
                     width: 70,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text('Player\nPosition'))),
+                        child: Text('Player\nPosition'))),
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.yellowCard.toString(),
+                    columnName: 'yellow_card',
                     width: 70,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text('Yellow\nCard'))),
+                        child: Text('Yellow\nCard'))),
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.redCard.toString(),
+                    columnName: 'red_card',
                     width: 70,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text('Red\nCard'))),
+                        child: Text('Red\nCard'))),
                 GridColumn(
-                    columnName: tablesAndStatsNotifier.currentTablesAndStats.nationality,
+                    columnName: 'nationality',
                     width: 80,
                     label: Container(
                         alignment: Alignment.center,
-                        child: const Text('Nationality '))),
+                        child: Text('Nationality '))),
               ],
             ),
           ),
@@ -162,7 +226,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class TablesAndStatsDataSource extends DataGridSource {
-
+  
   TablesAndStatsDataSource(this.tablesAndStatsList) {
     FirebaseFirestore.instance.collection('TablesAndStats');
     _buildDataRow();
@@ -183,15 +247,27 @@ class TablesAndStatsDataSource extends DataGridSource {
     dataGridRows = tablesAndStatsList
         .map<DataGridRow>((e) => DataGridRow(cells: [
 
-      DataGridCell<String>(columnName: tablesAndStatsNotifier.currentTablesAndStats.id, value: e.id),
-      DataGridCell<String>(columnName: tablesAndStatsNotifier.currentTablesAndStats.playerName, value: e.playerName),
-      DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.matchesPlayed.toString(), value: e.matchesPlayed),
-      DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.goalsScored.toString(), value: e.goalsScored),
-      DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.assists.toString(), value: e.assists),
-      DataGridCell<String>(columnName: tablesAndStatsNotifier.currentTablesAndStats.playerPosition, value: e.playerPosition),
-      DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.yellowCard.toString(), value: e.yellowCard),
-      DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.redCard.toString(), value: e.redCard),
-      DataGridCell<String>(columnName: tablesAndStatsNotifier.currentTablesAndStats.nationality, value: e.nationality),
+      // DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.id.toString(), value: e.id),
+      // DataGridCell<String>(columnName: tablesAndStatsNotifier.currentTablesAndStats.playerName, value: e.playerName),
+      // DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.matchesPlayed.toString(), value: e.matchesPlayed),
+      // DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.goalsScored.toString(), value: e.goalsScored),
+      // DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.assists.toString(), value: e.assists),
+      // DataGridCell<String>(columnName: tablesAndStatsNotifier.currentTablesAndStats.playerPosition, value: e.playerPosition),
+      // DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.yellowCard.toString(), value: e.yellowCard),
+      // DataGridCell<int>(columnName: tablesAndStatsNotifier.currentTablesAndStats.redCard.toString(), value: e.redCard),
+      // DataGridCell<String>(columnName: tablesAndStatsNotifier.currentTablesAndStats.nationality, value: e.nationality),
+
+
+      DataGridCell<int>(columnName: 'id', value: e.id),
+      DataGridCell<String>(columnName: 'player_name', value: e.playerName),
+      DataGridCell<int>(columnName: 'matches_played', value: e.matchesPlayed),
+      DataGridCell<int>(columnName: 'goals_scored', value: e.goalsScored),
+      DataGridCell<int>(columnName: 'assists', value: e.assists),
+      DataGridCell<String>(columnName: 'player_position', value: e.playerPosition),
+      DataGridCell<int>(columnName: 'yellow_card', value: e.yellowCard),
+      DataGridCell<int>(columnName: 'red_card', value: e.redCard),
+      DataGridCell<String>(columnName: 'nationality', value: e.nationality),
+
 
     ]))
         .toList();
