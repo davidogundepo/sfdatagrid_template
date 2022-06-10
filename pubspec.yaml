@@ -51,8 +51,8 @@ dev_dependencies:
   firebase_auth: ^3.1.1
   firebase_crashlytics: ^2.2.1
   provider: ^6.0.0
+  syncfusion_flutter_core: ^20.1.59
   syncfusion_flutter_datagrid: 20.1.47
-  syncfusion_flutter_datagrid_export: ^20.1.47-beta
   syncfusion_localizations: ^20.1.47
 
 # For information on the generic Dart part of this file, see the
