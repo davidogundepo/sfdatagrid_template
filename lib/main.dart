@@ -2,13 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sfdatagrid_template/tables_and_stats.dart';
+import 'package:sfdatagrid_template/bottom_nav_pages/players_table_page.dart';
 // import 'package:sfdatagrid_template/api/tables_and_stats_api.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
+import 'bottom_nav_pages/bottom_navigator.dart';
 // import 'model/TablesAndStats.dart';
 // import 'notifier/tables_and_stats_notifier.dart';
 // import 'package:provider/provider.dart';
@@ -68,19 +70,17 @@ class _MyAppState extends State<MyApp> {
       body: Center(
         child: Column(
           children: [
-            Container(
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                    navigateTablesAndStatsDetails(context);
-                  },
-                  child: const Center(
-                      child: Text(
-                        'Export to Excel',
-                        style: TextStyle(color: Colors.white),
-                      )),
-                ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                  navigateTablesAndStatsDetails(context);
+                },
+                child: const Center(
+                    child: Text(
+                      'Export to Excel',
+                      style: TextStyle(color: Colors.white),
+                    )),
               ),
             ),
           ],
@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future navigateTablesAndStatsDetails(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const TablesAndStatsDetails()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomNavigator()));
   }
 
 }
