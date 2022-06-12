@@ -1,12 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import '../api/trainings_games_reels_api.dart';
+import '../notifier/trainings_games_reels_notifier.dart';
 import 'players_stats_info_page.dart';
 import 'players_table_page.dart';
-import 'season_timeline.dart';
+import 'season_timeline_page.dart';
 import 'trainings_games_reels_page.dart';
 
+import 'package:provider/provider.dart';
 
+TrainingsAndGamesReelsNotifier trainingsAndGamesReelsNotifier;
 
 class BottomNavigator extends StatefulWidget {
   const BottomNavigator({Key key}) : super(key: key);
@@ -25,9 +29,11 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
   ];
 
-
   @override
   Widget build(BuildContext context) {
+
+    // trainingsAndGamesReelsNotifier = Provider.of<TrainingsAndGamesReelsNotifier>(context);
+
     return Scaffold(
       body: _pageOption[selectedPage],
       bottomNavigationBar: Container(
@@ -105,4 +111,15 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       ),
     );
   }
+
+  @override
+  void initState() {
+
+    // trainingsAndGamesReelsNotifier = Provider.of<TrainingsAndGamesReelsNotifier>(context, listen: true);
+    // getTrainingsAndGamesReels(trainingsAndGamesReelsNotifier);
+
+    super.initState();
+  }
+
+
 }

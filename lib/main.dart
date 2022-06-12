@@ -3,7 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sfdatagrid_template/bottom_nav_pages/players_table_page.dart';
-// import 'package:sfdatagrid_template/api/tables_and_stats_api.dart';
+import 'package:sfdatagrid_template/notifier/trainings_games_reels_notifier.dart';
+// import 'package:sfdatagrid_template/api/trainings_games_reels_api.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,9 +12,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'bottom_nav_pages/bottom_navigator.dart';
-// import 'model/TablesAndStats.dart';
-// import 'notifier/tables_and_stats_notifier.dart';
-// import 'package:provider/provider.dart';
+// import 'model/TrainingsAndGamesReels.dart';
+// import 'notifier/trainings_games_reels_notifier.dart';
+import 'package:provider/provider.dart';
 
 Color backgroundColor = Colors.indigo[400];
 Color appBarIconColor = Colors.indigo[200];
@@ -24,7 +25,17 @@ Color secondStudentChartColor = Colors.indigo[400];
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApps());
+  runZonedGuarded(() {
+    runApp(MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => TrainingsAndGamesReelsNotifier(),
+          ),
+        ],
+        child: const MyApps()
+    ));
+  }, FirebaseCrashlytics.instance.recordError
+  );
 
 }
 
