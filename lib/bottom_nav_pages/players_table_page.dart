@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 
 Color backgroundColor = Colors.indigo[400];
@@ -38,75 +39,62 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
     return
       StreamBuilder(
           stream: getDataFromFirestore(),
-          builder: (context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
-              for (var data in snapshot.data.docs) {
-                playersTableList.add(PlayersTable(
-                    id: data['id'],
-                    playerName: data['player_name'],
-                    matchesPlayed: data['matches_played'],
-                    goalsScored: data['goals_scored'],
-                    assists: data['assists'],
-                    playerPosition: data['player_position'],
-                    yellowCard: data['yellow_card'],
-                    redCard: data['red_card'],
-                    nationality: data['nationality']
-                ));
-              }
-              playersTableDataSource = PlayersTableDataSource(playersTableList);
+              if (playersTableList.isNotEmpty) {
+                realTimeUpdate(var data) {
+                  return DataGridRow(cells: [
+                    DataGridCell<String>(columnName: 'id', value: data.doc['id']),
+                    // DataGridCell<Image>(columnName: 'image', value: data.doc['image']),
+                    DataGridCell<String>(columnName: 'player_name',
+                        value: data.doc['player_name']),
+                    DataGridCell<String>(columnName: 'matches_played',
+                        value: data.doc['matches_played']),
+                    DataGridCell<int>(columnName: 'goals_scored',
+                        value: data.doc['goals_scored']),
+                    DataGridCell<int>(columnName: 'assists',
+                        value: data.doc['assists']),
+                    DataGridCell<String>(columnName: 'yellow_card',
+                        value: data.doc['yellow_card']),
+                    DataGridCell<String>(columnName: 'red_card',
+                        value: data.doc['red_card']),
+                    DataGridCell<String>(columnName: 'player_position',
+                        value: data.doc['player_position']),
+                    DataGridCell<String>(columnName: 'nationality',
+                        value: data.doc['nationality']),
+                  ]);
+                }
+                for (var data in snapshot.data.docChanges) {
+                  if (data.type == DocumentChangeType.modified) {
+                    playersTableDataSource.dataGridRows[data.oldIndex] =
+                        realTimeUpdate(data);
+                    playersTableDataSource.updateDataGridSource();
+                  } else if (data.type == DocumentChangeType.added) {
+                    playersTableDataSource.dataGridRows.add(realTimeUpdate(data));
+                    playersTableDataSource.updateDataGridSource();
 
-              // if (playersTableList.isNotEmpty) {
-              //   realTimeUpdate(var data) {
-              //     return DataGridRow(cells: [
-              //       // DataGridCell<int>(columnName: 'id', value: itemCount++),
-              //       DataGridCell<String>(columnName: 'player_name',
-              //           value: data.doc['player_name']),
-              //       DataGridCell<int>(columnName: 'matches_played',
-              //           value: int.parse(data.doc['matches_played'])),
-              //       DataGridCell<int>(columnName: 'goals_scored',
-              //           value: data.doc['goals_scored']),
-              //       DataGridCell<int>(columnName: 'assists',
-              //           value: int.parse(data.doc['assists'])),
-              //       DataGridCell<int>(columnName: 'yellow_card',
-              //           value: int.parse(data.doc['yellow_card'])),
-              //       DataGridCell<int>(columnName: 'red_card',
-              //           value: int.parse(data.doc['red_card'])),
-              //       DataGridCell<String>(columnName: 'player_position',
-              //           value: data.doc['player_position']),
-              //       DataGridCell<String>(columnName: 'nationality',
-              //           value: data.doc['nationality']),
-              //     ]);
-              //   }
-              //   for (var data in snapshot.data.docChanges) {
-              //     if (data.type == DocumentChangeType.modified) {
-              //       playersTableDataSource.dataGridRows[data.oldIndex] =
-              //           realTimeUpdate(data);
-              //       playersTableDataSource.updateDataGridSource();
-              //     } else if (data.type == DocumentChangeType.added) {
-              //       playersTableDataSource.dataGridRows.add(realTimeUpdate(data));
-              //       playersTableDataSource.updateDataGridSource();
-              //
-              //     } else if (data.type == DocumentChangeType.removed) {
-              //       playersTableDataSource.dataGridRows.removeAt(data.oldIndex);
-              //       playersTableDataSource.updateDataGridSource();
-              //     }
-              //   }
-              // } else {
-              //   for (var data in snapshot.data.docs) {
-              //     playersTableList.add(PlayersTable(
-              //         id: data['id'],
-              //         playerName: data['player_name'],
-              //         matchesPlayed: data['matches_played'],
-              //         goalsScored: data['goals_scored'],
-              //         assists: data['assists'],
-              //         playerPosition: data['player_position'],
-              //         yellowCard: data['yellow_card'],
-              //         redCard: data['red_card'],
-              //         nationality: data['nationality']
-              //     ));
-              //   }
-              //   playersTableDataSource = PlayersTableDataSource(playersTableList);
-              // }
+                  } else if (data.type == DocumentChangeType.removed) {
+                    playersTableDataSource.dataGridRows.removeAt(data.oldIndex);
+                    playersTableDataSource.updateDataGridSource();
+                  }
+                }
+              } else {
+                for (var data in snapshot.data.docs) {
+                  playersTableList.add(PlayersTable(
+                      id: data['id'],
+                      // image: data['image'],
+                      playerName: data['player_name'],
+                      matchesPlayed: data['matches_played'],
+                      goalsScored: data['goals_scored'],
+                      assists: data['assists'],
+                      playerPosition: data['player_position'],
+                      yellowCard: data['yellow_card'],
+                      redCard: data['red_card'],
+                      nationality: data['nationality']
+                  ));
+                }
+                playersTableDataSource = PlayersTableDataSource(playersTableList);
+              }
 
               return SizedBox(
                 height: 700,
@@ -117,7 +105,8 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                         sortIcon: const Icon(Icons.arrow_circle_up),
                         sortIconColor: Colors.white,
                         headerColor: Colors.indigo[400],
-                        gridLineColor: Colors.indigo[200], gridLineStrokeWidth: 1.0
+                        gridLineColor: Colors.indigo[200],
+                        gridLineStrokeWidth: 1.0
                     ),
                     child: SfDataGrid(
                       source: playersTableDataSource,
@@ -145,11 +134,9 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                               ),
                               const GridSummaryColumn(
                                   name: 'Count',
-                                  columnName: 'assists',
+                                  columnName: 'id',
                                   summaryType: GridSummaryType.count
                               ),
-
-
                             ],
                             position: GridTableSummaryRowPosition.bottom
                         )
@@ -183,6 +170,16 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
+      // GridColumn(
+      //     columnName: 'image',
+      //     width: 51,
+      //     label: Container(
+      //       decoration: const BoxDecoration(
+      //           color: Colors.transparent,
+      //           borderRadius: BorderRadius.all(Radius.circular(15)),
+      //
+      //       ),
+      //     )),
       GridColumn(
           columnName: 'player_name',
           width: 120,
@@ -348,12 +345,13 @@ class PlayersTableDataSource extends DataGridSource {
         .map<DataGridRow>((e) => DataGridRow(cells: [
 
       DataGridCell<int>(columnName: 'id', value: itemCount++),
+      // DataGridCell<Image>(columnName: 'image', value: e.image),
       DataGridCell<String>(columnName: 'player_name', value: e.playerName),
-      DataGridCell<int>(columnName: 'matches_played', value: int.parse(e.matchesPlayed)),
+      DataGridCell<String>(columnName: 'matches_played', value: e.matchesPlayed),
       DataGridCell<int>(columnName: 'goals_scored', value: e.goalsScored),
-      DataGridCell<int>(columnName: 'assists', value: int.parse(e.assists)),
-      DataGridCell<int>(columnName: 'yellow_card', value: int.parse(e.yellowCard)),
-      DataGridCell<int>(columnName: 'red_card', value: int.parse(e.redCard)),
+      DataGridCell<int>(columnName: 'assists', value: e.assists),
+      DataGridCell<String>(columnName: 'yellow_card', value: e.yellowCard),
+      DataGridCell<String>(columnName: 'red_card', value: e.redCard),
       DataGridCell<String>(columnName: 'player_position', value: e.playerPosition),
       DataGridCell<String>(columnName: 'nationality', value: e.nationality),
 
@@ -416,15 +414,20 @@ class PlayersTableDataSource extends DataGridSource {
           // ),
         }).toList());
   }
+
+  void updateDataGridSource() {
+    notifyListeners();
+  }
 }
 
 class PlayersTable{
 
   String id;
+  // Image image;
   String playerName;
   String matchesPlayed;
   int goalsScored;
-  String assists;
+  int assists;
   String playerPosition;
   String yellowCard;
   String redCard;
@@ -435,6 +438,7 @@ class PlayersTable{
       (
       {
         this.id,
+        // this.image,
         this.playerName,
         this.matchesPlayed,
         this.goalsScored,

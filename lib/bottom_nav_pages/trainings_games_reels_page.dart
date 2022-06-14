@@ -45,6 +45,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
 
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: Row(
@@ -52,16 +53,23 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Hero(
-                  tag: 'trainingsAndGamesReelsPageBtn',
+                  tag: 'trainingsAndGamesReelsPageButton',
                   child: Card(
                     elevation: 10,
                     shape: kBackButtonShape,
                     child: IconButton(
                       alignment: Alignment.center,
                       // splashColor: Colors.orange.withOpacity(4),
-                      splashColor: Colors.orange.withAlpha(50),
-                      color: Colors.teal,
-                      icon: const Icon(LineIcons.chevronCircleLeft),
+                      // splashColor: Colors.orange.withAlpha(50),
+                      // color: Colors.teal,
+                      icon: InkWell(
+                          highlightColor: Colors.teal.withAlpha(90),
+                          borderRadius: const BorderRadius.only(topRight: Radius.circular(15)),
+                          onTap: (){
+                            Navigator.of(context).pop(false);
+                            navigateMyApp(context);
+                          },
+                          child: const Icon(LineIcons.chevronCircleLeft)),
                       iconSize: 30,
                       onPressed: () {
                         Navigator.of(context).pop(false);
@@ -77,34 +85,36 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
                   tag: 'title',
                   transitionOnUserGestures: true,
                   child: Card(
-                    elevation: 10,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
+                      elevation: 10,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(30),
+                        ),
                       ),
-                    ),
-                    child: InkWell(
-                      onTap: (){},
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: 50,
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 30),
-                            child: Text(
-                              'Monthly Reels',//ADD FOOTBALL ICON
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                                // color: Colors.black54,
+                      child: InkWell(
+                        highlightColor: Colors.teal.withAlpha(90),
+                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30)),
+                        onTap: (){},
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          height: 50,
+                          child: const Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 30),
+                              child: Text(
+                                'Monthly Reels',//ADD FOOTBALL ICON
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                  // color: Colors.black54,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
                 )
               ],
             ),
@@ -121,120 +131,33 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
 
 
   Widget _buildReels(BuildContext context, int index) {
-    // TrainingsAndGamesReelsNotifier trainingsAndGamesReelsNotifier = Provider.of<TrainingsAndGamesReelsNotifier>(context);
 
-    return InkWell(
-
-      child: Container(
-          decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: const BorderRadius.all(
-                  Radius.circular(15)
-              ),
-              image: DecorationImage(
-                  alignment: const Alignment(0, -1),
-                  image: CachedNetworkImageProvider(
-                      trainingsAndGamesReelsNotifier.trainingsAndGamesReelsList[index].image
-                  ),
-                  fit: BoxFit.cover
-              )
-          ),
+    return Container(
+      decoration: const BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+      child: Ink(
+        decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            image: DecorationImage(
+                alignment: const Alignment(0, -1),
+                image: CachedNetworkImageProvider(
+                    trainingsAndGamesReelsNotifier.trainingsAndGamesReelsList[index].image
+                ),
+                fit: BoxFit.cover
+            )
+        ),
+        child: InkWell(
+          onTap: () {},
+          highlightColor: Colors.teal.withAlpha(90),
+          borderRadius: BorderRadius.circular(15),
+        ),
       ),
-      onTap: (){},
-      splashColor: Colors.deepOrangeAccent,
     );
   }
 }
-
-// class TrainingsAndGamesReelsPage extends StatefulWidget implements PreferredSizeWidget {
-//
-//   final Function onPressed;
-//   final Function onTitleTapped;
-//
-//   @override
-//   final Size preferredSize;
-//
-//   const TrainingsAndGamesReelsPage({Key key, @required this.onPressed, this.onTitleTapped})
-//       : preferredSize = const Size.fromHeight(60.0),
-//         super(key: key);
-//
-//   @override
-//   State<TrainingsAndGamesReelsPage> createState() => _TrainingsAndGamesReelsPageState();
-//
-// }
-//
-// class _TrainingsAndGamesReelsPageState extends State<TrainingsAndGamesReelsPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Column(
-//         children: <Widget>[
-//           // SizedBox(height: 30,),
-//           Row(
-//             mainAxisSize: MainAxisSize.max,
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: <Widget>[
-//               Hero(
-//                 tag: 'trainingsAndGamesReelsPageBtn',
-//                 child: Card(
-//                   elevation: 10,
-//                   shape: kBackButtonShape,
-//                   child: MaterialButton(
-//                     height: 50,
-//                     minWidth: 50,
-//                     elevation: 10,
-//                     shape: kBackButtonShape,
-//                     onPressed: () {  },
-//                     // onPressed: onPressed,
-//                     // child: child,
-//                   ),
-//                 ),
-//               ),
-//               // SizedBox(
-//               //   width: 50,
-//               // ),
-//               Hero(
-//                 tag: 'title',
-//                 transitionOnUserGestures: true,
-//                 child: Card(
-//                   elevation: 10,
-//                   shape: const RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.only(
-//                       bottomLeft: Radius.circular(30),
-//                     ),
-//                   ),
-//                   child: InkWell(
-//                     // onTap: onTitleTapped,
-//                     child: SizedBox(
-//                       width: MediaQuery.of(context).size.width / 1.5,
-//                       height: 50,
-//                       child: const Align(
-//                         alignment: Alignment.centerLeft,
-//                         child: Padding(
-//                           padding: EdgeInsets.only(left: 30),
-//                           child: Text(
-//                             'Monthly Reels',
-//                             style: TextStyle(
-//                               fontWeight: FontWeight.bold,
-//                               fontSize: 25,
-//                               // color: Colors.black54,
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//
-//           Container(),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 ShapeBorder kBackButtonShape = const RoundedRectangleBorder(
   borderRadius: BorderRadius.only(

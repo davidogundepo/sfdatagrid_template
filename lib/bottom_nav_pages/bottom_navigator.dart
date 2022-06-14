@@ -20,7 +20,10 @@ class BottomNavigator extends StatefulWidget {
 }
 
 class _BottomNavigatorState extends State<BottomNavigator> {
+
+  bool toggle = false;
   int selectedPage = 0;
+
   final _pageOption = [
     const PlayersTablePage(),
     const PlayersStatsAndInfoPage(),
@@ -68,10 +71,11 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                     tabs: const [
                       GButton(
                         gap: 12,
-                        icon: Icons.home,
+                        icon: Icons.favorite_border,
                         textColor: Colors.blue,
                         iconColor: Colors.teal,
                         iconActiveColor: Colors.deepOrangeAccent,
+                        rippleColor: Colors.blueGrey,
                         text: 'Table'
                       ),
                       GButton(

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sfdatagrid_template/bottom_nav_pages/players_table_page.dart';
+import 'package:sfdatagrid_template/notifier/players_stats_info_notifier.dart';
 import 'package:sfdatagrid_template/notifier/trainings_games_reels_notifier.dart';
 // import 'package:sfdatagrid_template/api/trainings_games_reels_api.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -30,6 +31,9 @@ void main() async {
         providers: [
           ChangeNotifierProvider(
             create: (context) => TrainingsAndGamesReelsNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => PlayersStatsAndInfoNotifier(),
           ),
         ],
         child: const MyApps()
