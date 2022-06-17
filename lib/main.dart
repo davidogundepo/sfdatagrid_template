@@ -2,19 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sfdatagrid_template/bottom_nav_pages/players_table_page.dart';
-import 'package:sfdatagrid_template/notifier/players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/trainings_games_reels_notifier.dart';
-// import 'package:sfdatagrid_template/api/trainings_games_reels_api.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import './notifier/player_of_the_month_stats_info_notifier.dart';
+import './notifier/most_assists_players_stats_info_notifier.dart';
+import './notifier/most_fouled_yc_players_stats_info_notifier.dart';
+import './notifier/most_fouled_rc_players_stats_info_notifier.dart';
+import './notifier/top_goals_players_stats_info_notifier.dart';
+import './notifier/trainings_games_reels_notifier.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-
 import 'bottom_nav_pages/bottom_navigator.dart';
-// import 'model/TrainingsAndGamesReels.dart';
-// import 'notifier/trainings_games_reels_notifier.dart';
 import 'package:provider/provider.dart';
 
 Color backgroundColor = Colors.indigo[400];
@@ -30,11 +26,24 @@ void main() async {
     runApp(MultiProvider(
         providers: [
           ChangeNotifierProvider(
+            create: (context) => MostAssistsPlayersStatsAndInfoNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => MostFouledYCPlayersStatsAndInfoNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => MostFouledRCPlayersStatsAndInfoNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => TopGoalsPlayersStatsAndInfoNotifier(),
+          ),
+          ChangeNotifierProvider(
             create: (context) => TrainingsAndGamesReelsNotifier(),
           ),
           ChangeNotifierProvider(
-            create: (context) => PlayersStatsAndInfoNotifier(),
+            create: (context) => PlayerOfTheMonthStatsAndInfoNotifier(),
           ),
+
         ],
         child: const MyApps()
     ));
