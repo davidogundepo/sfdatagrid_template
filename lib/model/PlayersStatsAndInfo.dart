@@ -3,16 +3,16 @@ class PlayersStatsAndInfo {
 
   String id;
   String playerName;
-  String goalsScored;
-  String assists;
-  String yellowCard;
-  String redCard;
+  dynamic goalsScored;
+  dynamic assists;
+  dynamic yellowCard;
+  dynamic redCard;
   String preferredFoot;
   String playerPosition;
-  String matchesPlayed;
-  String playerValue;
+  dynamic matchesPlayed;
+  dynamic playerValue;
   String playerOfTheMonth;
-  String age;
+  dynamic age;
   String nationality;
   String image;
 

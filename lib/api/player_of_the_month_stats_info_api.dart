@@ -6,7 +6,7 @@ import '../notifier/player_of_the_month_stats_info_notifier.dart';
 getPlayerOfTheMonthStatsAndInfo(PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier) async {
 
   QuerySnapshot snapshot = await FirebaseFirestore.instance
-      .collection('PlayersTabled').get();
+      .collection('PlayersTable').limit(1).get();
 
   List<PlayersStatsAndInfo> _playerOfTheMonthStatsAndInfoList = [];
 

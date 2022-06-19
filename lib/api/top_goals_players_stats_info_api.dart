@@ -6,8 +6,8 @@ import '../notifier/top_goals_players_stats_info_notifier.dart';
 getTopGoalsPlayersStatsAndInfo(TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier) async {
 
   QuerySnapshot snapshot = await FirebaseFirestore.instance
-      .collection('PlayersTabled')
-      // .orderBy('goals_scored', descending: true).limit(10)
+      .collection('PlayersTable')
+      .orderBy('goals_scored', descending: true).limit(10)
       .get();
 
   List<PlayersStatsAndInfo> _topGoalsPlayersStatsAndInfoList = [];

@@ -48,15 +48,15 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                     // DataGridCell<Image>(columnName: 'image', value: data.doc['image']),
                     DataGridCell<String>(columnName: 'player_name',
                         value: data.doc['player_name']),
-                    DataGridCell<String>(columnName: 'matches_played',
+                    DataGridCell<int>(columnName: 'matches_played',
                         value: data.doc['matches_played']),
                     DataGridCell<int>(columnName: 'goals_scored',
                         value: data.doc['goals_scored']),
                     DataGridCell<int>(columnName: 'assists',
                         value: data.doc['assists']),
-                    DataGridCell<String>(columnName: 'yellow_card',
+                    DataGridCell<int>(columnName: 'yellow_card',
                         value: data.doc['yellow_card']),
-                    DataGridCell<String>(columnName: 'red_card',
+                    DataGridCell<int>(columnName: 'red_card',
                         value: data.doc['red_card']),
                     DataGridCell<String>(columnName: 'player_position',
                         value: data.doc['player_position']),
@@ -347,11 +347,11 @@ class PlayersTableDataSource extends DataGridSource {
       DataGridCell<int>(columnName: 'id', value: itemCount++),
       // DataGridCell<Image>(columnName: 'image', value: e.image),
       DataGridCell<String>(columnName: 'player_name', value: e.playerName),
-      DataGridCell<String>(columnName: 'matches_played', value: e.matchesPlayed),
+      DataGridCell<int>(columnName: 'matches_played', value: e.matchesPlayed),
       DataGridCell<int>(columnName: 'goals_scored', value: e.goalsScored),
       DataGridCell<int>(columnName: 'assists', value: e.assists),
-      DataGridCell<String>(columnName: 'yellow_card', value: e.yellowCard),
-      DataGridCell<String>(columnName: 'red_card', value: e.redCard),
+      DataGridCell<int>(columnName: 'yellow_card', value: e.yellowCard),
+      DataGridCell<int>(columnName: 'red_card', value: e.redCard),
       DataGridCell<String>(columnName: 'player_position', value: e.playerPosition),
       DataGridCell<String>(columnName: 'nationality', value: e.nationality),
 
@@ -423,14 +423,13 @@ class PlayersTableDataSource extends DataGridSource {
 class PlayersTable{
 
   String id;
-  // Image image;
   String playerName;
-  String matchesPlayed;
+  int matchesPlayed;
   int goalsScored;
   int assists;
   String playerPosition;
-  String yellowCard;
-  String redCard;
+  int yellowCard;
+  int redCard;
   String nationality;
 
 
@@ -438,7 +437,6 @@ class PlayersTable{
       (
       {
         this.id,
-        // this.image,
         this.playerName,
         this.matchesPlayed,
         this.goalsScored,
