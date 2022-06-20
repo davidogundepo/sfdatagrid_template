@@ -26,22 +26,100 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
 
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 40.0, right: 40, top: 120, bottom: 120),
           child: Stack(
             children: [
-              Card(
-                margin: EdgeInsets.all(20),
-                child: Image.asset("assets/images/curry_ed.png"),
-              ),
-              Container(
-                width: 100,
-                height: 200,
-                child: Card(
-                  color: Colors.transparent,
-                  // margin: EdgeInsets.all(20),
-                  child: Image.asset("assets/images/curry.jpeg"),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * .43,
+                  height: MediaQuery.of(context).size.height,
+                  child: Image.asset(
+                      "assets/images/curry_champion.jpeg",
+                    fit: BoxFit.cover,
+                    color: Colors.teal,
+                    colorBlendMode: BlendMode.softLight,
+                    alignment: const Alignment(0.4, -1),
+                  ),
                 ),
-              )
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: SizedBox(
+                  // color: Colors.green,
+                  height: MediaQuery.of(context).size.height,
+                  // height: 500,
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.asset(
+                    "assets/images/back_field.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            'sense',
+                            style: TextStyle(
+                              color: Colors.white70
+                            ),
+                          ),
+                          Text(
+                            'sense 2 years',
+                            style: TextStyle(
+                                color: Colors.white70
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            'sense',
+                            style: TextStyle(
+                              color: Colors.white70
+                            ),
+                          ),
+                          Text(
+                            'sense 2 years',
+                            style: TextStyle(
+                                color: Colors.white70
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            'sense',
+                            style: TextStyle(
+                              color: Colors.white70
+                            ),
+                          ),
+                          Text(
+                            'sense 2 years',
+                            style: TextStyle(
+                                color: Colors.white70
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
