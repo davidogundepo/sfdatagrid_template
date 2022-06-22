@@ -157,6 +157,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
       ),
     );
   }
+
 }
 
 ShapeBorder kBackButtonShape = const RoundedRectangleBorder(
@@ -164,5 +165,7 @@ ShapeBorder kBackButtonShape = const RoundedRectangleBorder(
     topRight: Radius.circular(30),
   ),
 );
+
+
 
 

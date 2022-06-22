@@ -15,7 +15,7 @@ import 'package:sfdatagrid_template/notifier/player_of_the_month_stats_info_noti
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:clay_containers/clay_containers.dart';
 import '../main.dart';
-
+import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../notifier/top_goals_players_stats_info_notifier.dart';
 
@@ -312,160 +312,163 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
 
-                          const Padding(
-                            padding: EdgeInsets.only(left: 22),
-                            child: Text(
-                              'Top 10 Goal Scorers',
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 22),
+                                child: Text(
+                                  'Top 10 Goal Scorers',
 
-                            ),
-                          ),
-
-                          Container(
-                            height: 350,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Swiper(
-                              autoplay: true,
-                              viewportFraction: 0.8,
-                              scale: 0.9,
-                              itemCount: topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList.length,
-                              itemBuilder: (context, index) =>
-                              Padding(
-                                padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
-                                child: ClayContainer(
-                                  width: MediaQuery.of(context).size.width * 0.90,
-                                  emboss: true,
-                                  spread: 1,
-                                  color: Colors.teal,
-                                  depth: -29,
-                                  curveType: CurveType.concave,
-                                  customBorderRadius: const BorderRadius.only(
-                                      topRight: Radius.elliptical(70, 70),
-                                      bottomLeft: Radius.circular(10),
-                                      topLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Align(
-                                          alignment: Alignment.topRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Container(
-                                              width: 100.0,
-                                              height: 100.0,
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    alignment: const Alignment(0, -1),
-                                                    image: CachedNetworkImageProvider(
-                                                        topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].image
-                                                    ),
-                                                    fit: BoxFit.cover
-                                                ),
-                                                borderRadius: const BorderRadius.only(
-                                                    topLeft: Radius.circular(10),
-                                                    bottomLeft: Radius.circular(10),
-                                                    topRight: Radius.circular(10),
-                                                    bottomRight: Radius.circular(10),
-                                                ),
-                                                shape: BoxShape.rectangle,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(right: 50.0, top: 40),
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.white70
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  (index+1).toString(),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                const Text('position'),
-                                                Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerPosition),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                                height: 50
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                const Text('preferred foot'),
-                                                Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].preferredFoot),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                                height: 50
-                                            ),
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    const Text('name'),
-                                                    Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerName),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                    width: 20
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    const Text('goals'),
-                                                    Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].goalsScored.toString()),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                    width: 20
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    const Text('matches'),
-                                                    Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
-                                                  ],
-                                                )
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                                 ),
                               ),
-                              itemWidth: MediaQuery.of(context).size.width * 0.9,
-                              layout: SwiperLayout.DEFAULT,
-                            ),
-                          ),
-
-                          const SizedBox (
-                            height: 50,
+                              Container(
+                                height: 350,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Swiper(
+                                  autoplay: true,
+                                  viewportFraction: 0.8,
+                                  scale: 0.9,
+                                  itemCount: topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList.length,
+                                  itemBuilder: (context, index) =>
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                        child: ClayContainer(
+                                          width: MediaQuery.of(context).size.width * 0.90,
+                                          emboss: true,
+                                          spread: 1,
+                                          color: Colors.teal,
+                                          depth: -29,
+                                          curveType: CurveType.concave,
+                                          customBorderRadius: const BorderRadius.only(
+                                              topRight: Radius.elliptical(70, 70),
+                                              bottomLeft: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Stack(
+                                              children: <Widget>[
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: Container(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            alignment: const Alignment(0, -1),
+                                                            image: CachedNetworkImageProvider(
+                                                                topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].image
+                                                            ),
+                                                            fit: BoxFit.cover
+                                                        ),
+                                                        borderRadius: const BorderRadius.only(
+                                                          topLeft: Radius.circular(10),
+                                                          bottomLeft: Radius.circular(10),
+                                                          topRight: Radius.circular(10),
+                                                          bottomRight: Radius.circular(10),
+                                                        ),
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                  child: Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: Container(
+                                                      decoration: const BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.white70
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          (index+1).toString(),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('position'),
+                                                        Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerPosition),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('preferred foot'),
+                                                        Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].preferredFoot),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: <Widget>[
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('name'),
+                                                            Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerName),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('goals'),
+                                                            Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].goalsScored.toString()),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('matches'),
+                                                            Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                  layout: SwiperLayout.DEFAULT,
+                                ),
+                              ),
+                              const SizedBox (
+                                height: 50,
+                              ),
+                            ],
                           ),
 
                           Column(
@@ -488,120 +491,117 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                     scale: 0.9,
                                     itemCount: mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList.length,
                                     itemBuilder: (context, index) =>
-
                                         Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Stack(
-                                                children: <Widget>[
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Stack(
+                                              children: <Widget>[
 
-                                                  Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: ClayContainer(
-                                                        emboss: true,
-                                                        spread: 1,
-                                                        color: Colors.teal,
-                                                        depth: 49,
-                                                        curveType: CurveType.concave,
-                                                        customBorderRadius: const BorderRadius.only(
-                                                            topRight: Radius.circular(70),
-                                                            bottomLeft: Radius.circular(7),
-                                                            topLeft: Radius.circular(7),
-                                                            bottomRight: Radius.circular(7)
-                                                        ),
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.only(left: 8, right: 8, top: 70),
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.start,
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisSize: MainAxisSize.min,
-                                                            children: <Widget>[
-                                                              const Text(
-                                                                'Yellow Cards',
-                                                              ),
-                                                              Text(mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].yellowCard.toString()),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: ClayContainer(
+                                                      emboss: true,
+                                                      spread: 1,
+                                                      color: Colors.teal,
+                                                      depth: 49,
+                                                      curveType: CurveType.concave,
+                                                      customBorderRadius: const BorderRadius.only(
+                                                          topRight: Radius.circular(70),
+                                                          bottomLeft: Radius.circular(7),
+                                                          topLeft: Radius.circular(7),
+                                                          bottomRight: Radius.circular(7)
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(left: 8, right: 8, top: 70),
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: <Widget>[
+                                                            const Text(
+                                                              'Yellow Cards',
+                                                            ),
+                                                            Text(mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].yellowCard.toString()),
 
-                                                              const SizedBox(
-                                                                  height: 5
-                                                              ),
+                                                            const SizedBox(
+                                                                height: 5
+                                                            ),
 
-                                                              Padding(
-                                                                padding: const EdgeInsets.only(left: 40.0),
-                                                                child: Container(
-                                                                  decoration: const BoxDecoration(
-                                                                      shape: BoxShape.circle,
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 40.0),
+                                                              child: Container(
+                                                                decoration: const BoxDecoration(
+                                                                    shape: BoxShape.circle,
                                                                     color: Colors.white70
-                                                                  ),
-                                                                  child: Padding(
-                                                                    padding: const EdgeInsets.all(8.0),
-                                                                    child: Text(
-                                                                       (index+1).toString(),
-                                                                      textAlign: TextAlign.center,
-                                                                    ),
+                                                                ),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.all(8.0),
+                                                                  child: Text(
+                                                                    (index+1).toString(),
+                                                                    textAlign: TextAlign.center,
                                                                   ),
                                                                 ),
                                                               ),
-                                                              const SizedBox(
-                                                                  height: 15
-                                                              ),
-                                                              Text(
-                                                                  mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].playerName
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              )
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 15
+                                                            ),
+                                                            Text(
+                                                                mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].playerName
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            )
 
-                                                            ],
-                                                          ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                  ),
+                                                ),
+                                                ClayContainer(
+                                                  emboss: true,
+                                                  spread: 1,
+                                                  color: Colors.teal,
+                                                  depth: 49,
+                                                  // borderRadius: 75,
+                                                  curveType: CurveType.concave,
+                                                  customBorderRadius: const BorderRadius.all(Radius.circular(40)
+                                                  ),
+                                                  child: Container(
+                                                    width: 70.0,
+                                                    height: 70.0,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.transparent,
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                            alignment: const Alignment(0, -1),
+                                                            image: CachedNetworkImageProvider(
+                                                                mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].image
+                                                            ),
+                                                            fit: BoxFit.cover
                                                         )
                                                     ),
                                                   ),
-                                                  ClayContainer(
-                                                    emboss: true,
-                                                    spread: 1,
-                                                    color: Colors.teal,
-                                                    depth: 49,
-                                                    // borderRadius: 75,
-                                                    curveType: CurveType.concave,
-                                                    customBorderRadius: const BorderRadius.all(Radius.circular(40)
-                                                    ),
-                                                    child: Container(
-                                                      width: 70.0,
-                                                      height: 70.0,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.transparent,
-                                                          shape: BoxShape.circle,
-                                                          image: DecorationImage(
-                                                              alignment: const Alignment(0, -1),
-                                                              image: CachedNetworkImageProvider(
-                                                                  mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].image
-                                                              ),
-                                                              fit: BoxFit.cover
-                                                          )
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
+                                              ],
 
-                                              ),
-                                              const SizedBox(width: 20),
+                                            ),
+                                            const SizedBox(width: 20),
 
-                                            ],
+                                          ],
                                         ),
-
                                     control: const SwiperControl(
                                       color: Colors.blue
                                     ),
                                     itemWidth: 250,
-                                    layout: SwiperLayout.STACK,
+                                    layout: SwiperLayout.DEFAULT,
                                   ),
                                 ),
-                              )
+                              ),
+                              const SizedBox (
+                                height: 50,
+                              ),
                             ],
-                          ),
-
-                          const SizedBox (
-                            height: 50,
                           ),
 
                           Column(
@@ -731,323 +731,484 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                     layout: SwiperLayout.STACK,
                                   ),
                                 ),
-                              )
+                              ),
+                              const SizedBox (
+                                height: 40,
+                              ),
                             ],
                           ),
 
-                          const SizedBox (
-                            height: 40,
-                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 22),
+                                child: Text(
+                                  'Top 10 Most Assists Players',
 
-                          const Padding(
-                            padding: EdgeInsets.only(left: 22),
-                            child: Text(
-                              'Top 10 Most Assists Players',
-
-                            ),
-                          ),
-
-                          Container(
-                            height: 350,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Swiper(
-                              autoplay: true,
-                              viewportFraction: 0.8,
-                              scale: 0.9,
-                              itemCount: mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList.length,
-                              itemBuilder: (context, index) =>
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
-                                    child: ClayContainer(
-                                      width: MediaQuery.of(context).size.width * 0.90,
-                                      emboss: true,
-                                      spread: 1,
-                                      color: Colors.teal,
-                                      depth: -29,
-                                      curveType: CurveType.concave,
-                                      customBorderRadius: const BorderRadius.only(
-                                          topRight: Radius.elliptical(70, 70),
-                                          bottomLeft: Radius.circular(10),
-                                          topLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Stack(
-                                          children: <Widget>[
-                                            Align(
-                                              alignment: Alignment.topRight,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(15.0),
-                                                child: Container(
-                                                  width: 100.0,
-                                                  height: 100.0,
-                                                  decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                        alignment: const Alignment(0, -1),
-                                                        image: CachedNetworkImageProvider(
-                                                            topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].image
-                                                        ),
-                                                        fit: BoxFit.cover
-                                                    ),
-                                                    borderRadius: const BorderRadius.only(
-                                                      topLeft: Radius.circular(10),
-                                                      bottomLeft: Radius.circular(10),
-                                                      topRight: Radius.circular(10),
-                                                      bottomRight: Radius.circular(10),
-                                                    ),
-                                                    shape: BoxShape.rectangle,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(right: 50.0, top: 40),
-                                              child: Align(
-                                                alignment: Alignment.centerRight,
-                                                child: Container(
-                                                  decoration: const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.white70
-                                                  ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                      (index+1).toString(),
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                ),
+                              ),
+                              Container(
+                                height: 350,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Swiper(
+                                  autoplay: true,
+                                  viewportFraction: 0.8,
+                                  scale: 0.9,
+                                  itemCount: mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList.length,
+                                  itemBuilder: (context, index) =>
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                        child: ClayContainer(
+                                          width: MediaQuery.of(context).size.width * 0.90,
+                                          emboss: true,
+                                          spread: 1,
+                                          color: Colors.teal,
+                                          depth: -29,
+                                          curveType: CurveType.concave,
+                                          customBorderRadius: const BorderRadius.only(
+                                              topRight: Radius.elliptical(70, 70),
+                                              bottomLeft: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Stack(
                                               children: <Widget>[
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: Container(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            alignment: const Alignment(0, -1),
+                                                            image: CachedNetworkImageProvider(
+                                                                topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].image
+                                                            ),
+                                                            fit: BoxFit.cover
+                                                        ),
+                                                        borderRadius: const BorderRadius.only(
+                                                          topLeft: Radius.circular(10),
+                                                          bottomLeft: Radius.circular(10),
+                                                          topRight: Radius.circular(10),
+                                                          bottomRight: Radius.circular(10),
+                                                        ),
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                  child: Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: Container(
+                                                      decoration: const BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.white70
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          (index+1).toString(),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                                 Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    const Text('position'),
-                                                    Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                    height: 50
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    const Text('preferred foot'),
-                                                    Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                    height: 50
-                                                ),
-                                                Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                   children: <Widget>[
                                                     Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
-                                                        const Text('name'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName),
+                                                        const Text('position'),
+                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition),
                                                       ],
                                                     ),
                                                     const SizedBox(
-                                                        width: 20
+                                                        height: 50
                                                     ),
                                                     Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
-                                                        const Text('Assists'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].assists.toString()),
+                                                        const Text('preferred foot'),
+                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot),
                                                       ],
                                                     ),
                                                     const SizedBox(
-                                                        width: 20
+                                                        height: 50
                                                     ),
-                                                    Column(
+                                                    Row(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                       children: <Widget>[
-                                                        const Text('matches'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('name'),
+                                                            Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Assists'),
+                                                            Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].assists.toString()),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('matches'),
+                                                            Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                          ],
+                                                        )
                                                       ],
                                                     )
                                                   ],
-                                                )
+                                                ),
                                               ],
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                              itemWidth: MediaQuery.of(context).size.width * 0.9,
-                              layout: SwiperLayout.DEFAULT,
-                            ),
-                          ),
-
-                          const SizedBox (
-                            height: 50,
-                          ),
-
-                          const Padding(
-                            padding: EdgeInsets.only(left: 22, bottom: 22),
-                            child: Text(
-                              'Player of the month',
-
-                            ),
-                          ),
-
-                          Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.90,
-                              height: 300,
-                              decoration: BoxDecoration(
-                                  color: Colors.teal[300],
-                                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.teal.withAlpha(30),
-                                        offset: const Offset(4.0, 2.0),
-                                        blurRadius: 1.0,
-                                        spreadRadius: 1.0
-                                    ),
-                                    BoxShadow(
-                                        color: Colors.teal.withAlpha(60),
-                                        offset: const Offset(-2.0, -1.0),
-                                        blurRadius: 1.0,
-                                        spreadRadius: 1.0
-                                    )
-                                  ]
+                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                  layout: SwiperLayout.DEFAULT,
+                                ),
                               ),
-                              child: Center(
-                                child: Listener(
-                                  onPointerUp: (_) => setState(() => isPressed = false),
-                                  onPointerDown: (_) => setState(() => isPressed = true),
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 200),
-                                    width: 200,
-                                    height: 120,
-                                    decoration: BoxDecoration(
+                              const SizedBox (
+                                height: 50,
+                              ),
+                            ],
+                          ),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 22, bottom: 22),
+                                child: Text(
+                                  'Player of the month',
+
+                                ),
+                              ),
+                              Center(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width * 0.90,
+                                  height: 300,
+                                  decoration: BoxDecoration(
                                       color: Colors.teal[300],
                                       borderRadius: const BorderRadius.all(Radius.circular(15)),
                                       boxShadow: [
                                         BoxShadow(
-                                            color: Colors.teal[500],
-                                            offset: -distance,
-                                            blurRadius: blur,
+                                            color: Colors.teal.withAlpha(30),
+                                            offset: const Offset(4.0, 2.0),
+                                            blurRadius: 1.0,
                                             spreadRadius: 1.0
                                         ),
                                         BoxShadow(
-                                            color: Colors.teal[200],
-                                            offset: distance,
-                                            blurRadius: blur,
+                                            color: Colors.teal.withAlpha(60),
+                                            offset: const Offset(-2.0, -1.0),
+                                            blurRadius: 1.0,
                                             spreadRadius: 1.0
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'YAY!',
-                                          // textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 60,
-                                              shadows: [
-                                                const Shadow(
-                                                    offset: Offset(3, 3),
-                                                    color: Colors.black38,
-                                                    blurRadius: 10),
-                                                Shadow(
-                                                    offset: const Offset(-3, -3),
-                                                    color: Colors.teal[300],
-                                                    blurRadius: 10
-                                                )
-                                              ],
-                                              color: Colors.teal[300]),
-                                        ),
-                                      ],
-                                    ),
+                                        )
+                                      ]
+                                  ),
+                                  child: GestureDetector(
+                                    child: Center(
+                                      child: Listener(
+                                        onPointerUp: (_) => setState(() => isPressed = false),
+                                        onPointerDown: (_) => setState(() => isPressed = true),
+                                        child: AnimatedContainer(
+                                          duration: const Duration(milliseconds: 200),
+                                          width: 200,
+                                          height: 120,
+                                          decoration: BoxDecoration(
+                                            color: Colors.teal[300],
+                                            borderRadius: const BorderRadius.all(Radius.circular(15)),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.teal[500],
+                                                  offset: -distance,
+                                                  blurRadius: blur,
+                                                  spreadRadius: 1.0
+                                              ),
+                                              BoxShadow(
+                                                  color: Colors.teal[200],
+                                                  offset: distance,
+                                                  blurRadius: blur,
+                                                  spreadRadius: 1.0
+                                              ),
+                                            ],
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'YAY!',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 60,
+                                                  shadows: [
+                                                    const Shadow(
+                                                        offset: Offset(3, 3),
+                                                        color: Colors.black38,
+                                                        blurRadius: 10),
+                                                    Shadow(
+                                                        offset: const Offset(-3, -3),
+                                                        color: Colors.teal[300],
+                                                        blurRadius: 10
+                                                    )
+                                                  ],
+                                                  color: Colors.teal[300]),
+                                            ),
+                                          ),
 
-                                    // child: Listener(
-                                    //   onPointerUp: (_) => setState(() => isPressed = false),
-                                    //   onPointerDown: (_) => setState(() => isPressed = true),
-                                    //   child: AnimatedContainer(
-                                    //     duration: const Duration(milliseconds: 100),
-                                    //     width: 200,
-                                    //     height: 150,
-                                    //     decoration: BoxDecoration(
-                                    //       borderRadius: BorderRadius.circular(30),
-                                    //       color: backgroundColor,
-                                    //       boxShadow: [
-                                    //         BoxShadow(
-                                    //           blurRadius: blur,
-                                    //           offset: -distance,
-                                    //           color: Colors.white,
-                                    //           inset: isPressed
-                                    //         ),
-                                    //         BoxShadow(
-                                    //           blurRadius: blur,
-                                    //           offset: -distance,
-                                    //           color: const Color(0xFFA7A9AF),
-                                    //           inset: isPressed
-                                    //         ),
-                                    //
-                                    //       ]
-                                    //     ),
-                                    //     child: const AvatarGlow(
-                                    //       endRadius: 100,
-                                    //       glowColor: Colors.deepPurple,
-                                    //       duration: Duration(milliseconds: 2000),
-                                    //       repeatPauseDuration: Duration(milliseconds: 100),
-                                    //       child: Icon(Icons.airplay,
-                                    //           size: 80,
-                                    //           color: Colors.white
-                                    //       ),
-                                    //     ),
-                                    //     // child: const SizedBox(height: 50, width: 50),
-                                    //   ),
-                                    // ),
+                                          // child: Listener(
+                                          //   onPointerUp: (_) => setState(() => isPressed = false),
+                                          //   onPointerDown: (_) => setState(() => isPressed = true),
+                                          //   child: AnimatedContainer(
+                                          //     duration: const Duration(milliseconds: 100),
+                                          //     width: 200,
+                                          //     height: 150,
+                                          //     decoration: BoxDecoration(
+                                          //       borderRadius: BorderRadius.circular(30),
+                                          //       color: backgroundColor,
+                                          //       boxShadow: [
+                                          //         BoxShadow(
+                                          //           blurRadius: blur,
+                                          //           offset: -distance,
+                                          //           color: Colors.white,
+                                          //           inset: isPressed
+                                          //         ),
+                                          //         BoxShadow(
+                                          //           blurRadius: blur,
+                                          //           offset: -distance,
+                                          //           color: const Color(0xFFA7A9AF),
+                                          //           inset: isPressed
+                                          //         ),
+                                          //
+                                          //       ]
+                                          //     ),
+                                          //     child: const AvatarGlow(
+                                          //       endRadius: 100,
+                                          //       glowColor: Colors.deepPurple,
+                                          //       duration: Duration(milliseconds: 2000),
+                                          //       repeatPauseDuration: Duration(milliseconds: 100),
+                                          //       child: Icon(Icons.airplay,
+                                          //           size: 80,
+                                          //           color: Colors.white
+                                          //       ),
+                                          //     ),
+                                          //     // child: const SizedBox(height: 50, width: 50),
+                                          //   ),
+                                          // ),
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: (){
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            Stack (
+                                              children: [
+                                                AlertDialog(
+                                                  shape: const RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                                  ),
+                                                  contentPadding: const EdgeInsets.all(10),
+                                                  backgroundColor: Colors.teal,
+                                                  content: SizedBox(
+                                                    width: MediaQuery.of(context).size.width,
+                                                    height: MediaQuery.of(context).size.height * 0.6,
+                                                    child: ListView.builder(
+                                                      itemExtent: MediaQuery.of(context).size.height * 0.585,
+                                                      shrinkWrap: true,
+                                                      itemCount: playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList.length,
+                                                      itemBuilder: (context, index) =>
+                                                          Stack(
+                                                            alignment: AlignmentDirectional.topStart,
+                                                            // fit: StackFit.loose,
+                                                            children: [
+                                                              Align(
+                                                                alignment: Alignment.centerLeft,
+                                                                child: SizedBox(
+                                                                  width: MediaQuery.of(context).size.width * .43,
+                                                                  height: MediaQuery.of(context).size.height * 2,
+                                                                  child: Image(
+                                                                    height: double.infinity,
+                                                                    width: double.infinity,
+                                                                    image: CachedNetworkImageProvider(
+                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].image,
+                                                                      scale: 0.2,
+                                                                    ),
+                                                                    fit: BoxFit.cover,
+                                                                    color: Colors.grey,
+                                                                    colorBlendMode: BlendMode.softLight,
+                                                                    alignment: const Alignment(0.4, -1),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Align(
+                                                                alignment: Alignment.centerRight,
+                                                                child: SizedBox(
+                                                                  // color: Colors.green,
+                                                                  height: MediaQuery.of(context).size.height,
+                                                                  // height: 500,
+                                                                  width: MediaQuery.of(context).size.width,
+                                                                  child: Image.asset(
+                                                                    "assets/images/back_field.png",
+                                                                    fit: BoxFit.cover,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Align(
+                                                                alignment: Alignment.topRight,
+                                                                child: Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                                  children: [
+                                                                    Column(
+                                                                      children: [
+                                                                        const Text(
+                                                                          'sense 1',
+                                                                          style: TextStyle(
+                                                                              color: Colors.white70,
+                                                                              fontSize: 30
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          // 'sense 1 years',
+                                                                          playerOfTheMonthStatsAndInfoNotifier
+                                                                              .playerOfTheMonthStatsAndInfoList[index]
+                                                                              .playerName,
+                                                                          style: const TextStyle(
+                                                                              color: Colors.white70,
+                                                                              fontSize: 30
+                                                                          ),
+                                                                        ),
+                                                                        const SizedBox(height: 30),
+                                                                      ],
+                                                                    ),
+                                                                    Column(
+                                                                      children: [
+                                                                        const Text(
+                                                                          'sense 2',
+                                                                          style: TextStyle(
+                                                                              color: Colors.white70
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          playerOfTheMonthStatsAndInfoNotifier
+                                                                              .playerOfTheMonthStatsAndInfoList[index]
+                                                                              .playerPosition,
+                                                                          style: const TextStyle(
+                                                                              color: Colors.white70
+                                                                          ),
+                                                                        ),
+                                                                        const SizedBox(height: 30),
+                                                                      ],
+                                                                    ),
+                                                                    Column(
+                                                                      children: const [
+                                                                        Text(
+                                                                          'sense 3',
+                                                                          style: TextStyle(
+                                                                              color: Colors.white70
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          'sense 3 years',
+
+                                                                          style: TextStyle(
+                                                                              color: Colors.white70
+                                                                          ),
+                                                                        ),
+
+                                                                        SizedBox(height: 30),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  top: MediaQuery.of(context).size.height * 0.175,
+                                                  right: MediaQuery.of(context).size.width * 0.13,
+                                                  child: GestureDetector(
+                                                    onTap: (){
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Container(
+                                                      width: 30,
+                                                      height: 30,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.grey[200],
+                                                        shape: BoxShape.rectangle,
+                                                        borderRadius: BorderRadius.circular(6.0),
+                                                      ),
+                                                      child: Align(
+                                                        alignment: Alignment.center,
+                                                        child: Icon(
+                                                          Icons.close,
+                                                          color: Colors.teal,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-
-                          // Padding(
-                          //   padding: const EdgeInsets.only(top: 20),
-                          //   child: Container(
-                          //     color:  Colors.teal,
-                          //     child: Center(
-                          //       child: ClayContainer(
-                          //         color:  Colors.teal,
-                          //         height: 200,
-                          //         width: 200,
-                          //         depth: -29,
-                          //         curveType: CurveType.concave,
-                          //         child: ClayText(
-                          //           "Seize the Clay!",
-                          //           emboss: true,
-                          //           size: 40,
-                          //           textColor: Colors.teal,
-                          //           color: Colors.teal,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-
-                          const SizedBox (
-                            height: 50,
-                          ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(top: 20),
+                              //   child: Container(
+                              //     color:  Colors.teal,
+                              //     child: Center(
+                              //       child: ClayContainer(
+                              //         color:  Colors.teal,
+                              //         height: 200,
+                              //         width: 200,
+                              //         depth: -29,
+                              //         curveType: CurveType.concave,
+                              //         child: ClayText(
+                              //           "Seize the Clay!",
+                              //           emboss: true,
+                              //           size: 40,
+                              //           textColor: Colors.teal,
+                              //           color: Colors.teal,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              const SizedBox (
+                                height: 50,
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -1109,7 +1270,14 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
     getMostFouledRCPlayersStatsAndInfo(mostFouledRCPlayersStatsAndInfoNotifier);
     getPlayerOfTheMonthStatsAndInfo(playerOfTheMonthStatsAndInfoNotifier);
 
+
     super.initState();
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
   }
 
 }
