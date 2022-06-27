@@ -2,16 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:sfdatagrid_template/api/most_assists_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/most_fouled_rc_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/most_fouled_yc_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/player_of_the_month_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/top_goals_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/notifier/most_assists_players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/most_fouled_rc_players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/most_fouled_yc_players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/player_of_the_month_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/top_goals_players_stats_info_notifier.dart';
+import '../api/most_assists_players_stats_info_api.dart';
+import '../api/most_fouled_rc_players_stats_info_api.dart';
+import '../api/most_fouled_yc_players_stats_info_api.dart';
+import '../api/player_of_the_month_stats_info_api.dart';
+import '../api/top_defensive_players_stats_info_api.dart';
+import '../api/top_gk_players_stats_info_api.dart';
+import '../api/top_goals_players_stats_info_api.dart';
+import '../notifier/most_assists_players_stats_info_notifier.dart';
+import '../notifier/most_fouled_rc_players_stats_info_notifier.dart';
+import '../notifier/most_fouled_yc_players_stats_info_notifier.dart';
+import '../notifier/player_of_the_month_stats_info_notifier.dart';
+import '../notifier/top_defensive_players_stats_info_notifier.dart';
+import '../notifier/top_gk_players_stats_info_notifier.dart';
+import '../notifier/top_goals_players_stats_info_notifier.dart';
 import '../api/trainings_games_reels_api.dart';
 import '../notifier/trainings_games_reels_notifier.dart';
 import 'players_stats_info_page.dart';
@@ -25,6 +29,8 @@ TrainingsAndGamesReelsNotifier trainingsAndGamesReelsNotifier;
 PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier;
 MostFouledYCPlayersStatsAndInfoNotifier mostFouledYCPlayersStatsAndInfoNotifier;
 MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier;
+TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier;
+TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier;
 TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier;
 MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier;
 
@@ -144,6 +150,12 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
     mostFouledRCPlayersStatsAndInfoNotifier = Provider.of<MostFouledRCPlayersStatsAndInfoNotifier>(context, listen: false);
     getMostFouledRCPlayersStatsAndInfo(mostFouledRCPlayersStatsAndInfoNotifier);
+
+    topGKPlayersStatsAndInfoNotifier = Provider.of<TopGKPlayersStatsAndInfoNotifier>(context, listen: false);
+    getTopGKPlayersStatsAndInfo(topGKPlayersStatsAndInfoNotifier);
+
+    topDefensivePlayersStatsAndInfoNotifier = Provider.of<TopDefensivePlayersStatsAndInfoNotifier>(context, listen: false);
+    getTopDefensivePlayersStatsAndInfo(topDefensivePlayersStatsAndInfoNotifier);
 
     topGoalsPlayersStatsAndInfoNotifier = Provider.of<TopGoalsPlayersStatsAndInfoNotifier>(context, listen: false);
     getTopGoalsPlayersStatsAndInfo(topGoalsPlayersStatsAndInfoNotifier);

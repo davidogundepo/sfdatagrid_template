@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import './notifier/top_defensive_players_stats_info_notifier.dart';
+import './notifier/top_gk_players_stats_info_notifier.dart';
 import './notifier/player_of_the_month_stats_info_notifier.dart';
 import './notifier/most_assists_players_stats_info_notifier.dart';
 import './notifier/most_fouled_yc_players_stats_info_notifier.dart';
@@ -36,6 +38,12 @@ void main() async {
           ),
           ChangeNotifierProvider(
             create: (context) => TopGoalsPlayersStatsAndInfoNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => TopGKPlayersStatsAndInfoNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => TopDefensivePlayersStatsAndInfoNotifier(),
           ),
           ChangeNotifierProvider(
             create: (context) => TrainingsAndGamesReelsNotifier(),

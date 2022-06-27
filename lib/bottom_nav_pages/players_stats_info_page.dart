@@ -2,22 +2,25 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import 'package:sfdatagrid_template/api/most_assists_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/most_fouled_rc_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/most_fouled_yc_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/player_of_the_month_stats_info_api.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:sfdatagrid_template/api/top_goals_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/notifier/most_assists_players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/most_fouled_rc_players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/most_fouled_yc_players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/player_of_the_month_stats_info_notifier.dart';
+import '../api/top_defensive_players_stats_info_api.dart';
+import '../api/top_gk_players_stats_info_api.dart';
+import '../api/most_assists_players_stats_info_api.dart';
+import '../api/most_fouled_rc_players_stats_info_api.dart';
+import '../api/most_fouled_yc_players_stats_info_api.dart';
+import '../api/player_of_the_month_stats_info_api.dart';
+import '../api/top_goals_players_stats_info_api.dart';
+import '../notifier/most_assists_players_stats_info_notifier.dart';
+import '../notifier/most_fouled_rc_players_stats_info_notifier.dart';
+import '../notifier/most_fouled_yc_players_stats_info_notifier.dart';
+import '../notifier/player_of_the_month_stats_info_notifier.dart';
+import '../notifier/top_defensive_players_stats_info_notifier.dart';
+import '../notifier/top_gk_players_stats_info_notifier.dart';
+import '../notifier/top_goals_players_stats_info_notifier.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:clay_containers/clay_containers.dart';
 import '../main.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../notifier/top_goals_players_stats_info_notifier.dart';
 
 
 TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier;
@@ -25,6 +28,8 @@ MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier;
 MostFouledYCPlayersStatsAndInfoNotifier mostFouledYCPlayersStatsAndInfoNotifier;
 MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier;
 PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier;
+TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier;
+TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier;
 
 
 
@@ -47,35 +52,6 @@ Color borderColor = Colors.black;
 
 Map<int, Widget> playersTGPAndMAP;
 
-
-
-var _playerPositionTGP;
-var _preferredFootTGP;
-var _playerNameTGP;
-var _goalsScoredTGP;
-var _matchesPlayedTGP;
-var _playerImageTGP;
-
-var _playerPositionMAP;
-var _preferredFootMAP;
-var _playerNameMAP;
-var _asssistsCreatedMAP;
-var _matchesPlayedMAP;
-var _playerImageMAP;
-
-var _yellowCard;
-var _ycPlayerName;
-var _ycPlayerImage;
-
-var _redCard;
-var _rcPlayerName;
-var _rcPlayerImage;
-
-var _potmName;
-var _potmGoals;
-var _potmAssists;
-var _potmMatchesPlayed;
-var _potmImage;
 
 
 class PlayersStatsAndInfoPage extends StatefulWidget {
@@ -106,6 +82,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
   }
 
 
+  SwiperController swiperController;
 
   int sharedValue = 0;
 
@@ -246,7 +223,6 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
 
 
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -255,13 +231,15 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
 
 
     TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier = Provider.of<TopGoalsPlayersStatsAndInfoNotifier>(context);
-    // _playerPositionTGP = topGoalsPlayersStatsAndInfoNotifier.currentTopGoalsPlayersStatsAndInfo.playerPosition;
-
 
     MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier = Provider.of<MostAssistsPlayersStatsAndInfoNotifier>(context);
 
+    TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier = Provider.of<TopGKPlayersStatsAndInfoNotifier>(context);
+
+    TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier = Provider.of<TopDefensivePlayersStatsAndInfoNotifier>(context);
+
     MostFouledYCPlayersStatsAndInfoNotifier mostFouledYCPlayersStatsAndInfoNotifier = Provider.of<MostFouledYCPlayersStatsAndInfoNotifier>(context, listen: true);
-    // _yellowCard = mostFouledYCPlayersStatsAndInfoNotifier.currentMostFouledYCPlayersStatsAndInfo.yellowCard;
+
     MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier = Provider.of<MostFouledRCPlayersStatsAndInfoNotifier>(context, listen: true);
 
     PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier = Provider.of<PlayerOfTheMonthStatsAndInfoNotifier>(context);
@@ -421,38 +399,203 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                     const SizedBox(
                                                         height: 50
                                                     ),
-                                                    Row(
+                                                    SingleChildScrollView(
+                                                      scrollDirection: Axis.horizontal,
+                                                      child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('name'),
+                                                              Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerName),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('goals'),
+                                                              Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].goalsScored.toString()),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('matches'),
+                                                              Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                  layout: SwiperLayout.DEFAULT,
+                                ),
+                              ),
+                              const SizedBox (
+                                height: 50,
+                              ),
+                            ],
+                          ),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 22),
+                                child: Text(
+                                  'Top 10 Most Assists Players',
+
+                                ),
+                              ),
+                              Container(
+                                height: 350,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Swiper(
+                                  autoplay: true,
+                                  viewportFraction: 0.8,
+                                  scale: 0.9,
+                                  itemCount: mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList.length,
+                                  itemBuilder: (context, index) =>
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                        child: ClayContainer(
+                                          width: MediaQuery.of(context).size.width * 0.90,
+                                          emboss: true,
+                                          spread: 1,
+                                          color: Colors.teal,
+                                          depth: -29,
+                                          curveType: CurveType.concave,
+                                          customBorderRadius: const BorderRadius.only(
+                                              topRight: Radius.elliptical(70, 70),
+                                              bottomLeft: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Stack(
+                                              children: <Widget>[
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: Container(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            alignment: const Alignment(0, -1),
+                                                            image: CachedNetworkImageProvider(
+                                                                mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].image
+                                                            ),
+                                                            fit: BoxFit.cover
+                                                        ),
+                                                        borderRadius: const BorderRadius.only(
+                                                          topLeft: Radius.circular(10),
+                                                          bottomLeft: Radius.circular(10),
+                                                          topRight: Radius.circular(10),
+                                                          bottomRight: Radius.circular(10),
+                                                        ),
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                  child: Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: Container(
+                                                      decoration: const BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.white70
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          (index+1).toString(),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                       children: <Widget>[
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('name'),
-                                                            Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerName),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 20
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('goals'),
-                                                            Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].goalsScored.toString()),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 20
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('matches'),
-                                                            Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
-                                                          ],
-                                                        )
+                                                        const Text('position'),
+                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition),
                                                       ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('preferred foot'),
+                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    SingleChildScrollView(
+                                                      scrollDirection: Axis.horizontal,
+                                                      child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('name'),
+                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Assists'),
+                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].assists.toString()),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('matches'),
+                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
                                                     )
                                                   ],
                                                 ),
@@ -744,7 +887,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                               const Padding(
                                 padding: EdgeInsets.only(left: 22),
                                 child: Text(
-                                  'Top 10 Most Assists Players',
+                                  'Top Goal Keepers',
 
                                 ),
                               ),
@@ -754,10 +897,10 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                     borderRadius: BorderRadius.circular(10)
                                 ),
                                 child: Swiper(
-                                  autoplay: true,
+                                  autoplay: false,
                                   viewportFraction: 0.8,
                                   scale: 0.9,
-                                  itemCount: mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList.length,
+                                  itemCount: topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList.length,
                                   itemBuilder: (context, index) =>
                                       Padding(
                                         padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
@@ -789,7 +932,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].image
+                                                                topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].image
                                                             ),
                                                             fit: BoxFit.cover
                                                         ),
@@ -831,7 +974,176 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('position'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition),
+                                                        Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerPosition),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('name'),
+                                                        Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerName),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    SingleChildScrollView(
+                                                      scrollDirection: Axis.horizontal,
+                                                      child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Goals Conceded'),
+                                                              Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].goalsConcededGkDef.toString()),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Clean Sheets'),
+                                                              Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].cleanSheetGk.toString()),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text(
+                                                                'matches',
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              Text(
+                                                                topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played',
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                  // itemHeight: 300,
+                                  layout: SwiperLayout.DEFAULT,
+                                ),
+                              ),
+                              const SizedBox (
+                                height: 50,
+                              ),
+                            ],
+                          ),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 22),
+                                child: Text(
+                                  'Top 10 Defensive Players',
+
+                                ),
+                              ),
+                              Container(
+                                height: 350,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Swiper(
+                                  autoplay: false,
+                                  viewportFraction: 0.8,
+                                  scale: 0.9,
+                                  itemCount: topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList.length,
+                                  itemBuilder: (context, index) =>
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                        child: ClayContainer(
+                                          width: MediaQuery.of(context).size.width * 0.90,
+                                          emboss: true,
+                                          spread: 1,
+                                          color: Colors.teal,
+                                          depth: -29,
+                                          curveType: CurveType.concave,
+                                          customBorderRadius: const BorderRadius.only(
+                                              topRight: Radius.elliptical(70, 70),
+                                              bottomLeft: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Stack(
+                                              children: <Widget>[
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: Container(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            alignment: const Alignment(0, -1),
+                                                            image: CachedNetworkImageProvider(
+                                                                topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].image
+                                                            ),
+                                                            fit: BoxFit.cover
+                                                        ),
+                                                        borderRadius: const BorderRadius.only(
+                                                          topLeft: Radius.circular(10),
+                                                          bottomLeft: Radius.circular(10),
+                                                          topRight: Radius.circular(10),
+                                                          bottomRight: Radius.circular(10),
+                                                        ),
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                  child: Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: Container(
+                                                      decoration: const BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.white70
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          (index+1).toString(),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('position'),
+                                                        Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerPosition),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -841,44 +1153,47 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('preferred foot'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot),
+                                                        Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].preferredFoot),
                                                       ],
                                                     ),
                                                     const SizedBox(
                                                         height: 50
                                                     ),
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                      children: <Widget>[
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('name'),
-                                                            Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 20
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Assists'),
-                                                            Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].assists.toString()),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 20
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('matches'),
-                                                            Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
-                                                          ],
-                                                        )
-                                                      ],
+                                                    SingleChildScrollView(
+                                                      scrollDirection: Axis.horizontal,
+                                                      child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('name'),
+                                                              Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerName),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Goals Conceded'),
+                                                              Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].goalsConcededGkDef.toString()),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('matches'),
+                                                              Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
                                                     )
                                                   ],
                                                 ),
@@ -1192,37 +1507,18 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
   initState() {
 
     TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier = Provider.of<TopGoalsPlayersStatsAndInfoNotifier>(context, listen: false);
-    // _playerPositionTGP = topGoalsPlayersStatsAndInfoNotifier.currentTopGoalsPlayersStatsAndInfo.playerPosition;
-    // _preferredFootTGP = topGoalsPlayersStatsAndInfoNotifier.currentTopGoalsPlayersStatsAndInfo.preferredFoot;
-    // _playerNameTGP = topGoalsPlayersStatsAndInfoNotifier.currentTopGoalsPlayersStatsAndInfo.playerName;
-    // _goalsScoredTGP = topGoalsPlayersStatsAndInfoNotifier.currentTopGoalsPlayersStatsAndInfo.goalsScored;
-    // _matchesPlayedMAP = topGoalsPlayersStatsAndInfoNotifier.currentTopGoalsPlayersStatsAndInfo.matchesPlayed;
-    // _playerImageTGP = topGoalsPlayersStatsAndInfoNotifier.currentTopGoalsPlayersStatsAndInfo.image;
 
     MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier = Provider.of<MostAssistsPlayersStatsAndInfoNotifier>(context, listen: false);
-    // _playerPositionMAP = mostAssistsPlayersStatsAndInfoNotifier.currentMostAssistsPlayersStatsAndInfo.playerPosition;
-    // _preferredFootMAP = mostAssistsPlayersStatsAndInfoNotifier.currentMostAssistsPlayersStatsAndInfo.preferredFoot;
-    // _playerNameMAP = mostAssistsPlayersStatsAndInfoNotifier.currentMostAssistsPlayersStatsAndInfo.playerName;
-    // _asssistsCreatedMAP = mostAssistsPlayersStatsAndInfoNotifier.currentMostAssistsPlayersStatsAndInfo.assists;
-    // _matchesPlayedMAP = mostAssistsPlayersStatsAndInfoNotifier.currentMostAssistsPlayersStatsAndInfo.matchesPlayed;
-    // _playerImageMAP = mostAssistsPlayersStatsAndInfoNotifier.currentMostAssistsPlayersStatsAndInfo.image;
 
     MostFouledYCPlayersStatsAndInfoNotifier mostFouledYCPlayersStatsAndInfoNotifier = Provider.of<MostFouledYCPlayersStatsAndInfoNotifier>(context, listen: false);
-    // _yellowCard = mostFouledYCPlayersStatsAndInfoNotifier.currentMostFouledYCPlayersStatsAndInfo.yellowCard;
-    // _ycPlayerName = mostFouledYCPlayersStatsAndInfoNotifier.currentMostFouledYCPlayersStatsAndInfo.playerName;
-    // _ycPlayerImage = mostFouledYCPlayersStatsAndInfoNotifier.currentMostFouledYCPlayersStatsAndInfo.image;
 
     MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier = Provider.of<MostFouledRCPlayersStatsAndInfoNotifier>(context, listen: false);
-    // _redCard = mostFouledRCPlayersStatsAndInfoNotifier.currentMostFouledRCPlayersStatsAndInfo.redCard;
-    // _rcPlayerName = mostFouledRCPlayersStatsAndInfoNotifier.currentMostFouledRCPlayersStatsAndInfo.playerName;
-    // _rcPlayerImage = mostFouledRCPlayersStatsAndInfoNotifier.currentMostFouledRCPlayersStatsAndInfo.image;
 
     PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier = Provider.of<PlayerOfTheMonthStatsAndInfoNotifier>(context, listen: false);
-    // _potmName = playerOfTheMonthStatsAndInfoNotifier.currentPlayerOfTheMonthStatsAndInfo.playerName;
-    // _potmMatchesPlayed = playerOfTheMonthStatsAndInfoNotifier.currentPlayerOfTheMonthStatsAndInfo.matchesPlayed;
-    // _potmGoals = playerOfTheMonthStatsAndInfoNotifier.currentPlayerOfTheMonthStatsAndInfo.goalsScored;
-    // _potmAssists = playerOfTheMonthStatsAndInfoNotifier.currentPlayerOfTheMonthStatsAndInfo.assists;
-    // _potmImage = playerOfTheMonthStatsAndInfoNotifier.currentPlayerOfTheMonthStatsAndInfo.image;
+
+    TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier = Provider.of<TopGKPlayersStatsAndInfoNotifier>(context, listen: false);
+
+    TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier = Provider.of<TopDefensivePlayersStatsAndInfoNotifier>(context, listen: false);
 
 
     getTopGoalsPlayersStatsAndInfo(topGoalsPlayersStatsAndInfoNotifier);
@@ -1230,7 +1526,8 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
     getMostFouledYCPlayersStatsAndInfo(mostFouledYCPlayersStatsAndInfoNotifier);
     getMostFouledRCPlayersStatsAndInfo(mostFouledRCPlayersStatsAndInfoNotifier);
     getPlayerOfTheMonthStatsAndInfo(playerOfTheMonthStatsAndInfoNotifier);
-
+    getTopGKPlayersStatsAndInfo(topGKPlayersStatsAndInfoNotifier);
+    getTopDefensivePlayersStatsAndInfo(topDefensivePlayersStatsAndInfoNotifier);
 
     super.initState();
 

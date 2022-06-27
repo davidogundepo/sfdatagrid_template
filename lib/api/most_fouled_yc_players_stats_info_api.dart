@@ -9,7 +9,8 @@ getMostFouledYCPlayersStatsAndInfo(MostFouledYCPlayersStatsAndInfoNotifier mostF
       .collection('PlayersTable')
       .where('yellow_card', isGreaterThan: 0)
       .orderBy('yellow_card', descending: true)
-      .limit(8).get();
+      .limit(8)
+      .get();
 
   List<PlayersStatsAndInfo> _mostFouledYCPlayersStatsAndInfoList = [];
 

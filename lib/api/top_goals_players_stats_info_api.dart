@@ -7,7 +7,9 @@ getTopGoalsPlayersStatsAndInfo(TopGoalsPlayersStatsAndInfoNotifier topGoalsPlaye
 
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('PlayersTable')
+      .where('goals_scored', isGreaterThan: 0)
       .orderBy('goals_scored', descending: true).limit(10)
+
       .get();
 
   List<PlayersStatsAndInfo> _topGoalsPlayersStatsAndInfoList = [];
