@@ -11,6 +11,8 @@ class PlayersStatsAndInfo {
   String playerPosition;
   dynamic matchesPlayed;
   dynamic playerValue;
+  dynamic cleanSheet;
+  dynamic goalsConceded;
   String playerOfTheMonth;
   dynamic age;
   String nationality;
@@ -27,6 +29,8 @@ class PlayersStatsAndInfo {
     playerPosition = data['player_position'];
     matchesPlayed = data['matches_played'];
     playerValue = data['player_value'];
+    playerValue = data['clean_sheets'];
+    playerValue = data['goals_conceded'];
     playerOfTheMonth = data['player_of_the_month'];
     age = data['age'];
     nationality = data['nationality'];

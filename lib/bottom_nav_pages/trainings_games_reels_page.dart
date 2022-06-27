@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:sfdatagrid_template/api/trainings_games_reels_api.dart';
 import 'package:sfdatagrid_template/notifier/trainings_games_reels_notifier.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -12,115 +14,131 @@ import 'package:line_icons/line_icons.dart';
 
 class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSizeWidget {
 
-  // final Function onPressed;
-  // final Function onTitleTapped;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   final Size preferredSize;
 
-  const TrainingsAndGamesReelsPage(
+  TrainingsAndGamesReelsPage(
       {Key key})
-      : preferredSize = const Size.fromHeight(60.0),
-        super(key: key);
+      : preferredSize = const Size.fromHeight(60.0), super(key: key);
 
   @override
   Widget build(BuildContext context) {
     trainingsAndGamesReelsNotifier = Provider.of<TrainingsAndGamesReelsNotifier>(context);
     getTrainingsAndGamesReels(trainingsAndGamesReelsNotifier);
 
-    return SafeArea(
-      child: Stack(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: StaggeredGridView.countBuilder(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 12,
-              itemCount: trainingsAndGamesReelsNotifier.trainingsAndGamesReelsList.length,
-              itemBuilder: _buildReels,
-              staggeredTileBuilder: (int index) {
-                return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
-            },
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:
+              NotificationListener<ScrollNotification>(
+                onNotification: (scrollNotification) {
+                  if (scrollNotification is ScrollStartNotification || _scrollController.position.userScrollDirection == ScrollDirection.reverse) {
+                    HapticFeedback.heavyImpact();
+                  }
+                  else if (scrollNotification is ScrollUpdateNotification || _scrollController.position.userScrollDirection == ScrollDirection.forward
+                  ) {
+                    HapticFeedback.lightImpact();
+                  }
+                  else if (scrollNotification is ScrollEndNotification) {
 
+                  }
+                  return true;
+                },
+                child: StaggeredGridView.countBuilder(
+                  controller: _scrollController,
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 12,
+                  itemCount: trainingsAndGamesReelsNotifier.trainingsAndGamesReelsList.length,
+                  itemBuilder: _buildReels,
+                  staggeredTileBuilder: (int index) {
+                    return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
+                    },
+                ),
+              ),
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Hero(
-                  tag: 'trainingsAndGamesReelsPageButton',
-                  child: Card(
-                    elevation: 10,
-                    shape: kBackButtonShape,
-                    child: IconButton(
-                      alignment: Alignment.center,
-                      // splashColor: Colors.orange.withOpacity(4),
-                      // splashColor: Colors.orange.withAlpha(50),
-                      // color: Colors.teal,
-                      icon: InkWell(
-                          highlightColor: Colors.teal.withAlpha(90),
-                          borderRadius: const BorderRadius.only(topRight: Radius.circular(15)),
-                          onTap: (){
-                            Navigator.of(context).pop(false);
-                            navigateMyApp(context);
-                          },
-                          child: const Icon(LineIcons.chevronCircleLeft)),
-                      iconSize: 30,
-                      onPressed: () {
-                        Navigator.of(context).pop(false);
-                        navigateMyApp(context);
-                      },
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Hero(
+                    tag: 'trainingsAndGamesReelsPageButton',
+                    child: Card(
+                      elevation: 10,
+                      shape: kBackButtonShape,
+                      child: IconButton(
+                        alignment: Alignment.center,
+                        // splashColor: Colors.orange.withOpacity(4),
+                        // splashColor: Colors.orange.withAlpha(50),
+                        // color: Colors.teal,
+                        icon: InkWell(
+                            highlightColor: Colors.teal.withAlpha(90),
+                            borderRadius: const BorderRadius.only(topRight: Radius.circular(15)),
+                            onTap: (){
+                              Navigator.of(context).pop(false);
+                              navigateMyApp(context);
+                            },
+                            child: const Icon(LineIcons.chevronCircleLeft)),
+                        iconSize: 30,
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                          navigateMyApp(context);
+                        },
+                      ),
                     ),
                   ),
-                ),
-                // SizedBox(
-                //   width: 50,
-                // ),
-                Hero(
-                  tag: 'title',
-                  transitionOnUserGestures: true,
-                  child: Card(
-                      elevation: 10,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
+                  // SizedBox(
+                  //   width: 50,
+                  // ),
+                  Hero(
+                    tag: 'title',
+                    transitionOnUserGestures: true,
+                    child: Card(
+                        elevation: 10,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
+                          ),
                         ),
-                      ),
-                      child: InkWell(
-                        highlightColor: Colors.teal.withAlpha(90),
-                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30)),
-                        onTap: (){},
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.5,
-                          height: 50,
-                          child: const Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 30),
-                              child: Text(
-                                'Monthly Reels',//ADD FOOTBALL ICON
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25,
-                                  // color: Colors.black54,
+                        child: InkWell(
+                          highlightColor: Colors.teal.withAlpha(90),
+                          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30)),
+                          onTap: (){},
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            height: 50,
+                            child: const Align(
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 30),
+                                child: Text(
+                                  'Monthly Reels',//ADD FOOTBALL ICON
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
+                                    // color: Colors.black54,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

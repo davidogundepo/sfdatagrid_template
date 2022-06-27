@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:sfdatagrid_template/api/most_assists_player_stats_info_api.dart';
+import 'package:sfdatagrid_template/api/most_assists_players_stats_info_api.dart';
 import 'package:sfdatagrid_template/api/most_fouled_rc_players_stats_info_api.dart';
 import 'package:sfdatagrid_template/api/most_fouled_yc_players_stats_info_api.dart';
 import 'package:sfdatagrid_template/api/player_of_the_month_stats_info_api.dart';
@@ -38,13 +38,13 @@ class BottomNavigator extends StatefulWidget {
 class _BottomNavigatorState extends State<BottomNavigator> {
 
   bool toggle = false;
-  int selectedPage = 1;
+  int selectedPage = 0;
 
   final _pageOption = [
     const PlayersTablePage(),
     const PlayersStatsAndInfoPage(),
     const SeasonTimeline(),
-    const TrainingsAndGamesReelsPage(),
+    TrainingsAndGamesReelsPage(),
 
   ];
 

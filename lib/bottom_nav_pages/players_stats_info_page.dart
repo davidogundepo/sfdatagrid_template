@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import 'package:sfdatagrid_template/api/most_assists_player_stats_info_api.dart';
+import 'package:sfdatagrid_template/api/most_assists_players_stats_info_api.dart';
 import 'package:sfdatagrid_template/api/most_fouled_rc_players_stats_info_api.dart';
 import 'package:sfdatagrid_template/api/most_fouled_yc_players_stats_info_api.dart';
 import 'package:sfdatagrid_template/api/player_of_the_month_stats_info_api.dart';
@@ -977,46 +977,6 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   color: Colors.teal[300]),
                                             ),
                                           ),
-
-                                          // child: Listener(
-                                          //   onPointerUp: (_) => setState(() => isPressed = false),
-                                          //   onPointerDown: (_) => setState(() => isPressed = true),
-                                          //   child: AnimatedContainer(
-                                          //     duration: const Duration(milliseconds: 100),
-                                          //     width: 200,
-                                          //     height: 150,
-                                          //     decoration: BoxDecoration(
-                                          //       borderRadius: BorderRadius.circular(30),
-                                          //       color: backgroundColor,
-                                          //       boxShadow: [
-                                          //         BoxShadow(
-                                          //           blurRadius: blur,
-                                          //           offset: -distance,
-                                          //           color: Colors.white,
-                                          //           inset: isPressed
-                                          //         ),
-                                          //         BoxShadow(
-                                          //           blurRadius: blur,
-                                          //           offset: -distance,
-                                          //           color: const Color(0xFFA7A9AF),
-                                          //           inset: isPressed
-                                          //         ),
-                                          //
-                                          //       ]
-                                          //     ),
-                                          //     child: const AvatarGlow(
-                                          //       endRadius: 100,
-                                          //       glowColor: Colors.deepPurple,
-                                          //       duration: Duration(milliseconds: 2000),
-                                          //       repeatPauseDuration: Duration(milliseconds: 100),
-                                          //       child: Icon(Icons.airplay,
-                                          //           size: 80,
-                                          //           color: Colors.white
-                                          //       ),
-                                          //     ),
-                                          //     // child: const SizedBox(height: 50, width: 50),
-                                          //   ),
-                                          // ),
                                         ),
                                       ),
                                     ),
@@ -1037,6 +997,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                     height: MediaQuery.of(context).size.height * 0.6,
                                                     child: ListView.builder(
                                                       itemExtent: MediaQuery.of(context).size.height * 0.585,
+
                                                       shrinkWrap: true,
                                                       itemCount: playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList.length,
                                                       itemBuilder: (context, index) =>

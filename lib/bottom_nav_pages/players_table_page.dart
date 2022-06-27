@@ -9,6 +9,7 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 
 Color backgroundColor = Colors.indigo[400];
@@ -46,7 +47,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 realTimeUpdate(var data) {
                   return DataGridRow(cells: [
                     DataGridCell<String>(columnName: 'id', value: data.doc['id']),
-                    // DataGridCell<Image>(columnName: 'image', value: data.doc['image']),
+                    DataGridCell<String>(columnName: 'image', value: data.doc['image']),
                     DataGridCell<String>(columnName: 'player_name',
                         value: data.doc['player_name']),
                     DataGridCell<int>(columnName: 'matches_played',
@@ -83,7 +84,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 for (var data in snapshot.data.docs) {
                   playersTableList.add(PlayersTable(
                       id: data['id'],
-                      // image: data['image'],
+                      image: data['image'],
                       playerName: data['player_name'],
                       matchesPlayed: data['matches_played'],
                       goalsScored: data['goals_scored'],
@@ -110,8 +111,9 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                         gridLineStrokeWidth: 1.0
                     ),
                     child: SfDataGrid(
+                      rowHeight: 50,
                       source: playersTableDataSource,
-                      frozenColumnsCount: 2,
+                      frozenColumnsCount: 3,
                       frozenRowsCount: 0,
                       allowSorting: true,
                       allowTriStateSorting: true,
@@ -161,26 +163,27 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
     return <GridColumn>[
       GridColumn(
           columnName: 'id',
-          width: 50,
+          width: 35,
           label: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              // padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: const Text('ID',
                 style: TextStyle(
                     color: Colors.white
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
-      // GridColumn(
-      //     columnName: 'image',
-      //     width: 51,
-      //     label: Container(
-      //       decoration: const BoxDecoration(
-      //           color: Colors.transparent,
-      //           borderRadius: BorderRadius.all(Radius.circular(15)),
-      //
-      //       ),
-      //     )),
+      GridColumn(
+          columnName: 'image',
+          width: 70,
+          label: Container(
+            padding: const EdgeInsets.all(8.0),
+            alignment: Alignment.center,
+            child: const Text('Image',
+              style: TextStyle(
+              color: Colors.white
+              ),
+              overflow: TextOverflow.ellipsis))),
       GridColumn(
           columnName: 'player_name',
           width: 120,
@@ -192,7 +195,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 style: TextStyle(
                     color: Colors.white
                 ),
-                overflow: TextOverflow.fade,
+                overflow: TextOverflow.ellipsis,
               ))),
       GridColumn(
           columnName: 'matches_played',
@@ -212,8 +215,10 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
               alignment: Alignment.centerLeft,
               child: const Text('GS',//'Goals Scored'
                 style: TextStyle(
-                    color: Colors.white
+                    color: Colors.white54,
+                  fontWeight: FontWeight.bold
                 ),
+                overflow: TextOverflow.ellipsis,
               ))),
       GridColumn(
           columnName: 'assists',
@@ -224,6 +229,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 style: TextStyle(
                     color: Colors.white
                 ),
+                overflow: TextOverflow.ellipsis,
               ))),
       GridColumn(
           columnName: 'yellow_card',
@@ -234,6 +240,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 style: TextStyle(
                     color: Colors.white
                 ),
+                overflow: TextOverflow.ellipsis,
               ))),
       GridColumn(
           columnName: 'red_card',
@@ -244,7 +251,9 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 style: TextStyle(
                     color: Colors.white
                 ),
+                overflow: TextOverflow.ellipsis,
               ))),
+
       GridColumn(
           columnName: 'player_position',
           width: 60,
@@ -254,6 +263,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 style: TextStyle(
                     color: Colors.white
                 ),
+                overflow: TextOverflow.ellipsis,
               ))),
       GridColumn(
           columnName: 'nationality',
@@ -264,7 +274,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                 style: TextStyle(
                   color: Colors.white,
                 ),
-                overflow: TextOverflow.fade,
+                overflow: TextOverflow.ellipsis,
               ))),
     ];
   }
@@ -351,7 +361,7 @@ class PlayersTableDataSource extends DataGridSource {
         .map<DataGridRow>((e) => DataGridRow(cells: [
 
       DataGridCell<int>(columnName: 'id', value: itemCount++),
-      // DataGridCell<Image>(columnName: 'image', value: e.image),
+      DataGridCell<String>(columnName: 'image', value: e.image),
       DataGridCell<String>(columnName: 'player_name', value: e.playerName),
       DataGridCell<int>(columnName: 'matches_played', value: e.matchesPlayed),
       DataGridCell<int>(columnName: 'goals_scored', value: e.goalsScored),
@@ -386,7 +396,7 @@ class PlayersTableDataSource extends DataGridSource {
         cells: row.getCells().map<Widget>((e) {
           TextStyle getTextStyle() {
             if (e.columnName == 'goals_scored') {
-              return const TextStyle(color: Colors.white54);
+              return const TextStyle(color: Colors.white54, fontWeight: FontWeight.bold);
             }
             else if (e.columnName == 'nationality') {
               return const TextStyle(
@@ -397,7 +407,29 @@ class PlayersTableDataSource extends DataGridSource {
               return const TextStyle(color: Colors.white);
             }
           }
-          return Container(
+          return e.columnName == 'image'
+              ?
+          Container(
+            margin: const EdgeInsets.all(2),
+            alignment: Alignment.center,
+            // width: 25,
+            // height: 25,
+            decoration: BoxDecoration(
+                color: Colors.transparent,
+                shape: BoxShape.circle,
+                // borderRadius: const BorderRadius.all(Radius.circular(15)),
+                image: DecorationImage(
+                    alignment: const Alignment(1, -1.1),
+                    image: CachedNetworkImageProvider(
+                        e.value,
+                    ),
+                    fit: BoxFit.cover
+                )
+            ),
+
+          )
+              :
+          Container(
             alignment: (e.columnName == 'id' || e.columnName == 'playerName')
                 ? Alignment.center : Alignment.centerLeft,
             // alignment: Alignment.centerLeft,
@@ -405,7 +437,7 @@ class PlayersTableDataSource extends DataGridSource {
             child: Text(
               e.value.toString(),
               style: getTextStyle(),
-              // overflow: TextOverflow.ellipsis,
+              overflow: TextOverflow.fade,
             ),
           );
           // Container(
@@ -429,6 +461,7 @@ class PlayersTableDataSource extends DataGridSource {
 class PlayersTable{
 
   String id;
+  String image;
   String playerName;
   int matchesPlayed;
   int goalsScored;
@@ -443,6 +476,7 @@ class PlayersTable{
       (
       {
         this.id,
+        this.image,
         this.playerName,
         this.matchesPlayed,
         this.goalsScored,
