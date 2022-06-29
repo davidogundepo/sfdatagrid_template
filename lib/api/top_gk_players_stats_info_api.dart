@@ -12,13 +12,13 @@ getTopGKPlayersStatsAndInfo(TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAn
       .limit(10)
       .get();
 
-  List<PlayersStatsAndInfo> _topGKPlayersStatsAndInfoList = [];
+  List<PlayersStatsAndInfo> topGKPlayersStatsAndInfoList = [];
 
   for (var document in snapshot.docs) {
-    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data());
-    _topGKPlayersStatsAndInfoList.add(playersStatsAndInfo);
+    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data() as Map<String, dynamic>);
+    topGKPlayersStatsAndInfoList.add(playersStatsAndInfo);
   }
 
-  topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList = _topGKPlayersStatsAndInfoList;
+  topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList = topGKPlayersStatsAndInfoList;
 
 }

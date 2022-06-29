@@ -6,7 +6,7 @@ import '../model/PlayersStatsAndInfo.dart';
 
 class TopGKPlayersStatsAndInfoNotifier with ChangeNotifier {
   List<PlayersStatsAndInfo> _topGKPlayersStatsAndInfoList = <PlayersStatsAndInfo>[];
-  PlayersStatsAndInfo _currentTopGKPlayersStatsAndInfo;
+  late PlayersStatsAndInfo _currentTopGKPlayersStatsAndInfo;
 
   UnmodifiableListView<PlayersStatsAndInfo> get topGKPlayersStatsAndInfoList => UnmodifiableListView(_topGKPlayersStatsAndInfoList);
 

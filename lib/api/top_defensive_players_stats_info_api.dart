@@ -11,13 +11,13 @@ getTopDefensivePlayersStatsAndInfo(TopDefensivePlayersStatsAndInfoNotifier topDe
       .limit(10)
       .get();
 
-  List<PlayersStatsAndInfo> _topDefensivePlayersStatsAndInfoList = [];
+  List<PlayersStatsAndInfo> topDefensivePlayersStatsAndInfoList = [];
 
   for (var document in snapshot.docs) {
-    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data());
-    _topDefensivePlayersStatsAndInfoList.add(playersStatsAndInfo);
+    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data() as Map<String, dynamic>);
+    topDefensivePlayersStatsAndInfoList.add(playersStatsAndInfo);
   }
 
-  topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList = _topDefensivePlayersStatsAndInfoList;
+  topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList = topDefensivePlayersStatsAndInfoList;
 
 }

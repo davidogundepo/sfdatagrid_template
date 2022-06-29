@@ -10,13 +10,13 @@ getPlayerOfTheMonthStatsAndInfo(PlayerOfTheMonthStatsAndInfoNotifier playerOfThe
       .where('player_of_the_month', whereIn: ['yes','Yes','YES', 'yES', 'yeS', 'YEs', 'yEs'])
       .limit(1).get();
 
-  List<PlayersStatsAndInfo> _playerOfTheMonthStatsAndInfoList = [];
+  List<PlayersStatsAndInfo> playerOfTheMonthStatsAndInfoList = [];
 
   for (var document in snapshot.docs) {
-    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data());
-    _playerOfTheMonthStatsAndInfoList.add(playersStatsAndInfo);
+    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data() as Map<String, dynamic>);
+    playerOfTheMonthStatsAndInfoList.add(playersStatsAndInfo);
   }
 
-  playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList = _playerOfTheMonthStatsAndInfoList;
+  playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList = playerOfTheMonthStatsAndInfoList;
 
 }

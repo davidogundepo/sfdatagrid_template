@@ -10,14 +10,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-Color backgroundColor = Colors.indigo[400];
-Color appBarIconColor = Colors.indigo[200];
-Color appBarBackgroundColor = Colors.indigo[400];
-Color secondStudentChartColor = Colors.indigo[400];
+Color? backgroundColor = Colors.indigo[400];
+Color? appBarIconColor = Colors.indigo[200];
+Color? appBarBackgroundColor = Colors.indigo[400];
+Color? secondStudentChartColor = Colors.indigo[400];
 
 
 class PlayersTablePage extends StatefulWidget {
-  const PlayersTablePage({Key key}) : super(key: key);
+  const PlayersTablePage({Key? key}) : super(key: key);
 
   @override
   State<PlayersTablePage> createState() => _PlayersTablePageState();
@@ -28,7 +28,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
 
   List<PlayersTable> playersTableList = [];
 
-  PlayersTableDataSource playersTableDataSource;
+  late PlayersTableDataSource playersTableDataSource;
 
   Stream<QuerySnapshot> getDataFromFirestore() {
     return FirebaseFirestore.instance.collection('PlayersTable').orderBy('goals_scored', descending: true).snapshots();
@@ -64,7 +64,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                         value: data.doc['nationality']),
                   ]);
                 }
-                for (var data in snapshot.data.docChanges) {
+                for (var data in snapshot.data!.docChanges) {
                   if (data.type == DocumentChangeType.modified) {
                     playersTableDataSource.dataGridRows[data.oldIndex] =
                         realTimeUpdate(data);
@@ -79,7 +79,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                   }
                 }
               } else {
-                for (var data in snapshot.data.docs) {
+                for (var data in snapshot.data!.docs) {
                   playersTableList.add(PlayersTable(
                       id: data['id'],
                       image: data['image'],
@@ -330,8 +330,9 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp()));
   }
 
-  Future<bool> _onWillPop() {
-    return Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp()));
+  Future<bool> _onWillPop(){
+    Navigator.push(context, MaterialPageRoute(builder: (_) => const MyApp()));
+    return Future.value(true);
   }
 
 }
@@ -373,12 +374,12 @@ class PlayersTableDataSource extends DataGridSource {
   }
 
   @override
-  Widget buildTableSummaryCellWidget(GridTableSummaryRow summaryRow, GridSummaryColumn summaryColumn, RowColumnIndex rowColumnIndex, String summaryValue) {
+  Widget buildTableSummaryCellWidget(GridTableSummaryRow? summaryRow, GridSummaryColumn? summaryColumn, RowColumnIndex? rowColumnIndex, String? summaryValue) {
     // TODO: implement buildTableSummaryCellWidget
     return Container(
       padding: const EdgeInsets.all(15.0),
       // child: Text(summaryValue),
-      child: Text(summaryValue,
+      child: Text(summaryValue!,
         style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white)
@@ -458,16 +459,16 @@ class PlayersTableDataSource extends DataGridSource {
 
 class PlayersTable{
 
-  String id;
-  String image;
-  String playerName;
-  int matchesPlayed;
-  int goalsScored;
-  int assists;
-  String playerPosition;
-  int yellowCard;
-  int redCard;
-  String nationality;
+  String? id;
+  String? image;
+  String? playerName;
+  int? matchesPlayed;
+  int? goalsScored;
+  int? assists;
+  String? playerPosition;
+  int? yellowCard;
+  int? redCard;
+  String? nationality;
 
 
   PlayersTable

@@ -9,13 +9,13 @@ getMostFouledRCPlayersStatsAndInfo(MostFouledRCPlayersStatsAndInfoNotifier mostF
       .collection('PlayersTable').where('red_card', isGreaterThan: 0)
       .orderBy('red_card', descending: true).limit(8).get();
 
-  List<PlayersStatsAndInfo> _mostFouledRCPlayersStatsAndInfoList = [];
+  List<PlayersStatsAndInfo> mostFouledRCPlayersStatsAndInfoList = [];
 
   for (var document in snapshot.docs) {
-    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data());
-    _mostFouledRCPlayersStatsAndInfoList.add(playersStatsAndInfo);
+    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data() as Map<String, dynamic>);
+    mostFouledRCPlayersStatsAndInfoList.add(playersStatsAndInfo);
   }
 
-  mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList = _mostFouledRCPlayersStatsAndInfoList;
+  mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList = mostFouledRCPlayersStatsAndInfoList;
 
 }

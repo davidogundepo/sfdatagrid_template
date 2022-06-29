@@ -12,13 +12,13 @@ getCumMOTMPlayersStatsAndInfo(CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersS
       .limit(10)
       .get();
 
-  List<PlayersStatsAndInfo> _cumMOTMPlayersStatsAndInfoList = [];
+  List<PlayersStatsAndInfo> cumMOTMPlayersStatsAndInfoList = [];
 
   for (var document in snapshot.docs) {
-    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data());
-    _cumMOTMPlayersStatsAndInfoList.add(playersStatsAndInfo);
+    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data() as Map<String, dynamic>);
+    cumMOTMPlayersStatsAndInfoList.add(playersStatsAndInfo);
   }
 
-  cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList = _cumMOTMPlayersStatsAndInfoList;
+  cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList = cumMOTMPlayersStatsAndInfoList;
 
 }

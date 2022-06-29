@@ -17,10 +17,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'bottom_nav_pages/bottom_navigator.dart';
 import 'package:provider/provider.dart';
 
-Color backgroundColor = Colors.indigo[400];
-Color appBarIconColor = Colors.indigo[200];
-Color appBarBackgroundColor = Colors.indigo[400];
-Color secondStudentChartColor = Colors.indigo[400];
+Color? backgroundColor = Colors.indigo[400];
+Color? appBarIconColor = Colors.indigo[200];
+Color? appBarBackgroundColor = Colors.indigo[400];
+Color? secondStudentChartColor = Colors.indigo[400];
 
 
 void main() async {
@@ -69,7 +69,7 @@ void main() async {
 }
 
 class MyApps extends StatelessWidget {
-  const MyApps({Key key}) : super(key: key);
+  const MyApps({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class MyApps extends StatelessWidget {
 
 class MyApp extends StatefulWidget {
 
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() {

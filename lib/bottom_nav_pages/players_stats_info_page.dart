@@ -18,49 +18,49 @@ import '../notifier/player_of_the_month_stats_info_notifier.dart';
 import '../notifier/top_defensive_players_stats_info_notifier.dart';
 import '../notifier/top_gk_players_stats_info_notifier.dart';
 import '../notifier/top_goals_players_stats_info_notifier.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:clay_containers/clay_containers.dart';
 import '../main.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier;
-MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier;
-MostFouledYCPlayersStatsAndInfoNotifier mostFouledYCPlayersStatsAndInfoNotifier;
-MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier;
-PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier;
-TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier;
-TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier;
-MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier;
-CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier;
+late TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier;
+late MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier;
+late MostFouledYCPlayersStatsAndInfoNotifier mostFouledYCPlayersStatsAndInfoNotifier;
+late MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier;
+late PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier;
+late TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier;
+late TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier;
+late MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier;
+late CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier;
 
 
 
 
-Color backgroundColor = Color.fromRGBO(21, 29, 59, 1);
-Color appBarTextColor = Colors.white;
-Color appBarBackgroundColor = Color.fromRGBO(21, 29, 59, 2);
-Color appBarIconColor = Colors.white;
-Color modalColor = Colors.transparent;
-Color modalBackgroundColor = Color.fromRGBO(21, 29, 59, 1);
-Color materialBackgroundColor = Colors.transparent;
-Color cardBackgroundColor = Colors.white;
-Color splashColor = Color.fromRGBO(49, 63, 117, 1.0);
-Color iconColor = Colors.white;
-Color textColor = Colors.white;
-Color textColorTwo = Colors.white70;
-Color dialogBackgroundColor = Color.fromRGBO(21, 29, 59, 1);
-Color borderColor = Colors.black;
+Color? backgroundColor = Color.fromRGBO(21, 29, 59, 1);
+Color? appBarTextColor = Colors.white;
+Color? appBarBackgroundColor = Color.fromRGBO(21, 29, 59, 2);
+Color? appBarIconColor = Colors.white;
+Color? modalColor = Colors.transparent;
+Color? modalBackgroundColor = Color.fromRGBO(21, 29, 59, 1);
+Color? materialBackgroundColor = Colors.transparent;
+Color? cardBackgroundColor = Colors.white;
+Color? splashColor = const Color.fromRGBO(49, 63, 117, 1.0);
+Color? iconColor = Colors.white;
+Color? textColor = Colors.white;
+Color? textColorTwo = Colors.white70;
+Color? dialogBackgroundColor = Color.fromRGBO(21, 29, 59, 1);
+Color? borderColor = Colors.black;
 
 
-Map<int, Widget> playersTGPAndMAP;
+late Map<int, Widget> playersTGPAndMAP;
 
 
 
 class PlayersStatsAndInfoPage extends StatefulWidget {
 
-  const PlayersStatsAndInfoPage({Key key}) : super(key: key);
+  const PlayersStatsAndInfoPage({Key? key}) : super(key: key);
 
   @override
   State<PlayersStatsAndInfoPage> createState() => _PlayersStatsAndInfoPageState();
@@ -86,7 +86,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
   }
 
 
-  SwiperController swiperController;
+  late SwiperController swiperController;
 
   int sharedValue = 0;
 
@@ -348,7 +348,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].image
+                                                                (topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].image)!
                                                             ),
                                                             fit: BoxFit.cover
                                                         ),
@@ -390,7 +390,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('position'),
-                                                        Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerPosition),
+                                                        Text((topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerPosition)!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -400,7 +400,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('preferred foot'),
-                                                        Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].preferredFoot),
+                                                        Text((topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].preferredFoot)!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -416,7 +416,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: <Widget>[
                                                               const Text('name'),
-                                                              Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerName),
+                                                              Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerName!),
                                                             ],
                                                           ),
                                                           const SizedBox(
@@ -436,7 +436,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: <Widget>[
                                                               const Text('matches'),
-                                                              Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                              Text('${topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].matchesPlayed} played'),
                                                             ],
                                                           )
                                                         ],
@@ -510,7 +510,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].image
+                                                                mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].image!
                                                             ),
                                                             fit: BoxFit.cover
                                                         ),
@@ -552,7 +552,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('position'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition),
+                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -562,7 +562,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('preferred foot'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot),
+                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -578,7 +578,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: <Widget>[
                                                               const Text('name'),
-                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName),
+                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName!),
                                                             ],
                                                           ),
                                                           const SizedBox(
@@ -598,7 +598,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: <Widget>[
                                                               const Text('matches'),
-                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                              Text('${mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed} played'),
                                                             ],
                                                           )
                                                         ],
@@ -697,7 +697,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                 height: 15
                                                             ),
                                                             Text(
-                                                                mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].playerName
+                                                                mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].playerName!
                                                             ),
                                                             const SizedBox(
                                                               height: 10,
@@ -726,7 +726,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].image
+                                                                mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].image!
                                                             ),
                                                             fit: BoxFit.cover
                                                         )
@@ -830,7 +830,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                 height: 15
                                                             ),
                                                             Text(
-                                                                mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].playerName
+                                                                mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].playerName!
                                                             ),
                                                             const SizedBox(
                                                               height: 10,
@@ -859,7 +859,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].image
+                                                                mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].image!
                                                             ),
                                                             fit: BoxFit.cover
                                                         )
@@ -939,7 +939,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].image
+                                                                topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].image!
                                                             ),
                                                             fit: BoxFit.cover
                                                         ),
@@ -981,7 +981,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('position'),
-                                                        Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerPosition),
+                                                        Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerPosition!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -991,7 +991,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('name'),
-                                                        Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerName),
+                                                        Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerName!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -1031,7 +1031,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                 overflow: TextOverflow.ellipsis,
                                                               ),
                                                               Text(
-                                                                topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played',
+                                                                '${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].matchesPlayed} played',
                                                                 overflow: TextOverflow.ellipsis,
                                                               ),
                                                             ],
@@ -1108,7 +1108,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].image
+                                                                topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].image!
                                                             ),
                                                             fit: BoxFit.cover
                                                         ),
@@ -1150,7 +1150,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('position'),
-                                                        Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerPosition),
+                                                        Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerPosition!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -1160,7 +1160,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('preferred foot'),
-                                                        Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].preferredFoot),
+                                                        Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].preferredFoot!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -1176,7 +1176,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: <Widget>[
                                                               const Text('name'),
-                                                              Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerName),
+                                                              Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerName!),
                                                             ],
                                                           ),
                                                           const SizedBox(
@@ -1196,7 +1196,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: <Widget>[
                                                               const Text('matches'),
-                                                              Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                              Text('${topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].matchesPlayed} played'),
                                                             ],
                                                           )
                                                         ],
@@ -1270,7 +1270,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].image
+                                                                motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].image!
                                                             ),
                                                             fit: BoxFit.cover
                                                         ),
@@ -1312,7 +1312,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('position'),
-                                                        Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerPosition),
+                                                        Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerPosition!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -1322,7 +1322,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('preferred foot'),
-                                                        Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].preferredFoot),
+                                                        Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].preferredFoot!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -1336,7 +1336,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: <Widget>[
                                                             const Text('name'),
-                                                            Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerName),
+                                                            Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerName!),
                                                           ],
                                                         ),
                                                         const SizedBox(
@@ -1356,7 +1356,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: <Widget>[
                                                             const Text('matches'),
-                                                            Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                            Text('${motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].matchesPlayed} played'),
                                                           ],
                                                         )
                                                       ],
@@ -1429,7 +1429,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         image: DecorationImage(
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
-                                                                cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].image
+                                                                cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].image!
                                                             ),
                                                             fit: BoxFit.cover
                                                         ),
@@ -1471,7 +1471,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('Coventry Phoenix FC'),
-                                                        Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerPosition),
+                                                        Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerPosition!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -1481,7 +1481,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         const Text('Preferred Foot'),
-                                                        Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].preferredFoot),
+                                                        Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].preferredFoot!),
                                                       ],
                                                     ),
                                                     const SizedBox(
@@ -1497,7 +1497,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: <Widget>[
                                                               const Text('Name'),
-                                                              Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerName),
+                                                              Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerName!),
                                                             ],
                                                           ),
                                                           const SizedBox(
@@ -1517,7 +1517,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: <Widget>[
                                                               const Text('matches'),
-                                                              Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                              Text('${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].matchesPlayed} played'),
                                                             ],
                                                           )
                                                         ],
@@ -1586,13 +1586,13 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                             borderRadius: const BorderRadius.all(Radius.circular(15)),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: Colors.teal[500],
+                                                  color: Colors.teal[500]!,
                                                   offset: -distance,
                                                   blurRadius: blur,
                                                   spreadRadius: 1.0
                                               ),
                                               BoxShadow(
-                                                  color: Colors.teal[200],
+                                                  color: Colors.teal[200]!,
                                                   offset: distance,
                                                   blurRadius: blur,
                                                   spreadRadius: 1.0
@@ -1613,7 +1613,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         blurRadius: 10),
                                                     Shadow(
                                                         offset: const Offset(-3, -3),
-                                                        color: Colors.teal[300],
+                                                        color: Colors.teal[300]!,
                                                         blurRadius: 10
                                                     )
                                                   ],
@@ -1657,7 +1657,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                     height: double.infinity,
                                                                     width: double.infinity,
                                                                     image: CachedNetworkImageProvider(
-                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].image,
+                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].image!,
                                                                       scale: 0.2,
                                                                     ),
                                                                     fit: BoxFit.cover,
@@ -1699,7 +1699,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                           // 'sense 1 years',
                                                                           playerOfTheMonthStatsAndInfoNotifier
                                                                               .playerOfTheMonthStatsAndInfoList[index]
-                                                                              .playerName,
+                                                                              .playerName!,
                                                                           style: const TextStyle(
                                                                               color: Colors.white70,
                                                                               fontSize: 30
@@ -1719,7 +1719,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                         Text(
                                                                           playerOfTheMonthStatsAndInfoNotifier
                                                                               .playerOfTheMonthStatsAndInfoList[index]
-                                                                              .playerPosition,
+                                                                              .playerPosition!,
                                                                           style: const TextStyle(
                                                                               color: Colors.white70
                                                                           ),
@@ -1769,7 +1769,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         shape: BoxShape.rectangle,
                                                         borderRadius: BorderRadius.circular(6.0),
                                                       ),
-                                                      child: Align(
+                                                      child: const Align(
                                                         alignment: Alignment.center,
                                                         child: Icon(
                                                           Icons.close,

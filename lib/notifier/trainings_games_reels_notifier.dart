@@ -6,7 +6,7 @@ import '../model/TrainingsAndGamesReels.dart';
 
 class TrainingsAndGamesReelsNotifier with ChangeNotifier {
   List<TrainingsAndGamesReels> _trainingsAndGamesReelsList = <TrainingsAndGamesReels>[];
-  TrainingsAndGamesReels _currentTrainingsAndGamesReels;
+  late TrainingsAndGamesReels _currentTrainingsAndGamesReels;
 
   UnmodifiableListView<TrainingsAndGamesReels> get trainingsAndGamesReelsList => UnmodifiableListView(_trainingsAndGamesReelsList);
 

@@ -8,13 +8,13 @@ getTrainingsAndGamesReels(TrainingsAndGamesReelsNotifier trainingsAndGamesReelsN
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('TrainingsAndGamesReels').get();
 
-  List<TrainingsAndGamesReels> _trainingsAndGamesReelsList = [];
+  List<TrainingsAndGamesReels> trainingsAndGamesReelsList = [];
 
   for (var document in snapshot.docs) {
-    TrainingsAndGamesReels trainingsAndGamesReels = TrainingsAndGamesReels.fromMap(document.data());
-    _trainingsAndGamesReelsList.add(trainingsAndGamesReels);
+    TrainingsAndGamesReels trainingsAndGamesReels = TrainingsAndGamesReels.fromMap(document.data() as Map<String, dynamic>);
+    trainingsAndGamesReelsList.add(trainingsAndGamesReels);
   }
 
-  trainingsAndGamesReelsNotifier.trainingsAndGamesReelsList = _trainingsAndGamesReelsList;
+  trainingsAndGamesReelsNotifier.trainingsAndGamesReelsList = trainingsAndGamesReelsList;
 
 }

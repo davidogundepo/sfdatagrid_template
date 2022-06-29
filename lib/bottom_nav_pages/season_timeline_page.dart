@@ -8,7 +8,7 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import '../main.dart';
 
 class SeasonTimeline extends StatefulWidget {
-  const SeasonTimeline({Key key}) : super(key: key);
+  const SeasonTimeline({Key? key}) : super(key: key);
 
   @override
   State<SeasonTimeline> createState() => _SeasonTimelineState();
@@ -198,10 +198,10 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                       color: Colors.white.withOpacity(0.15),
                       blur: 1,
                       elevation: 16,
-                      height: 300,
+                      height: 400,
                       padding: const EdgeInsets.all(32),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const Align(
                               alignment: Alignment.centerLeft,
@@ -252,5 +252,5 @@ class PlayersPopulationChartData {
   PlayersPopulationChartData(this.x, this.y, [this.color]);
   final String x;
   final double y;
-  final Color color;
+  final Color? color;
 }

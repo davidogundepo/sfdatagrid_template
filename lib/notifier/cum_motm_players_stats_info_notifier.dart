@@ -6,7 +6,7 @@ import '../model/PlayersStatsAndInfo.dart';
 
 class CumMOTMPlayersStatsAndInfoNotifier with ChangeNotifier {
   List<PlayersStatsAndInfo> _cumMOTMPlayersStatsAndInfoList = <PlayersStatsAndInfo>[];
-  PlayersStatsAndInfo _currentCumMOTMPlayersStatsAndInfo;
+  late PlayersStatsAndInfo _currentCumMOTMPlayersStatsAndInfo;
 
   UnmodifiableListView<PlayersStatsAndInfo> get cumMOTMPlayersStatsAndInfoList => UnmodifiableListView(_cumMOTMPlayersStatsAndInfoList);
 

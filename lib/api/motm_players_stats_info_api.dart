@@ -11,13 +11,13 @@ getMOTMPlayersStatsAndInfo(MOTMPlayersStatsAndInfoNotifier mOTMPlayersStatsAndIn
       .limit(10)
       .get();
 
-  List<PlayersStatsAndInfo> _mOTMPlayersStatsAndInfoList = [];
+  List<PlayersStatsAndInfo> mOTMPlayersStatsAndInfoList = [];
 
   for (var document in snapshot.docs) {
-    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data());
-    _mOTMPlayersStatsAndInfoList.add(playersStatsAndInfo);
+    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data() as Map<String, dynamic>);
+    mOTMPlayersStatsAndInfoList.add(playersStatsAndInfo);
   }
 
-  mOTMPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList = _mOTMPlayersStatsAndInfoList;
+  mOTMPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList = mOTMPlayersStatsAndInfoList;
 
 }

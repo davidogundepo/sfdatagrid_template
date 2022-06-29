@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.1.0"
+  sdk: ">=2.17.0 <3.1.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -33,9 +33,9 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
   flutter_inset_box_shadow: ^1.0.8
-  syncfusion_flutter_charts: ^20.1.51
+  syncfusion_flutter_charts: ^20.1.61
   blurrycontainer: ^1.0.2
 
 dev_dependencies:
@@ -47,23 +47,24 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
-  firebase_core: ^1.6.0
-  cloud_firestore: ^2.5.2
-  firebase_database: ^7.1.1
-  firebase_auth: ^3.1.1
-  firebase_crashlytics: ^2.2.1
-  provider: ^6.0.0
-  syncfusion_flutter_core: ^20.1.59
-  syncfusion_flutter_datagrid: 20.1.47
-  syncfusion_localizations: ^20.1.47
+  flutter_lints: ^2.0.1
+  firebase_core: ^1.18.0
+  cloud_firestore: ^3.1.18
+#  firebase_database: ^7.1.1
+  firebase_auth: ^3.3.20
+  firebase_crashlytics: ^2.8.2
+  provider: ^6.0.3
+  syncfusion_flutter_core: ^20.1.61
+  syncfusion_flutter_datagrid: 20.1.61
+  syncfusion_localizations: ^20.1.61
   google_nav_bar: ^5.0.6
-  flutter_staggered_grid_view: ^0.3.3
-  transparent_image: ^1.0.0
-  cached_network_image: ^3.1.0
+  flutter_staggered_grid_view: ^0.4.0
+  transparent_image: ^2.0.0
+  cached_network_image: ^3.2.1
   line_icons: ^2.0.1
   avatar_glow: ^2.0.2
-  flutter_swiper: ^1.1.6
+#  flutter_swiper: ^1.1.6
+  flutter_swiper_null_safety: ^1.0.2
   clay_containers: ^0.3.2
 
 

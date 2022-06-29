@@ -1,24 +1,24 @@
 
 class PlayersStatsAndInfo {
 
-  String id;
-  String playerName;
+  String? id;
+  String? playerName;
   dynamic goalsScored;
   dynamic assists;
   dynamic yellowCard;
   dynamic redCard;
-  String preferredFoot;
-  String playerPosition;
+  String? preferredFoot;
+  String? playerPosition;
   dynamic matchesPlayed;
   dynamic playerValue;
   dynamic cleanSheetGk;
   dynamic goalsConcededGkDef;
   dynamic cumMOTMCount;
-  String menOfTheMatchesMOTM;
-  String playerOfTheMonth;
+  String? menOfTheMatchesMOTM;
+  String? playerOfTheMonth;
   dynamic age;
-  String nationality;
-  String image;
+  String? nationality;
+  String? image;
 
   PlayersStatsAndInfo.fromMap(Map<String, dynamic> data) {
     id = data['id'];

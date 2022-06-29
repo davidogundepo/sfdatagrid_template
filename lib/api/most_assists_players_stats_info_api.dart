@@ -8,13 +8,13 @@ getMostAssistsPlayersStatsAndInfo(MostAssistsPlayersStatsAndInfoNotifier mostAss
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('PlayersTable').orderBy('assists', descending: true).limit(10).get();
 
-  List<PlayersStatsAndInfo> _mostAssistsPlayersStatsAndInfoList = [];
+  List<PlayersStatsAndInfo> mostAssistsPlayersStatsAndInfoList = [];
 
   for (var document in snapshot.docs) {
-    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data());
-    _mostAssistsPlayersStatsAndInfoList.add(playersStatsAndInfo);
+    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data() as Map<String, dynamic>);
+    mostAssistsPlayersStatsAndInfoList.add(playersStatsAndInfo);
   }
 
-  mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList = _mostAssistsPlayersStatsAndInfoList;
+  mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList = mostAssistsPlayersStatsAndInfoList;
 
 }

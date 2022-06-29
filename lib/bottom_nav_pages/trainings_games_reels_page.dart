@@ -12,6 +12,10 @@ import '../main.dart';
 import 'bottom_navigator.dart';
 import 'package:line_icons/line_icons.dart';
 
+
+
+late TrainingsAndGamesReelsNotifier trainingsAndGamesReelsNotifier;
+
 class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSizeWidget {
 
   final ScrollController _scrollController = ScrollController();
@@ -20,7 +24,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
   final Size preferredSize;
 
   TrainingsAndGamesReelsPage(
-      {Key key})
+      {Key? key})
       : preferredSize = const Size.fromHeight(60.0), super(key: key);
 
   @override
@@ -147,7 +151,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
             image: DecorationImage(
                 alignment: const Alignment(0, -1),
                 image: CachedNetworkImageProvider(
-                    trainingsAndGamesReelsNotifier.trainingsAndGamesReelsList[index].image
+                    (trainingsAndGamesReelsNotifier.trainingsAndGamesReelsList[index].image)!
                 ),
                 fit: BoxFit.cover
             )

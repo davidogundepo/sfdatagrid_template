@@ -6,7 +6,7 @@ import '../model/PlayersStatsAndInfo.dart';
 
 class MostFouledYCPlayersStatsAndInfoNotifier with ChangeNotifier {
   List<PlayersStatsAndInfo> _mostFouledYCPlayersStatsAndInfoList = <PlayersStatsAndInfo>[];
-  PlayersStatsAndInfo _currentMostFouledYCPlayersStatsAndInfo;
+  late PlayersStatsAndInfo _currentMostFouledYCPlayersStatsAndInfo;
 
   UnmodifiableListView<PlayersStatsAndInfo> get mostFouledYCPlayersStatsAndInfoList => UnmodifiableListView(_mostFouledYCPlayersStatsAndInfoList);
 

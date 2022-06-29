@@ -29,19 +29,19 @@ import 'trainings_games_reels_page.dart';
 
 import 'package:provider/provider.dart';
 
-TrainingsAndGamesReelsNotifier trainingsAndGamesReelsNotifier;
-PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier;
-MostFouledYCPlayersStatsAndInfoNotifier mostFouledYCPlayersStatsAndInfoNotifier;
-MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier;
-TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier;
-TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier;
-TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier;
-MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier;
-MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier;
-CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier;
+late TrainingsAndGamesReelsNotifier trainingsAndGamesReelsNotifier;
+late PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier;
+late MostFouledYCPlayersStatsAndInfoNotifier mostFouledYCPlayersStatsAndInfoNotifier;
+late MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier;
+late TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier;
+late TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier;
+late TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier;
+late MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier;
+late MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier;
+late CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier;
 
 class BottomNavigator extends StatefulWidget {
-  const BottomNavigator({Key key}) : super(key: key);
+  const BottomNavigator({Key? key}) : super(key: key);
 
   @override
   State<BottomNavigator> createState() => _BottomNavigatorState();
@@ -84,14 +84,14 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                   child: GNav(
-                    rippleColor: Colors.grey[300],
-                    hoverColor: Colors.grey[100],
+                    rippleColor: Colors.grey.shade300,
+                    hoverColor: Colors.grey.shade100,
                     gap: 12,
                     activeColor: Colors.black,
                     iconSize: 24,
                     padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                     duration: const Duration(microseconds: 400),
-                    tabBackgroundColor: Colors.grey[100],
+                    tabBackgroundColor: (Colors.grey[100])!,
                     color: Colors.black,
                     haptic: true,
                     tabs: const [

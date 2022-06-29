@@ -12,15 +12,15 @@ getMostFouledYCPlayersStatsAndInfo(MostFouledYCPlayersStatsAndInfoNotifier mostF
       .limit(8)
       .get();
 
-  List<PlayersStatsAndInfo> _mostFouledYCPlayersStatsAndInfoList = [];
+  List<PlayersStatsAndInfo> mostFouledYCPlayersStatsAndInfoList = [];
 
 
 
   for (var document in snapshot.docs) {
-    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data());
-    _mostFouledYCPlayersStatsAndInfoList.add(playersStatsAndInfo);
+    PlayersStatsAndInfo playersStatsAndInfo = PlayersStatsAndInfo.fromMap(document.data() as Map<String, dynamic>);
+    mostFouledYCPlayersStatsAndInfoList.add(playersStatsAndInfo);
   }
 
-  mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList = _mostFouledYCPlayersStatsAndInfoList;
+  mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList = mostFouledYCPlayersStatsAndInfoList;
 
 }
