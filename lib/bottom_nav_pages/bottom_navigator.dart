@@ -50,7 +50,7 @@ class BottomNavigator extends StatefulWidget {
 class _BottomNavigatorState extends State<BottomNavigator> {
 
   bool toggle = false;
-  int selectedPage = 0;
+  int selectedPage = 2;
 
   final _pageOption = [
     const PlayersTablePage(),

@@ -1,10 +1,11 @@
-
-import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:provider/provider.dart';
-import '../notifier/player_of_the_month_stats_info_notifier.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import '../main.dart';
 
 class SeasonTimeline extends StatefulWidget {
   const SeasonTimeline({Key key}) : super(key: key);
@@ -14,194 +15,224 @@ class SeasonTimeline extends StatefulWidget {
 }
 
 class _SeasonTimelineState extends State<SeasonTimeline> {
-  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
-
-    PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier = Provider
-        .of<PlayerOfTheMonthStatsAndInfoNotifier>(context);
+    final List<PlayersPopulationChartData> playersPopulationChartData = [
+      PlayersPopulationChartData('Attackers', 16),
+      PlayersPopulationChartData('Midfielders', 35),
+      PlayersPopulationChartData('Defenders', 19),
+      PlayersPopulationChartData('Goalkeepers', 7)
+    ];
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Tables and Stats',
+            // style: TextStyle(
+            //     color: appBarIconColor
+            // )
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: appBarIconColor),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+            navigateMyApp(context);
+          },
+        ),
+        elevation: 10,
+        backgroundColor: appBarBackgroundColor,
+      ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/timeline_back.jpeg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+          child: SingleChildScrollView(
+            child: SafeArea(
+              top: true,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: BlurryContainer(
+                      color: Colors.white.withOpacity(0.15),
+                      blur: 1,
+                      elevation: 16,
+                      height: 300,
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                              child: Text('Last 7 Matches | Win-Draw-Loss Chart')),
 
-      backgroundColor: Colors.green[300],
-
-      body: SafeArea(
-
-        child: Center(
-
-          child: Container(
-            width: 200,
-            height: 200,
-            color: Colors.brown,
-            child: MaterialButton(
-              onPressed: ()
-              {
-                showDialog(
-                    context: context,
-                    builder: (context) =>
-                        Stack (
-                          children: [
-                            AlertDialog(
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              ),
-                              contentPadding: const EdgeInsets.all(10),
-                              backgroundColor: Colors.teal,
-                              content: SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height * 0.6,
-                                child: ListView.builder(
-                                  itemExtent: MediaQuery.of(context).size.height * 0.585,
-                                  shrinkWrap: true,
-                                  itemCount: playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList.length,
-                                  itemBuilder: (context, index) =>
-                                      Stack(
-                                        alignment: AlignmentDirectional.topStart,
-                                        // fit: StackFit.loose,
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context).size.width * .43,
-                                              height: MediaQuery.of(context).size.height * 2,
-                                              child: Image(
-                                                height: double.infinity,
-                                                width: double.infinity,
-                                                image: CachedNetworkImageProvider(
-                                                  playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].image,
-                                                  scale: 0.2,
-                                                ),
-                                                fit: BoxFit.cover,
-                                                color: Colors.grey,
-                                                colorBlendMode: BlendMode.softLight,
-                                                alignment: const Alignment(0.4, -1),
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: SizedBox(
-                                              // color: Colors.green,
-                                              height: MediaQuery.of(context).size.height,
-                                              // height: 500,
-                                              width: MediaQuery.of(context).size.width,
-                                              child: Image.asset(
-                                                "assets/images/back_field.png",
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.topRight,
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    const Text(
-                                                      'sense 1',
-                                                      style: TextStyle(
-                                                          color: Colors.white70,
-                                                          fontSize: 30
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      // 'sense 1 years',
-                                                      playerOfTheMonthStatsAndInfoNotifier
-                                                          .playerOfTheMonthStatsAndInfoList[index]
-                                                          .playerName,
-                                                      style: const TextStyle(
-                                                          color: Colors.white70,
-                                                          fontSize: 30
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 30),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    const Text(
-                                                      'sense 2',
-                                                      style: TextStyle(
-                                                          color: Colors.white70
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      playerOfTheMonthStatsAndInfoNotifier
-                                                          .playerOfTheMonthStatsAndInfoList[index]
-                                                          .playerPosition,
-                                                      style: const TextStyle(
-                                                          color: Colors.white70
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 30),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: const [
-                                                    Text(
-                                                      'sense 3',
-                                                      style: TextStyle(
-                                                          color: Colors.white70
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'sense 3 years',
-
-                                                      style: TextStyle(
-                                                          color: Colors.white70
-                                                      ),
-                                                    ),
-
-                                                    SizedBox(height: 30),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                ),
-                              ),
+                          SfSparkWinLossChart(
+                            color: Colors.teal.withOpacity(0.55),
+                            negativePointColor: Colors.red.withOpacity(0.55),
+                            tiePointColor: Colors.blueGrey,
+                            trackball: const SparkChartTrackball(
+                              color: Colors.blueGrey,
+                              backgroundColor: Colors.blueGrey,
+                              activationMode: SparkChartActivationMode.tap
                             ),
-                            Positioned(
-                              top: MediaQuery.of(context).size.height * 0.175,
-                              right: MediaQuery.of(context).size.width * 0.13,
-                              child: GestureDetector(
-                                onTap: (){
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    shape: BoxShape.rectangle,
-                                    borderRadius: BorderRadius.circular(6.0),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Icon(
-                                      Icons.close,
-                                      color: Colors.teal,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            data: const <double>[
+                              12, 15, -10, 13, 0, 8, -13
+                            ],
+                          ),
+                        ],
+                      ),
+
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: BlurryContainer(
+                      color: Colors.white.withOpacity(0.15),
+                      blur: 1,
+                      elevation: 16,
+                      height: 300,
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                              child: Text('Last Six Month | Training Attendance Chart')),
+
+                          SfSparkWinLossChart(
+                            color: Colors.teal.withOpacity(0.55),
+                            negativePointColor: Colors.red.withOpacity(0.55),
+                            tiePointColor: Colors.blueGrey,
+                            trackball: const SparkChartTrackball(
+                              color: Colors.blueGrey,
+                              backgroundColor: Colors.blueGrey,
+                              activationMode: SparkChartActivationMode.tap
                             ),
-                          ],
-                        ),
-                );
-              },
+                            data: const <double>[
+                              12, 15, -10, 13, 0, 8, -13
+                            ],
+                          ),
+                        ],
+                      ),
+
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: BlurryContainer(
+                      color: Colors.white.withOpacity(0.15),
+                      blur: 1,
+                      elevation: 16,
+                      height: 300,
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("Club's Monthly Efficiency | Evaluation Gauge")),
+
+                          SfSparkWinLossChart(
+                            color: Colors.teal.withOpacity(0.55),
+                            negativePointColor: Colors.red.withOpacity(0.55),
+                            tiePointColor: Colors.blueGrey,
+                            trackball: const SparkChartTrackball(
+                                color: Colors.blueGrey,
+                                backgroundColor: Colors.blueGrey,
+                                activationMode: SparkChartActivationMode.tap
+                            ),
+                            data: const <double>[
+                              12, 15, -10, 13, 0, 8, -13
+                            ],
+                          ),
+                        ],
+                      ),
+
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: BlurryContainer(
+                      color: Colors.white.withOpacity(0.15),
+                      blur: 1,
+                      elevation: 16,
+                      height: 300,
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                              child: Text('12 days left | Special Event/Match Counter')),
+
+                          SfSparkWinLossChart(
+                            color: Colors.teal.withOpacity(0.55),
+                            negativePointColor: Colors.red.withOpacity(0.55),
+                            tiePointColor: Colors.blueGrey,
+                            trackball: const SparkChartTrackball(
+                              color: Colors.blueGrey,
+                              backgroundColor: Colors.blueGrey,
+                              activationMode: SparkChartActivationMode.tap
+                            ),
+                            data: const <double>[
+                              12, 15, -10, 13, 0, 8, -13
+                            ],
+                          ),
+                        ],
+                      ),
+
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: BlurryContainer(
+                      color: Colors.white.withOpacity(0.15),
+                      blur: 1,
+                      elevation: 16,
+                      height: 300,
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text('Total Players Population Chart')),
+                          SfCircularChart(
+                            series: <CircularSeries>[
+                              PieSeries<PlayersPopulationChartData, String>(
+                                dataSource: playersPopulationChartData,
+                                xValueMapper: (PlayersPopulationChartData data, _) => data.x,
+                                yValueMapper: (PlayersPopulationChartData data, _) => data.y,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+
+                ],
+              ),
             ),
           ),
-
-
-        ),
       ),
     );
+
+  }
+
+
+  Future navigateMyApp(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp()));
   }
 
   @override
@@ -215,4 +246,11 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
     ]);
   }
 
+}
+
+class PlayersPopulationChartData {
+  PlayersPopulationChartData(this.x, this.y, [this.color]);
+  final String x;
+  final double y;
+  final Color color;
 }

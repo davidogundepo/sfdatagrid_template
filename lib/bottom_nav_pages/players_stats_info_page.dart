@@ -287,7 +287,6 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
               const SizedBox(
                 height: 30,
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: Column(
@@ -1471,7 +1470,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                     Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
-                                                        const Text('position'),
+                                                        const Text('Coventry Phoenix FC'),
                                                         Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerPosition),
                                                       ],
                                                     ),
@@ -1481,7 +1480,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                     Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
-                                                        const Text('preferred foot'),
+                                                        const Text('Preferred Foot'),
                                                         Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].preferredFoot),
                                                       ],
                                                     ),
