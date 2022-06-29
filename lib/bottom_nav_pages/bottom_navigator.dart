@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:sfdatagrid_template/api/cum_motm_players_stats_info_api.dart';
+import 'package:sfdatagrid_template/api/motm_players_stats_info_api.dart';
+import 'package:sfdatagrid_template/notifier/cum_motm_players_stats_info_notifier.dart';
+import 'package:sfdatagrid_template/notifier/motm_players_stats_info_notifier.dart';
 import '../api/most_assists_players_stats_info_api.dart';
 import '../api/most_fouled_rc_players_stats_info_api.dart';
 import '../api/most_fouled_yc_players_stats_info_api.dart';
@@ -33,6 +37,8 @@ TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier;
 TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier;
 TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier;
 MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier;
+MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier;
+CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier;
 
 class BottomNavigator extends StatefulWidget {
   const BottomNavigator({Key key}) : super(key: key);
@@ -156,6 +162,12 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
     topDefensivePlayersStatsAndInfoNotifier = Provider.of<TopDefensivePlayersStatsAndInfoNotifier>(context, listen: false);
     getTopDefensivePlayersStatsAndInfo(topDefensivePlayersStatsAndInfoNotifier);
+
+    motmPlayersStatsAndInfoNotifier = Provider.of<MOTMPlayersStatsAndInfoNotifier>(context, listen: false);
+    getMOTMPlayersStatsAndInfo(motmPlayersStatsAndInfoNotifier);
+
+    cumMOTMPlayersStatsAndInfoNotifier = Provider.of<CumMOTMPlayersStatsAndInfoNotifier>(context, listen: false);
+    getCumMOTMPlayersStatsAndInfo(cumMOTMPlayersStatsAndInfoNotifier);
 
     topGoalsPlayersStatsAndInfoNotifier = Provider.of<TopGoalsPlayersStatsAndInfoNotifier>(context, listen: false);
     getTopGoalsPlayersStatsAndInfo(topGoalsPlayersStatsAndInfoNotifier);

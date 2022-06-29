@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:sfdatagrid_template/notifier/cum_motm_players_stats_info_notifier.dart';
+import 'package:sfdatagrid_template/notifier/motm_players_stats_info_notifier.dart';
 import '../api/top_defensive_players_stats_info_api.dart';
 import '../api/top_gk_players_stats_info_api.dart';
 import '../api/most_assists_players_stats_info_api.dart';
@@ -30,6 +32,8 @@ MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier;
 PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier;
 TopGKPlayersStatsAndInfoNotifier topGKPlayersStatsAndInfoNotifier;
 TopDefensivePlayersStatsAndInfoNotifier topDefensivePlayersStatsAndInfoNotifier;
+MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier;
+CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier;
 
 
 
@@ -243,6 +247,10 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
     MostFouledRCPlayersStatsAndInfoNotifier mostFouledRCPlayersStatsAndInfoNotifier = Provider.of<MostFouledRCPlayersStatsAndInfoNotifier>(context, listen: true);
 
     PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier = Provider.of<PlayerOfTheMonthStatsAndInfoNotifier>(context);
+
+    MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier = Provider.of<MOTMPlayersStatsAndInfoNotifier>(context);
+
+    CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier = Provider.of<CumMOTMPlayersStatsAndInfoNotifier>(context);
 
 
 
@@ -737,7 +745,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                       color: Colors.blue
                                     ),
                                     itemWidth: 250,
-                                    layout: SwiperLayout.DEFAULT,
+                                    layout: SwiperLayout.STACK,
                                   ),
                                 ),
                               ),
@@ -897,7 +905,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                     borderRadius: BorderRadius.circular(10)
                                 ),
                                 child: Swiper(
-                                  autoplay: false,
+                                  autoplay: true,
                                   viewportFraction: 0.8,
                                   scale: 0.9,
                                   itemCount: topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList.length,
@@ -1066,7 +1074,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                     borderRadius: BorderRadius.circular(10)
                                 ),
                                 child: Swiper(
-                                  autoplay: false,
+                                  autoplay: true,
                                   viewportFraction: 0.8,
                                   scale: 0.9,
                                   itemCount: topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList.length,
@@ -1190,6 +1198,327 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             children: <Widget>[
                                                               const Text('matches'),
                                                               Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                  layout: SwiperLayout.DEFAULT,
+                                ),
+                              ),
+                              const SizedBox (
+                                height: 50,
+                              ),
+                            ],
+                          ),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 22),
+                                child: Text(
+                                  'Weekly MOTM Players',
+
+                                ),
+                              ),
+                              Container(
+                                height: 350,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Swiper(
+                                  autoplay: true,
+                                  viewportFraction: 0.8,
+                                  scale: 0.9,
+                                  itemCount: motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList.length,
+                                  itemBuilder: (context, index) =>
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                        child: ClayContainer(
+                                          width: MediaQuery.of(context).size.width * 0.90,
+                                          emboss: true,
+                                          spread: 1,
+                                          color: Colors.teal,
+                                          depth: -29,
+                                          curveType: CurveType.concave,
+                                          customBorderRadius: const BorderRadius.only(
+                                              topRight: Radius.elliptical(70, 70),
+                                              bottomLeft: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Stack(
+                                              children: <Widget>[
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: Container(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            alignment: const Alignment(0, -1),
+                                                            image: CachedNetworkImageProvider(
+                                                                motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].image
+                                                            ),
+                                                            fit: BoxFit.cover
+                                                        ),
+                                                        borderRadius: const BorderRadius.only(
+                                                          topLeft: Radius.circular(10),
+                                                          bottomLeft: Radius.circular(10),
+                                                          topRight: Radius.circular(10),
+                                                          bottomRight: Radius.circular(10),
+                                                        ),
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                  child: Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: Container(
+                                                      decoration: const BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.white70
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          (index+1).toString(),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('position'),
+                                                        Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerPosition),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('preferred foot'),
+                                                        Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].preferredFoot),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: <Widget>[
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('name'),
+                                                            Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerName),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          // children: <Widget>[
+                                                            // const Text('Assists'),
+                                                            // Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].assists.toString()),
+                                                          // ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('matches'),
+                                                            Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                  layout: SwiperLayout.DEFAULT,
+                                ),
+                              ),
+                              const SizedBox (
+                                height: 50,
+                              ),
+                            ],
+                          ),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 22),
+                                child: Text(
+                                  'Most Awarded MOTM Players',
+
+                                ),
+                              ),
+                              Container(
+                                height: 350,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Swiper(
+                                  autoplay: true,
+                                  viewportFraction: 0.8,
+                                  scale: 0.9,
+                                  itemCount: cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList.length,
+                                  itemBuilder: (context, index) =>
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                        child: ClayContainer(
+                                          width: MediaQuery.of(context).size.width * 0.90,
+                                          emboss: true,
+                                          spread: 1,
+                                          color: Colors.teal,
+                                          depth: -29,
+                                          curveType: CurveType.concave,
+                                          customBorderRadius: const BorderRadius.only(
+                                              topRight: Radius.elliptical(70, 70),
+                                              bottomLeft: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Stack(
+                                              children: <Widget>[
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: Container(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            alignment: const Alignment(0, -1),
+                                                            image: CachedNetworkImageProvider(
+                                                                cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].image
+                                                            ),
+                                                            fit: BoxFit.cover
+                                                        ),
+                                                        borderRadius: const BorderRadius.only(
+                                                          topLeft: Radius.circular(10),
+                                                          bottomLeft: Radius.circular(10),
+                                                          topRight: Radius.circular(10),
+                                                          bottomRight: Radius.circular(10),
+                                                        ),
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                  child: Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: Container(
+                                                      decoration: const BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.white70
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          (index+1).toString(),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('position'),
+                                                        Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerPosition),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        const Text('preferred foot'),
+                                                        Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].preferredFoot),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 50
+                                                    ),
+                                                    SingleChildScrollView(
+                                                      scrollDirection: Axis.horizontal,
+                                                      child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Name'),
+                                                              Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerName),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('MOTM Count'),
+                                                              Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].cumMOTMCount.toString()),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 20
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('matches'),
+                                                              Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].matchesPlayed.toString() + ' played'),
                                                             ],
                                                           )
                                                         ],

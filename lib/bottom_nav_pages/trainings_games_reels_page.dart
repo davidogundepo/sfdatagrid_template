@@ -34,22 +34,8 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child:
-              NotificationListener<ScrollNotification>(
-                onNotification: (scrollNotification) {
-                  if (scrollNotification is ScrollStartNotification || _scrollController.position.userScrollDirection == ScrollDirection.reverse) {
-                    HapticFeedback.heavyImpact();
-                  }
-                  else if (scrollNotification is ScrollUpdateNotification || _scrollController.position.userScrollDirection == ScrollDirection.forward
-                  ) {
-                    HapticFeedback.lightImpact();
-                  }
-                  else if (scrollNotification is ScrollEndNotification) {
-
-                  }
-                  return true;
-                },
                 child: StaggeredGridView.countBuilder(
+                  shrinkWrap: true,
                   controller: _scrollController,
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
@@ -60,7 +46,6 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
                     return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
                     },
                 ),
-              ),
             ),
 
             Padding(

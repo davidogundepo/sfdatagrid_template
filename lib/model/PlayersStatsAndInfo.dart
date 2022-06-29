@@ -13,6 +13,8 @@ class PlayersStatsAndInfo {
   dynamic playerValue;
   dynamic cleanSheetGk;
   dynamic goalsConcededGkDef;
+  dynamic cumMOTMCount;
+  String menOfTheMatchesMOTM;
   String playerOfTheMonth;
   dynamic age;
   String nationality;
@@ -31,6 +33,8 @@ class PlayersStatsAndInfo {
     playerValue = data['player_value'];
     cleanSheetGk = data['clean_sheets_gk'];
     goalsConcededGkDef = data['goals_conceded_gk_def'];
+    cumMOTMCount = data['man_of_the_match_cum'];
+    menOfTheMatchesMOTM = data['man_of_the_match'];
     playerOfTheMonth = data['player_of_the_month'];
     age = data['age'];
     nationality = data['nationality'];
