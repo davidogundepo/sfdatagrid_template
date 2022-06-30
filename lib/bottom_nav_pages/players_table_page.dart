@@ -303,7 +303,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
         backgroundColor: backgroundColor,
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Tables and Stats',
+          title: Text('Players Table',
               style: TextStyle(
                   color: appBarIconColor
               )

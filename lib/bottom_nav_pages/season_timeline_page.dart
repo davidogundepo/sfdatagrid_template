@@ -5,7 +5,13 @@ import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../main.dart';
+
+
+Color colorBack = const Color.fromRGBO(58, 56, 69, 1);
+Color? appBarColor = const Color.fromRGBO(136, 121, 176, 1);
+// Color colorBack = const Color.fromRGBO(58, 56, 69, 1);
 
 class SeasonTimeline extends StatefulWidget {
   const SeasonTimeline({Key? key}) : super(key: key);
@@ -17,6 +23,10 @@ class SeasonTimeline extends StatefulWidget {
 class _SeasonTimelineState extends State<SeasonTimeline> {
 
   late TooltipBehavior _tooltipBehavior;
+  late TooltipBehavior _tooltipBehaviorTwo;
+
+  final double _pointerValue = 32;
+  String _image = 'assets/images/baller.gif';
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +40,10 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Tables and Stats',
-            // style: TextStyle(
-            //     color: appBarIconColor
-            // )
+        title: const Text('Beta and Incomplete  😎',
+            style: TextStyle(
+                color: Color(0xffB1BCE6)
+            )
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: appBarIconColor),
@@ -43,7 +53,7 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
           },
         ),
         elevation: 10,
-        backgroundColor: appBarBackgroundColor,
+        backgroundColor: colorBack,
       ),
       body: Container(
         constraints: const BoxConstraints.expand(),
@@ -61,7 +71,7 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: BlurryContainer(
-                      color: Colors.indigo.withOpacity(0.45),
+                      color: Colors.indigo.withOpacity(0.75),
                       blur: 1,
                       elevation: 16,
                       height: 300,
@@ -79,12 +89,13 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                               )),
 
                           SfSparkWinLossChart(
-                            color: Colors.blue.withOpacity(0.85),
+                            axisLineColor: Colors.white,
+                            color: Colors.blue,
                             negativePointColor: Colors.red.withOpacity(0.75),
-                            tiePointColor: Colors.black54,
+                            tiePointColor: Colors.black,
                             trackball: const SparkChartTrackball(
-                              color: Colors.blueGrey,
-                              backgroundColor: Colors.blueGrey,
+                              color: Colors.indigoAccent,
+                              backgroundColor: Colors.indigoAccent,
                               activationMode: SparkChartActivationMode.tap
                             ),
                             data: const <double>[
@@ -100,7 +111,7 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: BlurryContainer(
-                      color: Colors.blue.withOpacity(0.45),
+                      color: Colors.blue.withOpacity(0.85),
                       blur: 1,
                       elevation: 16,
                       height: 450,
@@ -111,12 +122,67 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                           const Align(
                             alignment: Alignment.centerLeft,
                               child: Text(
-                                  'Monthly Training Attendance Chart',
+                                  'Average Monthly Training Attendance Chart',
                               style: TextStyle(
                                 color: Colors.white
-                              ),)),
-
-                          SfCartesianChart()
+                              ),
+                              )
+                          ),
+                          SfCartesianChart(
+                            margin: const EdgeInsets.all(20),
+                            borderWidth: 2,
+                            borderColor: Colors.white,
+                            plotAreaBorderColor: Colors.white,
+                            plotAreaBorderWidth: 0,
+                            tooltipBehavior: _tooltipBehaviorTwo,
+                            enableAxisAnimation: true,
+                            legend: Legend(
+                              textStyle: const TextStyle(
+                                color: Colors.white
+                              ),
+                              isVisible: true,
+                              position: LegendPosition.bottom,
+                              toggleSeriesVisibility: true
+                            ),
+                            primaryXAxis: CategoryAxis(
+                              rangePadding: ChartRangePadding.none,
+                              labelStyle: const TextStyle(
+                                color: Colors.white
+                              )
+                            ),
+                            primaryYAxis: CategoryAxis(
+                                rangePadding: ChartRangePadding.none,
+                                labelStyle: const TextStyle(
+                                    color: Colors.white
+                                ),
+                            ),
+                            series: <ChartSeries>[
+                              SplineSeries<TrainingAttendanceChartData, String>(
+                                animationDuration: 9000,
+                                color: Colors.white,
+                                name: 'Last 5 months',
+                                enableTooltip: true,
+                                dataSource: [
+                                  TrainingAttendanceChartData('June', 25),
+                                  TrainingAttendanceChartData('July', 40),
+                                  TrainingAttendanceChartData('Aug', 33),
+                                  TrainingAttendanceChartData('Sept', 51),
+                                  TrainingAttendanceChartData('Oct', 39),
+                                ],
+                                xValueMapper: (TrainingAttendanceChartData data, _) => data.x,
+                                yValueMapper: (TrainingAttendanceChartData data, _) => data.y,
+                                markerSettings: const MarkerSettings(
+                                    isVisible: true,
+                                  shape: DataMarkerType.triangle
+                                ),
+                                dataLabelSettings: const DataLabelSettings(
+                                    isVisible: true,
+                                  useSeriesColor: true
+                                ),
+                                dashArray: <double>[5,5]
+                              )
+                            ],
+                          )
                         ],
                       ),
 
@@ -126,31 +192,78 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: BlurryContainer(
-                      color: Colors.white.withOpacity(0.15),
+                      color: Colors.white.withOpacity(0.95),
                       blur: 1,
                       elevation: 16,
-                      height: 300,
+                      height: 500,
                       padding: const EdgeInsets.all(32),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const Align(
                               alignment: Alignment.centerLeft,
                               child: Text("Club's Monthly Efficiency | Evaluation Gauge")),
 
-                          SfSparkWinLossChart(
-                            color: Colors.teal.withOpacity(0.55),
-                            negativePointColor: Colors.red.withOpacity(0.55),
-                            tiePointColor: Colors.blueGrey,
-                            trackball: const SparkChartTrackball(
-                                color: Colors.blueGrey,
-                                backgroundColor: Colors.blueGrey,
-                                activationMode: SparkChartActivationMode.tap
-                            ),
-                            data: const <double>[
-                              12, 15, -10, 13, 0, 8, -13
+                          SfRadialGauge(
+                            enableLoadingAnimation: true,
+                            animationDuration: 7000,
+                            axes: <RadialAxis>[
+                              RadialAxis(
+                                labelFormat: '{value}%',
+                                minimum: 0,
+                                maximum: 100,
+                                maximumLabels: 5,
+                                ranges: <GaugeRange>[
+                                  GaugeRange(
+                                    startValue: 0,
+                                    endValue: 33,
+                                    color: Colors.green,
+                                    startWidth: 10,
+                                    endWidth: 10,
+                                  ),
+                                  GaugeRange(
+                                    startValue: 33,
+                                    endValue: 67,
+                                    color: Colors.orange,
+                                    startWidth: 10,
+                                    endWidth: 10,
+                                  ),
+                                  GaugeRange(
+                                    startValue: 67,
+                                    endValue: 100,
+                                    color: Colors.red,
+                                    startWidth: 10,
+                                    endWidth: 10,
+                                  ),
+                                ],
+                                pointers: const <GaugePointer>[NeedlePointer(
+                                  value: 87,
+                                )],
+                                annotations: const <GaugeAnnotation>[
+                                  GaugeAnnotation(
+                                    angle: 90,
+                                      positionFactor: 0.5,
+                                      widget: Text(
+                                        '87%',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          fontSize: 20
+                                        ),
+                                      )
+                                  )
+                                ],
+                              )
                             ],
                           ),
+                          const Text(
+                            'July 2022   💪🏼',
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic
+                            ),
+                          )
                         ],
                       ),
 
@@ -160,31 +273,116 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: BlurryContainer(
-                      color: Colors.white.withOpacity(0.15),
+                      color: Colors.redAccent.withOpacity(0.75),
                       blur: 1,
                       elevation: 16,
-                      height: 300,
+                      height: 400,
                       padding: const EdgeInsets.all(32),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           const Align(
-                            alignment: Alignment.centerLeft,
-                              child: Text('12 days left | Special Event/Match Counter')),
-
-                          SfSparkWinLossChart(
-                            color: Colors.teal.withOpacity(0.55),
-                            negativePointColor: Colors.red.withOpacity(0.55),
-                            tiePointColor: Colors.blueGrey,
-                            trackball: const SparkChartTrackball(
-                              color: Colors.blueGrey,
-                              backgroundColor: Colors.blueGrey,
-                              activationMode: SparkChartActivationMode.tap
-                            ),
-                            data: const <double>[
-                              12, 15, -10, 13, 0, 8, -13
-                            ],
+                              alignment: Alignment.centerLeft,
+                              child: Text("Special Match/Event Counter",
+                                style: TextStyle(
+                                    color: Colors.white
+                                ),
+                              )
                           ),
+                          const SizedBox(height: 20),
+
+                          SfLinearGauge(
+                            labelFormatterCallback: (label) {
+                              if (label == '45') {
+                                return 'Event Day';
+                              }
+                              return label;
+                            },
+                            axisLabelStyle: const TextStyle(
+                                color: Colors.white
+                            ),
+                            maximum: 45,
+                            interval: 45,
+                            animateAxis: true,
+                            minorTicksPerInterval: 0,
+                            axisTrackStyle: LinearAxisTrackStyle(
+                                thickness: 32,
+                                edgeStyle: LinearEdgeStyle.bothCurve,
+                                borderWidth: 1,
+                                borderColor: Colors.grey[350],
+                                color: Colors.blueGrey.withOpacity(0.65)
+                            ),
+                            barPointers: <LinearBarPointer>[
+                              LinearBarPointer(
+                                value: _pointerValue,
+                                animationDuration: 20000,
+                                thickness: 32,
+                                color: Colors.white.withOpacity(0.85),
+                              ),
+                              const LinearBarPointer(
+                                value: 45,
+                                animationDuration: 20000,
+                                thickness: 32,
+                                offset: 40,
+                                color: Colors.transparent,
+                                position: LinearElementPosition.outside,
+                                child: Text('Saturday, 2 July | Presentation Night',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                            markerPointers: <LinearMarkerPointer>[
+                              LinearWidgetPointer(
+                                  value: _pointerValue,
+                                  animationDuration: 20000,
+                                  onAnimationCompleted: () {
+                                    setState(() {
+                                      _image = 'assets/images/baller.png';
+                                    });
+                                  },
+                                  position: LinearElementPosition.outside,
+                                  child: SizedBox(
+                                    width: 45,
+                                    height: 45,
+                                    child: Image.asset(
+                                      _image,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  )
+                              )
+                            ],
+
+                          ),
+                          Container(
+
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const <Widget>[
+                                Text(
+                                  'Days Left',
+                                  style: TextStyle(
+                                      color: Colors.white60,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500
+                                  ),
+                                ),
+                                Text(
+                                  '12',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
                         ],
                       ),
 
@@ -242,7 +440,7 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                                     )
                                   ),
                                   explode: true,
-                                  animationDuration: 4500,
+                                  animationDuration: 9000,
                                 )
                               ],
                             )
@@ -269,7 +467,16 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
 
   @override
   void initState() {
-    _tooltipBehavior =  TooltipBehavior(enable: true);
+    _tooltipBehavior =  TooltipBehavior(
+        enable: true,
+        color: Colors.teal
+    );
+
+    _tooltipBehaviorTwo =  TooltipBehavior(
+        enable: true,
+        color: Colors.lightBlue
+    );
+
     super.initState();
 
     SystemChrome.setPreferredOrientations([
@@ -278,6 +485,18 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
     ]);
   }
 
+
+  @override
+  void didChangeDependencies() {
+    precacheImage(const AssetImage('images/person_walking.png'), context);
+    super.didChangeDependencies();
+  }
+}
+
+class TrainingAttendanceChartData {
+  TrainingAttendanceChartData(this.x, this.y);
+  final String x;
+  final double? y;
 }
 
 class PlayersPopulationChartData {

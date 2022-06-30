@@ -37,6 +37,7 @@ dependencies:
   flutter_inset_box_shadow: ^1.0.8
   syncfusion_flutter_charts: ^20.1.61
   blurrycontainer: ^1.0.2
+  syncfusion_flutter_gauges: ^20.1.61
 
 dev_dependencies:
   flutter_test:
