@@ -33,9 +33,11 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
     getTrainingsAndGamesReels(trainingsAndGamesReelsNotifier);
 
     return Scaffold(
+      backgroundColor: Color.fromRGBO(27, 36, 48, 1),
       body: SafeArea(
         child: Stack(
           children: <Widget>[
+
             Padding(
               padding: const EdgeInsets.all(8.0),
                 child: StaggeredGridView.countBuilder(
@@ -61,26 +63,32 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
                   Hero(
                     tag: 'trainingsAndGamesReelsPageButton',
                     child: Card(
+                      color: Color.fromRGBO(27, 36, 48, 1),
                       elevation: 10,
                       shape: kBackButtonShape,
-                      child: IconButton(
-                        alignment: Alignment.center,
-                        // splashColor: Colors.orange.withOpacity(4),
-                        // splashColor: Colors.orange.withAlpha(50),
-                        // color: Colors.teal,
-                        icon: InkWell(
-                            highlightColor: Colors.teal.withAlpha(90),
-                            borderRadius: const BorderRadius.only(topRight: Radius.circular(15)),
-                            onTap: (){
-                              Navigator.of(context).pop(false);
-                              navigateMyApp(context);
-                            },
-                            child: const Icon(LineIcons.chevronCircleLeft)),
-                        iconSize: 30,
-                        onPressed: () {
-                          Navigator.of(context).pop(false);
-                          navigateMyApp(context);
-                        },
+                      child: InkWell(
+                        highlightColor: Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
+                        borderRadius: const BorderRadius.only(topRight: Radius.circular(30)),
+                        onTap: (){},
+                        child: IconButton(
+                          alignment: Alignment.center,
+                          splashColor: Color.fromRGBO(255, 141, 41, 0.7),
+                          splashRadius: 80,
+                          color: Color.fromRGBO(255, 141, 41, 0.7),
+                          icon: InkWell(
+                              highlightColor: Color.fromRGBO(255, 141, 41, 0.7),
+                              borderRadius: const BorderRadius.only(topRight: Radius.circular(15)),
+                              onTap: (){
+                                Navigator.of(context).pop(false);
+                                navigateMyApp(context);
+                              },
+                              child: const Icon(LineIcons.chevronCircleLeft)),
+                          iconSize: 30,
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                            navigateMyApp(context);
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -91,14 +99,16 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
                     tag: 'title',
                     transitionOnUserGestures: true,
                     child: Card(
+                      color: Color.fromRGBO(27, 36, 48, 1),
                         elevation: 10,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(30),
                           ),
+
                         ),
                         child: InkWell(
-                          highlightColor: Colors.teal.withAlpha(90),
+                          highlightColor: Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
                           borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30)),
                           onTap: (){},
                           child: SizedBox(
@@ -113,7 +123,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 25,
-                                    // color: Colors.black54,
+                                    color: Color.fromRGBO(255, 141, 41, 0.7),
                                   ),
                                 ),
                               ),
@@ -140,9 +150,13 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
   Widget _buildReels(BuildContext context, int index) {
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(15)),
+          border: Border.all(
+            color: Color.fromRGBO(255, 141, 41, 1),
+            width: 2
+          ),
         ),
       child: Ink(
         decoration: BoxDecoration(
@@ -158,7 +172,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
         ),
         child: InkWell(
           onTap: () {},
-          highlightColor: Colors.teal.withAlpha(90),
+          highlightColor: Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
           borderRadius: BorderRadius.circular(15),
         ),
       ),

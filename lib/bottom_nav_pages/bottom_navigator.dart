@@ -93,7 +93,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                   child: GNav(
                     rippleColor: Colors.white60,
-                    hoverColor: Color.fromRGBO(153, 90, 45, 1.0),
+                    hoverColor: Colors.white30,
                     gap: 12,
                     activeColor: Colors.black,
                     iconSize: 24,
@@ -126,15 +126,24 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                           textColor: Colors.blue,
                           iconColor: Colors.white30,
                           iconActiveColor: Colors.deepOrangeAccent,
-                        text: 'Timeline'
+                        text: 'Timeline',
+                        rippleColor: Colors.white30,
                       ),
                       GButton(
-                          gap: 12,
+                        gap: 12,
                         icon: Icons.support_agent,
-                          textColor: Colors.blue,
-                          iconColor: Colors.white30,
-                          iconActiveColor: Colors.deepOrangeAccent,
-                        text: 'Reels'
+                        textColor: Color.fromRGBO(255, 141, 41, 0.7),
+                        iconColor: Colors.white30,
+                        iconActiveColor: Color.fromRGBO(255, 141, 41, 0.7),
+                        text: 'Reels',
+                        activeBorder: Border.all(
+                            color: Color.fromRGBO(255, 141, 41, 0.7),
+                            width: 1
+                        ),
+                        border: Border.all(
+                          color: Colors.transparent
+                        ),
+                        rippleColor: Colors.white30,
                       ),
                     ],
                     selectedIndex: selectedPage,

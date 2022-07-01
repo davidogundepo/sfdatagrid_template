@@ -588,6 +588,10 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         color: Colors.transparent,
                                                         shape: BoxShape.circle,
                                                         image: DecorationImage(
+                                                            colorFilter: const ColorFilter.mode(
+                                                                Colors.grey,
+                                                                BlendMode.saturation
+                                                            ),
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
                                                                 mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].image!
@@ -721,6 +725,10 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         color: Colors.transparent,
                                                         shape: BoxShape.circle,
                                                         image: DecorationImage(
+                                                            colorFilter: const ColorFilter.mode(
+                                                                Colors.grey,
+                                                                BlendMode.saturation
+                                                            ),
                                                             alignment: const Alignment(0, -1),
                                                             image: CachedNetworkImageProvider(
                                                                 mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].image!
