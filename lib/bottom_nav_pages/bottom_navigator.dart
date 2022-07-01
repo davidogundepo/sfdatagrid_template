@@ -40,6 +40,14 @@ late MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifi
 late MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier;
 late CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier;
 
+Color? backgroundColor = Color.fromRGBO(34, 40, 49, 1);
+Color? cardBackgroundColorTwo = Color.fromRGBO(34, 40, 49, 0.611764705882353);
+Color? cardBackgroundColor = Color.fromRGBO(57, 62, 70, 1);
+Color? goalsScoredTextColor = Color.fromRGBO(255, 141, 41, 1);
+Color? appBarIconColor = Color.fromRGBO(255, 141, 41, 1);
+Color? appBarBackgroundColor = Color.fromRGBO(34, 40, 49, 1);
+
+
 class BottomNavigator extends StatefulWidget {
   const BottomNavigator({Key? key}) : super(key: key);
 
@@ -50,7 +58,7 @@ class BottomNavigator extends StatefulWidget {
 class _BottomNavigatorState extends State<BottomNavigator> {
 
   bool toggle = false;
-  int selectedPage = 2;
+  int selectedPage = 0;
 
   final _pageOption = [
     const PlayersTablePage(),
@@ -67,7 +75,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       body: _pageOption[selectedPage],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: backgroundColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -84,23 +92,23 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                   child: GNav(
-                    rippleColor: Colors.grey.shade300,
-                    hoverColor: Colors.grey.shade100,
+                    rippleColor: Colors.white60,
+                    hoverColor: Color.fromRGBO(153, 90, 45, 1.0),
                     gap: 12,
                     activeColor: Colors.black,
                     iconSize: 24,
                     padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                     duration: const Duration(microseconds: 400),
-                    tabBackgroundColor: (Colors.grey[100])!,
+                    tabBackgroundColor: (cardBackgroundColor)!,
                     color: Colors.black,
                     haptic: true,
-                    tabs: const [
+                    tabs: [
                       GButton(
                         gap: 12,
                         icon: Icons.favorite_border,
-                        textColor: Colors.blue,
-                        iconColor: Colors.teal,
-                        iconActiveColor: Colors.deepOrangeAccent,
+                        textColor: Colors.black54,
+                        iconColor: Colors.white30,
+                        iconActiveColor: Colors.black54,
                         rippleColor: Colors.blueGrey,
                         text: 'Table'
                       ),
@@ -108,7 +116,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                           gap: 12,
                         icon: Icons.monitor_heart,
                           textColor: Colors.blue,
-                          iconColor: Colors.teal,
+                          iconColor: Colors.white30,
                           iconActiveColor: Colors.deepOrangeAccent,
                         text: 'Stats'
                       ),
@@ -116,13 +124,16 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                           gap: 12,
                         icon: Icons.volunteer_activism,
                           textColor: Colors.blue,
-                          iconColor: Colors.teal,
+                          iconColor: Colors.white30,
                           iconActiveColor: Colors.deepOrangeAccent,
                         text: 'Timeline'
                       ),
                       GButton(
                           gap: 12,
                         icon: Icons.support_agent,
+                          textColor: Colors.blue,
+                          iconColor: Colors.white30,
+                          iconActiveColor: Colors.deepOrangeAccent,
                         text: 'Reels'
                       ),
                     ],

@@ -40,7 +40,7 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Beta and Incomplete  😎',
+        title: const Text('Beta and Half-done  😎',
             style: TextStyle(
                 color: Color(0xffB1BCE6)
             )

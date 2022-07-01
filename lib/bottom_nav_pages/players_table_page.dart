@@ -10,10 +10,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-Color? backgroundColor = Colors.indigo[400];
-Color? appBarIconColor = Colors.indigo[200];
-Color? appBarBackgroundColor = Colors.indigo[400];
-Color? secondStudentChartColor = Colors.indigo[400];
+Color? backgroundColor = Color.fromRGBO(34, 40, 49, 1);
+Color? cardBackgroundColorTwo = Color.fromRGBO(34, 40, 49, 0.611764705882353);
+Color? cardBackgroundColor = Color.fromRGBO(57, 62, 70, 1);
+Color? goalsScoredTextColor = Color.fromRGBO(255, 141, 41, 1);
+Color? appBarIconColor = Color.fromRGBO(255, 141, 41, 1);
+Color? appBarBackgroundColor = Color.fromRGBO(34, 40, 49, 1);
 
 
 class PlayersTablePage extends StatefulWidget {
@@ -99,13 +101,13 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
               return SizedBox(
                 height: 700,
                 child: Material(
-                  color: secondStudentChartColor,
+                  color: cardBackgroundColorTwo,
                   child: SfDataGridTheme(
                     data: SfDataGridThemeData(
                         sortIcon: const Icon(Icons.arrow_circle_up),
                         sortIconColor: Colors.white,
-                        headerColor: Colors.indigo[400],
-                        gridLineColor: Colors.indigo[200],
+                        headerColor: cardBackgroundColorTwo,
+                        gridLineColor: backgroundColor,
                         gridLineStrokeWidth: 1.0
                     ),
                     child: SfDataGrid(
@@ -119,7 +121,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                       columnWidthMode: ColumnWidthMode.fill,
                       tableSummaryRows: [
                         GridTableSummaryRow(
-                            color: Colors.indigo[400],
+                            color: cardBackgroundColorTwo,
                             showSummaryInRow: true,
                             title: '{Goals} Goals and {Ass} Assists by {Count} players so far.',
                             columns: [
@@ -167,19 +169,20 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
               // padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: const Text('ID',
                 style: TextStyle(
-                    color: Colors.white
+                    color: Colors.white70
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
       GridColumn(
           columnName: 'image',
           width: 70,
+          allowSorting: false,
           label: Container(
             padding: const EdgeInsets.all(8.0),
             alignment: Alignment.center,
             child: const Text('Image',
               style: TextStyle(
-              color: Colors.white
+              color: Colors.white70
               ),
               overflow: TextOverflow.ellipsis))),
       GridColumn(
@@ -191,7 +194,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
               child: const Text('Player Name',
                 softWrap: true,
                 style: TextStyle(
-                    color: Colors.white
+                    color: Colors.white70
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
@@ -200,9 +203,9 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
           width: 50,
           label: Container(
               alignment: Alignment.centerLeft,
-              child: const Text('  MP',//'Matches Played',
+              child: const Text(' MP',//'Matches Played',
                   style: TextStyle(
-                      color: Colors.white
+                      color: Colors.white70
                   ),
                   overflow: TextOverflow.ellipsis))),
       GridColumn(
@@ -211,11 +214,13 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
           width: 50,
           label: Container(
               alignment: Alignment.centerLeft,
-              child: const Text('GS',//'Goals Scored'
+              child: Text(' GS',//'Goals Scored'
                 style: TextStyle(
-                    color: Colors.white54,
-                  fontWeight: FontWeight.bold
+                    color: goalsScoredTextColor,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic
                 ),
+                textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
               ))),
       GridColumn(
@@ -223,9 +228,9 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
           width: 50,
           label: Container(
               alignment: Alignment.centerLeft,
-              child: const Text('A', //'Assists'
+              child: const Text(' A', //'Assists'
                 style: TextStyle(
-                    color: Colors.white
+                    color: Colors.white70
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
@@ -236,7 +241,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
               alignment: Alignment.centerLeft,
               child: const Text('YC', //'Yellow\nCard'
                 style: TextStyle(
-                    color: Colors.white
+                    color: Colors.white70
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
@@ -247,7 +252,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
               alignment: Alignment.centerLeft,
               child: const Text('RC', //'Red\nCard'
                 style: TextStyle(
-                    color: Colors.white
+                    color: Colors.white70
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
@@ -257,9 +262,9 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
           width: 60,
           label: Container(
               alignment: Alignment.centerLeft,
-              child: const Text('PP', //'Player Position'
+              child: const Text('  PP', //'Player Position'
                 style: TextStyle(
-                    color: Colors.white
+                    color: Colors.white70
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
@@ -270,7 +275,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
               alignment: Alignment.centerLeft,
               child: const Text('Nationality',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.white70,
                 ),
                 overflow: TextOverflow.ellipsis,
               ))),
@@ -318,8 +323,16 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
           elevation: 10,
           backgroundColor: appBarBackgroundColor,
         ),
-        body: Container(
-            child: _buildDataGrid()
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            elevation: 10,
+              color: cardBackgroundColor,
+              child: _buildDataGrid()
+          ),
         ),
       ),
     );
@@ -382,7 +395,7 @@ class PlayersTableDataSource extends DataGridSource {
       child: Text(summaryValue!,
         style: const TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.white)
+            color: Colors.white70)
       ),
 
     );
@@ -391,11 +404,15 @@ class PlayersTableDataSource extends DataGridSource {
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
-        color: Colors.indigo[300],
+        color: cardBackgroundColor,
         cells: row.getCells().map<Widget>((e) {
           TextStyle getTextStyle() {
             if (e.columnName == 'goals_scored') {
-              return const TextStyle(color: Colors.white54, fontWeight: FontWeight.bold);
+              return TextStyle(
+                  color: goalsScoredTextColor,
+                  fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic
+              );
             }
             else if (e.columnName == 'nationality') {
               return const TextStyle(
