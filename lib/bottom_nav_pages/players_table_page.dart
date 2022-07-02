@@ -435,7 +435,7 @@ class PlayersTableDataSource extends DataGridSource {
                 shape: BoxShape.circle,
                 // borderRadius: const BorderRadius.all(Radius.circular(15)),
                 image: DecorationImage(
-                    alignment: const Alignment(1, -1.1),
+                    alignment: const Alignment(-1, -1.1),
                     image: CachedNetworkImageProvider(
                         e.value,
                     ),
