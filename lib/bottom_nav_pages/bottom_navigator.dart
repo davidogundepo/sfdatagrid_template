@@ -92,7 +92,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                   child: GNav(
-                    rippleColor: Colors.white60,
+                    tabBorderRadius: 10,
+                    rippleColor: Colors.blueGrey,
                     hoverColor: Colors.white30,
                     gap: 12,
                     activeColor: Colors.black,
@@ -106,28 +107,29 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                       GButton(
                         gap: 12,
                         icon: Icons.favorite_border,
-                        textColor: Colors.black54,
+                        textColor: Color.fromRGBO(247, 246, 242, 1),
                         iconColor: Colors.white30,
-                        iconActiveColor: Colors.black54,
+                        iconActiveColor: Color.fromRGBO(247, 246, 242, 1),
                         rippleColor: Colors.blueGrey,
                         text: 'Table'
                       ),
                       GButton(
                           gap: 12,
                         icon: Icons.monitor_heart,
-                          textColor: Colors.blue,
+                          textColor: Color.fromRGBO(247, 246, 242, 1),
                           iconColor: Colors.white30,
-                          iconActiveColor: Colors.deepOrangeAccent,
-                        text: 'Stats'
+                          iconActiveColor: Color.fromRGBO(247, 246, 242, 1),
+                        text: 'Stats',
+                        rippleColor: Colors.blueGrey,
                       ),
                       GButton(
-                          gap: 12,
+                        gap: 12,
                         icon: Icons.volunteer_activism,
-                          textColor: Colors.blue,
-                          iconColor: Colors.white30,
-                          iconActiveColor: Colors.deepOrangeAccent,
+                        textColor: Color.fromRGBO(247, 246, 242, 1),
+                        iconColor: Colors.white30,
+                        iconActiveColor: Color.fromRGBO(247, 246, 242, 1),
                         text: 'Timeline',
-                        rippleColor: Colors.white30,
+                        rippleColor: Colors.blueGrey,
                       ),
                       GButton(
                         gap: 12,

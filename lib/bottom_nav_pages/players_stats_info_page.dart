@@ -69,6 +69,12 @@ class PlayersStatsAndInfoPage extends StatefulWidget {
 
 class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
 
+
+  Color shadowColor = Color.fromRGBO(109, 101, 72, 1.0);
+  bool isTextPressed = false;
+
+
+
   bool isPressed = false;
 
   bool _isVisible = true;
@@ -119,7 +125,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
 
 
     return Scaffold(
-      backgroundColor: Colors.teal[300],
+      backgroundColor: Color.fromRGBO(247, 246, 242, 1),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -130,7 +136,10 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                 child: Row(
                   children: <Widget>[
                     Material(
-                      color: Colors.white70,
+                      shape: Border.all(
+                        width: 2,
+                      ),
+                      color: Color.fromRGBO(196, 174, 137, 1.0),
                       child: IconButton(
                           onPressed: (){
                             Navigator.of(context).pop(false);
@@ -140,10 +149,15 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                       ),
                     ),
                     const SizedBox(
-                      width: 120,
+                      width: 60,
                     ),
                     const Text(
-                      'Coventry Phoenix'
+                      'Coventry Phoenix FC',
+                        style: TextStyle(
+                          fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(205, 133, 133, 1),
+                        ),
                     )
                   ],
                 ),
@@ -164,15 +178,30 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(left: 22),
-                                child: Text(
-                                  'Top 10 Goal Scorers',
-
-                                ),
+                                child: Listener(
+                                onPointerDown: (_) => setState(() {
+                                  isTextPressed = true;
+                                }),
+                                onPointerUp: (_) => setState(() {
+                                  isTextPressed = false;
+                                }),
+                                child: Text ('Top 10 Goal Scorers',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(140, 112, 84, 1.0),
+                                      shadows: [
+                                        for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                          Shadow(
+                                            color: shadowColor,
+                                            blurRadius: 3 * i,
+                                          ),
+                                      ]
+                                  ),),
+                              )
                               ),
                               Container(
-                                height: 350,
+                                height: 330,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10)
                                 ),
@@ -187,9 +216,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                         child: ClayContainer(
                                           width: MediaQuery.of(context).size.width * 0.90,
                                           emboss: true,
-                                          spread: 1,
-                                          color: Colors.teal,
-                                          depth: -29,
+                                          spread: 2,
+                                          color: Color.fromRGBO(237, 237, 237, 1),
+                                          depth: 20,
                                           curveType: CurveType.concave,
                                           customBorderRadius: const BorderRadius.only(
                                               topRight: Radius.elliptical(70, 70),
@@ -241,6 +270,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         child: Text(
                                                           (index+1).toString(),
                                                           textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
                                                         ),
                                                       ),
                                                     ),
@@ -250,61 +282,158 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('position'),
-                                                        Text((topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerPosition)!),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            // width: 14,
+                                                            thickness: 3,
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: <Widget>[
+                                                            const Text(
+                                                              'Position',
+                                                              style: TextStyle(
+                                                                color: Colors.black54
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + (topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerPosition)!,
+                                                              style: TextStyle(
+                                                                fontWeight: FontWeight.bold
+                                                              ),
+                                                                ),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
                                                         height: 50
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('preferred foot'),
-                                                        Text((topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].preferredFoot)!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Preferred Foot',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + (topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].preferredFoot)!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
-                                                        height: 50
+                                                        height: 20
                                                     ),
-                                                    SingleChildScrollView(
-                                                      scrollDirection: Axis.horizontal,
-                                                      child: Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                        children: <Widget>[
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('name'),
-                                                              Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerName!),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('goals'),
-                                                              Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].goalsScored.toString()),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('matches'),
-                                                              Text('${topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].matchesPlayed} played'),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
+                                                    Divider(
+                                                      thickness: 2,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 5
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: <Widget>[
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('  Name',
+                                                        style: TextStyle(
+                                                        fontWeight: FontWeight.bold
+                                                    ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                              indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].playerName!,
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),
+                                                              ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('  Goals',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(
+                                                                    191, 146,
+                                                                    69, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('      ' + topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].goalsScored.toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors.black54,
+                                                              ),
+                                                                textAlign: TextAlign.right,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('  Matches',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 15,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(
+                                                                    125, 179,
+                                                                    140, 1.0),
+                                                              ),
+                                                            ),
+                                            Text('   ${topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
                                                     )
                                                   ],
                                                 ),
@@ -326,15 +455,30 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(left: 22),
-                                child: Text(
-                                  'Top 10 Most Assists Players',
-
-                                ),
+                                child: Listener(
+                                  onPointerDown: (_) => setState(() {
+                                    isTextPressed = true;
+                                  }),
+                                  onPointerUp: (_) => setState(() {
+                                    isTextPressed = false;
+                                  }),
+                                  child: Text ('Top 10 Most Assists Players',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(140, 112, 84, 1.0),
+                                        shadows: [
+                                          for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                            Shadow(
+                                              color: shadowColor,
+                                              blurRadius: 3 * i,
+                                            ),
+                                        ]
+                                    ),),
+                                )
                               ),
                               Container(
-                                height: 350,
+                                height: 330,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10)
                                 ),
@@ -349,9 +493,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                         child: ClayContainer(
                                           width: MediaQuery.of(context).size.width * 0.90,
                                           emboss: true,
-                                          spread: 1,
-                                          color: Colors.teal,
-                                          depth: -29,
+                                          spread: 2,
+                                          color: Color.fromRGBO(237, 237, 237, 1),
+                                          depth: 20,
                                           curveType: CurveType.concave,
                                           customBorderRadius: const BorderRadius.only(
                                               topRight: Radius.elliptical(70, 70),
@@ -403,6 +547,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         child: Text(
                                                           (index+1).toString(),
                                                           textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -412,61 +559,150 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('position'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            // width: 14,
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Position',
+                                                          style: TextStyle(
+                                                              color: Colors.black54
+                                                          ),
+                                                        ),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
                                                         height: 50
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('preferred foot'),
-                                                        Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Preferred Foot',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
-                                                        height: 50
+                                                        height: 20
                                                     ),
-                                                    SingleChildScrollView(
-                                                      scrollDirection: Axis.horizontal,
-                                                      child: Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                        children: <Widget>[
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('name'),
-                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName!),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('Assists'),
-                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].assists.toString()),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('matches'),
-                                                              Text('${mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed} played'),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
+                                                    Divider(
+                                                      thickness: 2,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 5
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: <Widget>[
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('  Name',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName!,
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('  Assists',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(
+                                                                    191, 146,
+                                                                    69, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('      ' + mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].assists.toString(),
+                                                              style: TextStyle(
+                                                                color: Colors.black54,
+                                                              ),
+                                                              textAlign: TextAlign.right,
+                                                              ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('  Matches',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 15,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(
+                                                                    125, 179,
+                                                                    140, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('   ${mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                          ],
+                                                        )
+                                                      ],
                                                     )
                                                   ],
                                                 ),
@@ -488,9 +724,27 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(top: 20, left: 22, bottom: 15),
-                                child: Text('8 Most Yellow Carded Players'),
+                                child: Listener(
+                                  onPointerDown: (_) => setState(() {
+                                    isTextPressed = true;
+                                  }),
+                                  onPointerUp: (_) => setState(() {
+                                    isTextPressed = false;
+                                  }),
+                                  child: Text ('8 Most Yellow Carded Players',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(140, 112, 84, 1.0),
+                                        shadows: [
+                                          for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                            Shadow(
+                                              color: shadowColor,
+                                              blurRadius: 3 * i,
+                                            ),
+                                        ]
+                                    ),),
+                                )
                               ),
                               Container(
                                 decoration: BoxDecoration(
@@ -514,10 +768,11 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                 Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: ClayContainer(
+                                                       width: MediaQuery.of(context).size.width * 0.30,
                                                       emboss: true,
-                                                      spread: 1,
-                                                      color: Colors.teal,
-                                                      depth: 49,
+                                                      spread: 2,
+                                                      color: Color.fromRGBO(237, 237, 237, 1),
+                                                      depth: 30,
                                                       curveType: CurveType.concave,
                                                       customBorderRadius: const BorderRadius.only(
                                                           topRight: Radius.circular(70),
@@ -560,8 +815,11 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             const SizedBox(
                                                                 height: 15
                                                             ),
-                                                            Text(
-                                                                mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].playerName!
+                                                            Center(
+                                                              child: Text(
+                                                                  mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].playerName!,
+                                                                  overflow: TextOverflow.ellipsis,
+                                                              ),
                                                             ),
                                                             const SizedBox(
                                                               height: 10,
@@ -574,8 +832,8 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                 ),
                                                 ClayContainer(
                                                   emboss: true,
-                                                  spread: 1,
-                                                  color: Colors.teal,
+                                                  spread: 2,
+                                                  color: Color.fromRGBO(237, 237, 237, 1),
                                                   depth: 49,
                                                   // borderRadius: 75,
                                                   curveType: CurveType.concave,
@@ -625,9 +883,27 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(top: 20, left: 22, bottom: 15),
-                                child: Text('8 Most Red Carded Players'),
+                                child: Listener(
+                                  onPointerDown: (_) => setState(() {
+                                    isTextPressed = true;
+                                  }),
+                                  onPointerUp: (_) => setState(() {
+                                    isTextPressed = false;
+                                  }),
+                                  child: Text ('8 Most Red Carded Players',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(140, 112, 84, 1.0),
+                                        shadows: [
+                                          for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                            Shadow(
+                                              color: shadowColor,
+                                              blurRadius: 3 * i,
+                                            ),
+                                        ]
+                                    ),),
+                                )
                               ),
                               Container(
                                 decoration: BoxDecoration(
@@ -651,9 +927,10 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                 Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: ClayContainer(
+                                                      width: MediaQuery.of(context).size.width * 0.30,
                                                       emboss: true,
-                                                      spread: 1,
-                                                      color: Colors.teal,
+                                                      spread: 2,
+                                                      color: Color.fromRGBO(237, 237, 237, 1),
                                                       depth: 49,
                                                       curveType: CurveType.concave,
                                                       customBorderRadius: const BorderRadius.only(
@@ -697,8 +974,11 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                             const SizedBox(
                                                                 height: 15
                                                             ),
-                                                            Text(
-                                                                mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].playerName!
+                                                            Center(
+                                                              child: Text(
+                                                                  mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].playerName!,
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
                                                             ),
                                                             const SizedBox(
                                                               height: 10,
@@ -711,8 +991,8 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                 ),
                                                 ClayContainer(
                                                   emboss: true,
-                                                  spread: 1,
-                                                  color: Colors.teal,
+                                                  spread: 2,
+                                                  color: Color.fromRGBO(237, 237, 237, 1),
                                                   depth: 49,
                                                   // borderRadius: 75,
                                                   curveType: CurveType.concave,
@@ -763,15 +1043,30 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 22),
-                                child: Text(
-                                  'Top Goal Keepers',
-
-                                ),
+                              Padding(
+                                  padding: EdgeInsets.only(left: 22),
+                                  child: Listener(
+                                    onPointerDown: (_) => setState(() {
+                                      isTextPressed = true;
+                                    }),
+                                    onPointerUp: (_) => setState(() {
+                                      isTextPressed = false;
+                                    }),
+                                    child: Text ('Top Goal Keepers',
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(140, 112, 84, 1.0),
+                                          shadows: [
+                                            for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                              Shadow(
+                                                color: shadowColor,
+                                                blurRadius: 3 * i,
+                                              ),
+                                          ]
+                                      ),),
+                                  )
                               ),
                               Container(
-                                height: 350,
+                                height: 330,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10)
                                 ),
@@ -786,9 +1081,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                         child: ClayContainer(
                                           width: MediaQuery.of(context).size.width * 0.90,
                                           emboss: true,
-                                          spread: 1,
-                                          color: Colors.teal,
-                                          depth: -29,
+                                          spread: 2,
+                                          color: Color.fromRGBO(237, 237, 237, 1),
+                                          depth: 20,
                                           curveType: CurveType.concave,
                                           customBorderRadius: const BorderRadius.only(
                                               topRight: Radius.elliptical(70, 70),
@@ -840,6 +1135,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         child: Text(
                                                           (index+1).toString(),
                                                           textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -849,67 +1147,148 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('position'),
-                                                        Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerPosition!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            // width: 14,
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Position',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerPosition!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
                                                         height: 50
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('name'),
-                                                        Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerName!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Name',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerName!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
-                                                        height: 50
+                                                        height: 20
                                                     ),
-                                                    SingleChildScrollView(
-                                                      scrollDirection: Axis.horizontal,
-                                                      child: Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                        children: <Widget>[
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('Goals Conceded'),
-                                                              Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].goalsConcededGkDef.toString()),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('Clean Sheets'),
-                                                              Text(topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].cleanSheetGk.toString()),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text(
-                                                                'matches',
-                                                                overflow: TextOverflow.ellipsis,
+                                                    Divider(
+                                                      thickness: 2,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 5
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: <Widget>[
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Goals Con.',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
                                                               ),
-                                                              Text(
-                                                                '${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].matchesPlayed} played',
-                                                                overflow: TextOverflow.ellipsis,
+                                                            ),
+                                                            Text('      ' + topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].goalsConcededGkDef.toString()!,
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Clean Sheets',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(
+                                                                    191, 146,
+                                                                    69, 1.0),
                                                               ),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
+                                                            ),
+                                                            Text('      ' + topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].cleanSheetGk.toString(),
+                                                              style: TextStyle(
+                                                                color: Colors.black54,
+                                                              ),
+                                                              textAlign: TextAlign.right,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Matches',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 60,
+                                                              child: Divider(
+                                                                indent: 10,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(125, 179, 140, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                          ],
+                                                        )
+                                                      ],
                                                     )
                                                   ],
                                                 ),
@@ -919,7 +1298,6 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                         ),
                                       ),
                                   itemWidth: MediaQuery.of(context).size.width * 0.9,
-                                  // itemHeight: 300,
                                   layout: SwiperLayout.DEFAULT,
                                 ),
                               ),
@@ -928,19 +1306,34 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                               ),
                             ],
                           ),
-
+                          
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 22),
-                                child: Text(
-                                  'Top 10 Defensive Players',
-
-                                ),
+                              Padding(
+                                  padding: EdgeInsets.only(left: 22),
+                                  child: Listener(
+                                    onPointerDown: (_) => setState(() {
+                                      isTextPressed = true;
+                                    }),
+                                    onPointerUp: (_) => setState(() {
+                                      isTextPressed = false;
+                                    }),
+                                    child: Text ('Top 10 Defensive Players',
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(140, 112, 84, 1.0),
+                                          shadows: [
+                                            for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                              Shadow(
+                                                color: shadowColor,
+                                                blurRadius: 3 * i,
+                                              ),
+                                          ]
+                                      ),),
+                                  )
                               ),
                               Container(
-                                height: 350,
+                                height: 330,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10)
                                 ),
@@ -955,9 +1348,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                         child: ClayContainer(
                                           width: MediaQuery.of(context).size.width * 0.90,
                                           emboss: true,
-                                          spread: 1,
-                                          color: Colors.teal,
-                                          depth: -29,
+                                          spread: 2,
+                                          color: Color.fromRGBO(237, 237, 237, 1),
+                                          depth: 20,
                                           curveType: CurveType.concave,
                                           customBorderRadius: const BorderRadius.only(
                                               topRight: Radius.elliptical(70, 70),
@@ -1009,6 +1402,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         child: Text(
                                                           (index+1).toString(),
                                                           textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -1018,61 +1414,148 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('position'),
-                                                        Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerPosition!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            // width: 14,
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Position',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerPosition!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
                                                         height: 50
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('preferred foot'),
-                                                        Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].preferredFoot!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Preferred Foot',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].preferredFoot!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
-                                                        height: 50
+                                                        height: 20
                                                     ),
-                                                    SingleChildScrollView(
-                                                      scrollDirection: Axis.horizontal,
-                                                      child: Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                        children: <Widget>[
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('name'),
-                                                              Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerName!),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('Goals Conceded'),
-                                                              Text(topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].goalsConcededGkDef.toString()),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('matches'),
-                                                              Text('${topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].matchesPlayed} played'),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
+                                                    Divider(
+                                                      thickness: 2,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 5
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: <Widget>[
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Name',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('   ' + topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerName!,
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Goals Con.',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(
+                                                                    191, 146,
+                                                                    69, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('      ' + topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].goalsConcededGkDef.toString(),
+                                                              style: TextStyle(
+                                                                color: Colors.black54,
+                                                              ),
+                                                              textAlign: TextAlign.right,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Matches',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 60,
+                                                              child: Divider(
+                                                                indent: 10,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(125, 179, 140, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('${topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                          ],
+                                                        )
+                                                      ],
                                                     )
                                                   ],
                                                 ),
@@ -1094,15 +1577,30 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 22),
-                                child: Text(
-                                  'Weekly MOTM Players',
-
-                                ),
+                              Padding(
+                                  padding: EdgeInsets.only(left: 22),
+                                  child: Listener(
+                                    onPointerDown: (_) => setState(() {
+                                      isTextPressed = true;
+                                    }),
+                                    onPointerUp: (_) => setState(() {
+                                      isTextPressed = false;
+                                    }),
+                                    child: Text ('Weekly MOTM Players',
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(140, 112, 84, 1.0),
+                                          shadows: [
+                                            for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                              Shadow(
+                                                color: shadowColor,
+                                                blurRadius: 3 * i,
+                                              ),
+                                          ]
+                                      ),),
+                                  )
                               ),
                               Container(
-                                height: 350,
+                                height: 330,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10)
                                 ),
@@ -1117,9 +1615,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                         child: ClayContainer(
                                           width: MediaQuery.of(context).size.width * 0.90,
                                           emboss: true,
-                                          spread: 1,
-                                          color: Colors.teal,
-                                          depth: -29,
+                                          spread: 2,
+                                          color: Color.fromRGBO(237, 237, 237, 1),
+                                          depth: 20,
                                           curveType: CurveType.concave,
                                           customBorderRadius: const BorderRadius.only(
                                               topRight: Radius.elliptical(70, 70),
@@ -1171,6 +1669,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         child: Text(
                                                           (index+1).toString(),
                                                           textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -1180,25 +1681,69 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('position'),
-                                                        Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerPosition!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            // width: 14,
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Position',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerPosition!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
                                                         height: 50
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('preferred foot'),
-                                                        Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].preferredFoot!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Preferred Foot',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].preferredFoot!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
-                                                        height: 50
+                                                        height: 20
+                                                    ),
+                                                    Divider(
+                                                      thickness: 2,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 5
                                                     ),
                                                     Row(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1207,8 +1752,22 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         Column(
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: <Widget>[
-                                                            const Text('name'),
-                                                            Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerName!),
+                                                            const Text('Name',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('   ' + motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerName!,
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
                                                           ],
                                                         ),
                                                         const SizedBox(
@@ -1216,19 +1775,23 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         ),
                                                         Column(
                                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                                          // children: <Widget>[
-                                                            // const Text('Assists'),
-                                                            // Text(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].assists.toString()),
-                                                          // ],
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 20
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: <Widget>[
-                                                            const Text('matches'),
-                                                            Text('${motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].matchesPlayed} played'),
+                                                            const Text('Matches',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 60,
+                                                              child: Divider(
+                                                                indent: 10,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(125, 179, 140, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('${motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
                                                           ],
                                                         )
                                                       ],
@@ -1253,15 +1816,30 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 22),
-                                child: Text(
-                                  'Most Awarded MOTM Players',
-
-                                ),
+                              Padding(
+                                  padding: EdgeInsets.only(left: 22),
+                                  child: Listener(
+                                    onPointerDown: (_) => setState(() {
+                                      isTextPressed = true;
+                                    }),
+                                    onPointerUp: (_) => setState(() {
+                                      isTextPressed = false;
+                                    }),
+                                    child: Text ('Most Awarded MOTM Players',
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(140, 112, 84, 1.0),
+                                          shadows: [
+                                            for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                              Shadow(
+                                                color: shadowColor,
+                                                blurRadius: 3 * i,
+                                              ),
+                                          ]
+                                      ),),
+                                  )
                               ),
                               Container(
-                                height: 350,
+                                height: 330,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10)
                                 ),
@@ -1276,9 +1854,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                         child: ClayContainer(
                                           width: MediaQuery.of(context).size.width * 0.90,
                                           emboss: true,
-                                          spread: 1,
-                                          color: Colors.teal,
-                                          depth: -29,
+                                          spread: 2,
+                                          color: Color.fromRGBO(237, 237, 237, 1),
+                                          depth: 20,
                                           curveType: CurveType.concave,
                                           customBorderRadius: const BorderRadius.only(
                                               topRight: Radius.elliptical(70, 70),
@@ -1330,6 +1908,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         child: Text(
                                                           (index+1).toString(),
                                                           textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -1339,61 +1920,148 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('Coventry Phoenix FC'),
-                                                        Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerPosition!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            // width: 14,
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Position',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerPosition!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
                                                         height: 50
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        const Text('Preferred Foot'),
-                                                        Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].preferredFoot!),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          height:50,
+                                                          child: VerticalDivider(
+                                                            thickness: 3,
+                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Preferred Foot',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                            SizedBox(height: 10),
+                                                            Text('       ' + cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].preferredFoot!,
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                     const SizedBox(
-                                                        height: 50
+                                                        height: 20
                                                     ),
-                                                    SingleChildScrollView(
-                                                      scrollDirection: Axis.horizontal,
-                                                      child: Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                        children: <Widget>[
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('Name'),
-                                                              Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerName!),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('MOTM Count'),
-                                                              Text(cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].cumMOTMCount.toString()),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 20
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              const Text('matches'),
-                                                              Text('${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].matchesPlayed} played'),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
+                                                    Divider(
+                                                      thickness: 2,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 5
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: <Widget>[
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Name',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('   ' + cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerName!,
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('MOTM Count',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 70,
+                                                              child: Divider(
+                                                                indent: 5,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(
+                                                                    191, 146,
+                                                                    69, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('      ' + cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].cumMOTMCount.toString(),
+                                                              style: TextStyle(
+                                                                color: Colors.black54,
+                                                              ),
+                                                              textAlign: TextAlign.right,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 20
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            const Text('Matches',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),),
+                                                            Container(
+                                                              width: 60,
+                                                              child: Divider(
+                                                                indent: 10,
+                                                                thickness: 3,
+                                                                color: Color.fromRGBO(125, 179, 140, 1.0),
+                                                              ),
+                                                            ),
+                                                            Text('${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                              style: TextStyle(
+                                                                  color: Colors.black54
+                                                              ),),
+                                                          ],
+                                                        )
+                                                      ],
                                                     )
                                                   ],
                                                 ),
@@ -1415,29 +2083,44 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(left: 22, bottom: 22),
-                                child: Text(
-                                  'Player of the month',
-
-                                ),
+                                child: Listener(
+                                  onPointerDown: (_) => setState(() {
+                                    isTextPressed = true;
+                                  }),
+                                  onPointerUp: (_) => setState(() {
+                                    isTextPressed = false;
+                                  }),
+                                  child: Text ('Player Of The Month',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(140, 112, 84, 1.0),
+                                        shadows: [
+                                          for (double i = 1; i < (isTextPressed ? 1 : 2); i++)
+                                            Shadow(
+                                              color: shadowColor,
+                                              blurRadius: 3 * i,
+                                            ),
+                                        ]
+                                    ),),
+                                )
                               ),
                               Center(
                                 child: Container(
                                   width: MediaQuery.of(context).size.width * 0.90,
                                   height: 300,
                                   decoration: BoxDecoration(
-                                      color: Colors.teal[300],
+                                      color: Colors.deepOrange[300],
                                       borderRadius: const BorderRadius.all(Radius.circular(15)),
                                       boxShadow: [
                                         BoxShadow(
-                                            color: Colors.teal.withAlpha(30),
+                                            color: Colors.deepOrange.withAlpha(30),
                                             offset: const Offset(4.0, 2.0),
                                             blurRadius: 1.0,
                                             spreadRadius: 1.0
                                         ),
                                         BoxShadow(
-                                            color: Colors.teal.withAlpha(60),
+                                            color: Colors.deepOrange.withAlpha(60),
                                             offset: const Offset(-2.0, -1.0),
                                             blurRadius: 1.0,
                                             spreadRadius: 1.0
@@ -1454,17 +2137,17 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                           width: 200,
                                           height: 120,
                                           decoration: BoxDecoration(
-                                            color: Colors.teal[300],
+                                            color: Colors.deepOrange[300],
                                             borderRadius: const BorderRadius.all(Radius.circular(15)),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color: Colors.teal[500]!,
+                                                  color: Colors.deepOrange[500]!,
                                                   offset: -distance,
                                                   blurRadius: blur,
                                                   spreadRadius: 1.0
                                               ),
                                               BoxShadow(
-                                                  color: Colors.teal[200]!,
+                                                  color: Colors.deepOrange[200]!,
                                                   offset: distance,
                                                   blurRadius: blur,
                                                   spreadRadius: 1.0
@@ -1481,15 +2164,17 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   shadows: [
                                                     const Shadow(
                                                         offset: Offset(3, 3),
-                                                        color: Colors.black38,
+                                                        // color: Colors.black38,
+                                                        color: Color.fromRGBO(
+                                                            112, 32, 3, 0.38),
                                                         blurRadius: 10),
                                                     Shadow(
                                                         offset: const Offset(-3, -3),
-                                                        color: Colors.teal[300]!,
+                                                        color: Colors.deepOrange[300]!,
                                                         blurRadius: 10
                                                     )
                                                   ],
-                                                  color: Colors.teal[300]),
+                                                  color: Colors.deepOrange[300]),
                                             ),
                                           ),
                                         ),
@@ -1506,7 +2191,8 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                                   ),
                                                   contentPadding: const EdgeInsets.all(10),
-                                                  backgroundColor: Colors.teal,
+                                                  backgroundColor: Color.fromRGBO(
+                                                      184, 106, 65, 1.0),
                                                   content: SizedBox(
                                                     width: MediaQuery.of(context).size.width,
                                                     height: MediaQuery.of(context).size.height * 0.6,
@@ -1645,7 +2331,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                         alignment: Alignment.center,
                                                         child: Icon(
                                                           Icons.close,
-                                                          color: Colors.teal,
+                                                          color: Colors.deepOrangeAccent,
                                                         ),
                                                       ),
                                                     ),
