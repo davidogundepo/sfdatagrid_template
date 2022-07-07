@@ -10,12 +10,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-Color? backgroundColor = Color.fromRGBO(34, 40, 49, 1);
-Color? cardBackgroundColorTwo = Color.fromRGBO(34, 40, 49, 0.611764705882353);
-Color? cardBackgroundColor = Color.fromRGBO(57, 62, 70, 1);
-Color? goalsScoredTextColor = Color.fromRGBO(255, 141, 41, 1);
-Color? appBarIconColor = Color.fromRGBO(255, 141, 41, 1);
-Color? appBarBackgroundColor = Color.fromRGBO(34, 40, 49, 1);
+Color? backgroundColor = const Color.fromRGBO(34, 40, 49, 1);
+Color? cardBackgroundColorTwo = const Color.fromRGBO(34, 40, 49, 0.611764705882353);
+Color? cardBackgroundColor = const Color.fromRGBO(57, 62, 70, 1);
+Color? goalsScoredTextColor = const Color.fromRGBO(255, 141, 41, 1);
+Color? appBarIconColor = const Color.fromRGBO(255, 141, 41, 1);
+Color? appBarBackgroundColor = const Color.fromRGBO(34, 40, 49, 1);
 
 
 class PlayersTablePage extends StatefulWidget {
@@ -320,6 +320,259 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
               navigateMyApp(context);
             },
           ),
+          actions: [
+            PopupMenuButton(
+              color: const Color.fromRGBO(57, 62, 70, 1),
+              icon: const Icon(
+                Icons.menu,
+                color: Color.fromRGBO(255, 141, 41, 1),
+              ),
+                itemBuilder: (context) => [
+                  const PopupMenuItem<int>(
+                    value: 0,
+                    child: Text(
+                      "Legend",
+                      style: TextStyle(
+                          color: Color.fromRGBO(255, 141, 41, 1)
+                      ),
+                    ),
+                  ),
+                ],
+              onSelected: (item) => {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      scrollable: true,
+                      backgroundColor: const Color.fromRGBO(57, 62, 70, 1),
+                      title: const Text(
+                          'Acronyms',
+                        style: TextStyle(
+                          color: Colors.white70
+                        ),
+                      ),
+                      content: Container(
+                        height: MediaQuery.of(context).size.width * 0.70,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'ID - Identification',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'MP - Matches Played',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'GS - Goals Scored',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'A - Assists',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'YC - Yellow Cards',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'RC - Red Cards',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'PP - Players Positions',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'FC - Football Club',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'MOTM - Man Of The Match',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'POTM - Player Of The Match',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'CB - Central Back',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'LB - Left Back',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'RB - Right Back',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'GK - Goal Keeper',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'CM - Central Midfielder',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'CDM - Central Defensive Midfielder',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'LM - Left Midfielder',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'RM - Right Midfielder',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'AM - Attacking Midfielder',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'LW - Left Winger',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'RW - Right Winger',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'CF - Central Forward',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      actions: <Widget>[
+                          TextButton(
+                              onPressed: () => Navigator.pop(context, 'Okay'),
+                              child: const Text(
+                                  'Okay',
+                                style: TextStyle(
+                                    color: Color.fromRGBO(255, 141, 41, 1)
+                                ),
+                              )
+                          )
+                      ],
+                    )
+                )
+              })
+          ],
           elevation: 10,
           backgroundColor: appBarBackgroundColor,
         ),

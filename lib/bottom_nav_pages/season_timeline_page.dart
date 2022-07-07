@@ -13,6 +13,8 @@ Color colorBack = const Color.fromRGBO(58, 56, 69, 1);
 Color? appBarColor = const Color.fromRGBO(136, 121, 176, 1);
 // Color colorBack = const Color.fromRGBO(58, 56, 69, 1);
 
+late _SeasonTimelineState ss;
+
 class SeasonTimeline extends StatefulWidget {
   const SeasonTimeline({Key? key}) : super(key: key);
 
@@ -476,6 +478,8 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
         enable: true,
         color: Colors.lightBlue
     );
+
+    ss = _SeasonTimelineState();
 
     super.initState();
 

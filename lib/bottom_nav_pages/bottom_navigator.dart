@@ -40,12 +40,12 @@ late MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifi
 late MOTMPlayersStatsAndInfoNotifier motmPlayersStatsAndInfoNotifier;
 late CumMOTMPlayersStatsAndInfoNotifier cumMOTMPlayersStatsAndInfoNotifier;
 
-Color? backgroundColor = Color.fromRGBO(34, 40, 49, 1);
-Color? cardBackgroundColorTwo = Color.fromRGBO(34, 40, 49, 0.611764705882353);
-Color? cardBackgroundColor = Color.fromRGBO(57, 62, 70, 1);
-Color? goalsScoredTextColor = Color.fromRGBO(255, 141, 41, 1);
-Color? appBarIconColor = Color.fromRGBO(255, 141, 41, 1);
-Color? appBarBackgroundColor = Color.fromRGBO(34, 40, 49, 1);
+Color? backgroundColor = const Color.fromRGBO(34, 40, 49, 1);
+Color? cardBackgroundColorTwo = const Color.fromRGBO(34, 40, 49, 0.611764705882353);
+Color? cardBackgroundColor = const Color.fromRGBO(57, 62, 70, 1);
+Color? goalsScoredTextColor = const Color.fromRGBO(255, 141, 41, 1);
+Color? appBarIconColor = const Color.fromRGBO(255, 141, 41, 1);
+Color? appBarBackgroundColor = const Color.fromRGBO(34, 40, 49, 1);
 
 
 class BottomNavigator extends StatefulWidget {
@@ -104,42 +104,42 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                     color: Colors.black,
                     haptic: true,
                     tabs: [
-                      GButton(
+                      const GButton(
                         gap: 12,
-                        icon: Icons.favorite_border,
+                        icon: Icons.query_stats,
                         textColor: Color.fromRGBO(247, 246, 242, 1),
                         iconColor: Colors.white30,
                         iconActiveColor: Color.fromRGBO(247, 246, 242, 1),
                         rippleColor: Colors.blueGrey,
                         text: 'Table'
                       ),
-                      GButton(
+                      const GButton(
                           gap: 12,
-                        icon: Icons.monitor_heart,
+                        icon: Icons.workspace_premium,
                           textColor: Color.fromRGBO(247, 246, 242, 1),
                           iconColor: Colors.white30,
                           iconActiveColor: Color.fromRGBO(247, 246, 242, 1),
-                        text: 'Stats',
+                        text: 'Top Players',
                         rippleColor: Colors.blueGrey,
                       ),
-                      GButton(
+                      const GButton(
                         gap: 12,
-                        icon: Icons.volunteer_activism,
-                        textColor: Color.fromRGBO(247, 246, 242, 1),
+                        icon: Icons.leaderboard,
+                        textColor: const Color.fromRGBO(247, 246, 242, 1),
                         iconColor: Colors.white30,
-                        iconActiveColor: Color.fromRGBO(247, 246, 242, 1),
+                        iconActiveColor: const Color.fromRGBO(247, 246, 242, 1),
                         text: 'Timeline',
                         rippleColor: Colors.blueGrey,
                       ),
                       GButton(
                         gap: 12,
-                        icon: Icons.support_agent,
-                        textColor: Color.fromRGBO(255, 141, 41, 0.7),
+                        icon: Icons.view_carousel_outlined,
+                        textColor: const Color.fromRGBO(255, 141, 41, 0.7),
                         iconColor: Colors.white30,
-                        iconActiveColor: Color.fromRGBO(255, 141, 41, 0.7),
+                        iconActiveColor: const Color.fromRGBO(255, 141, 41, 0.7),
                         text: 'Reels',
                         activeBorder: Border.all(
-                            color: Color.fromRGBO(255, 141, 41, 0.7),
+                            color: const Color.fromRGBO(255, 141, 41, 0.7),
                             width: 1
                         ),
                         border: Border.all(
