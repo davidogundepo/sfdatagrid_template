@@ -6,7 +6,11 @@ import '../notifier/most_assists_players_stats_info_notifier.dart';
 getMostAssistsPlayersStatsAndInfo(MostAssistsPlayersStatsAndInfoNotifier mostAssistsPlayersStatsAndInfoNotifier) async {
 
   QuerySnapshot snapshot = await FirebaseFirestore.instance
-      .collection('PlayersTable').orderBy('assists', descending: true).limit(10).get();
+      .collection('PlayersTable')
+      .where('assists', isGreaterThan: 0)
+      .orderBy('assists', descending: true)
+      .limit(10)
+      .get();
 
   List<PlayersStatsAndInfo> mostAssistsPlayersStatsAndInfoList = [];
 

@@ -7,7 +7,7 @@ getMOTMPlayersStatsAndInfo(MOTMPlayersStatsAndInfoNotifier mOTMPlayersStatsAndIn
 
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('PlayersTable')
-      .where('man_of_the_match', whereIn: ['yes','Yes','YES', 'yES', 'yeS', 'YEs', 'yEs'])
+      .where('man_of_the_match', whereIn: ['yes','Yes','YES', 'yES', 'yeS', 'YEs', 'yEs', 'YeS'])
       .limit(10)
       .get();
 

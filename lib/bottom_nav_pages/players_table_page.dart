@@ -554,6 +554,16 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                                   ),
                                 ),
                               ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Goals Con. - Goals Conceded',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+
                             ],
                           ),
                         ),

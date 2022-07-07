@@ -1,6 +1,9 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:confetti/confetti.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sfdatagrid_template/api/cum_motm_players_stats_info_api.dart';
@@ -75,6 +78,9 @@ class PlayersStatsAndInfoPage extends StatefulWidget {
 class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
 
 
+  late ConfettiController _controllerTopCenter;
+
+
   Color shadowColor = const Color.fromRGBO(109, 101, 72, 1.0);
   bool isTextPressed = false;
 
@@ -108,6 +114,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
 
     Offset distance = isPressed ? const Offset(2, -2) : const Offset(2, -2);
     double blur = isPressed ? 7.0 : 24.0;
+
+
+    _controllerTopCenter.play();
 
 
     TopGoalsPlayersStatsAndInfoNotifier topGoalsPlayersStatsAndInfoNotifier = Provider.of<TopGoalsPlayersStatsAndInfoNotifier>(context);
@@ -210,7 +219,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                               )
                               ),
 
-                              if (topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList.isEmpty) ...[
+                              if (!topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList.isEmpty) ...[
                                 Center(
                                   child: Container(
                                     height: 330,
@@ -252,8 +261,15 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                   fit: BoxFit.contain,
                                                                 )
                                                                 ),
-                                                            SizedBox(height: 20),
-                                                            Text("No Goals Scored Yet")
+                                                            const SizedBox(height: 20),
+                                                            const Text(
+                                                                "No Goals Scored Yet",
+                                                                style: TextStyle(
+                                                                  color: Color.fromRGBO(205, 133, 133, 1),
+                                                                ),
+
+
+                                                                )
                                                           ],
                                                         ),
                                                       )
@@ -263,6 +279,10 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                             ),
                                           ),
                                   ),
+
+                                ),
+                                const SizedBox (
+                                  height: 50,
                                 ),
                               ]
                               else ...[
@@ -402,7 +422,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                   ),
                                                                 ),
                                                                 const SizedBox(height: 10),
-                                                                Text('       ' + (topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].preferredFoot)!,
+                                                                Text('       ${(topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].preferredFoot)!}',
                                                                   style: const TextStyle(
                                                                       fontWeight: FontWeight.bold
                                                                   ),
@@ -463,7 +483,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                         69, 1.0),
                                                                   ),
                                                                 ),
-                                                                Text('      ' + topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].goalsScored.toString(),
+                                                                Text('      ${topGoalsPlayersStatsAndInfoNotifier.topGoalsPlayersStatsAndInfoList[index].goalsScored}',
                                                                   style: const TextStyle(
                                                                     color: Colors.black54,
                                                                   ),
@@ -540,245 +560,315 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                     ),),
                                 )
                               ),
-                              Container(
-                                height: 330,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: Swiper(
-                                  autoplay: true,
-                                  viewportFraction: 0.8,
-                                  scale: 0.9,
-                                  itemCount: mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList.length,
-                                  itemBuilder: (context, index) =>
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
-                                        child: ClayContainer(
-                                          width: MediaQuery.of(context).size.width * 0.90,
-                                          emboss: true,
-                                          spread: 2,
-                                          color: const Color.fromRGBO(237, 237, 237, 1),
-                                          depth: 20,
-                                          curveType: CurveType.concave,
-                                          customBorderRadius: const BorderRadius.only(
-                                              topRight: Radius.elliptical(70, 70),
-                                              bottomLeft: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Stack(
+
+                              if (!mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList.isEmpty) ...[
+                                Center(
+                                  child: Container(
+                                    height: 330,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child:
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                      child: ClayContainer(
+                                        width: MediaQuery.of(context).size.width * 0.80,
+                                        emboss: true,
+                                        spread: 2,
+                                        color: const Color.fromRGBO(237, 237, 237, 1),
+                                        depth: 20,
+                                        curveType: CurveType.concave,
+                                        customBorderRadius: const BorderRadius.only(
+                                            topRight: Radius.elliptical(70, 70),
+                                            bottomLeft: Radius.circular(10),
+                                            topLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child:
+                                          Stack(
                                               children: <Widget>[
-                                                Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(15.0),
-                                                    child: Container(
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            alignment: const Alignment(0, -1),
-                                                            image: CachedNetworkImageProvider(
-                                                                mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].image!
-                                                            ),
-                                                            fit: BoxFit.cover
-                                                        ),
-                                                        borderRadius: const BorderRadius.only(
-                                                          topLeft: Radius.circular(10),
-                                                          bottomLeft: Radius.circular(10),
-                                                          topRight: Radius.circular(10),
-                                                          bottomRight: Radius.circular(10),
-                                                        ),
-                                                        shape: BoxShape.rectangle,
+                                                Center(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        // height: 70,
+                                                          child: Lottie.asset(
+                                                            'assets/football_goal.json',
+                                                            width: MediaQuery.of(context).size.width * 0.80,
+                                                            height: 200,
+                                                            fit: BoxFit.contain,
+                                                          )
                                                       ),
-                                                    ),
+                                                      const SizedBox(height: 20),
+                                                      const Text(
+                                                        "No Goals Scored Yet",
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(205, 133, 133, 1),
+                                                        ),
+
+
+                                                      )
+                                                    ],
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
-                                                  child: Align(
-                                                    alignment: Alignment.centerRight,
-                                                    child: Container(
-                                                      decoration: const BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: Colors.white70
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Text(
-                                                          (index+1).toString(),
-                                                          textAlign: TextAlign.center,
-                                                          style: const TextStyle(
-                                                            color: const Color.fromRGBO(205, 133, 133, 1),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Row(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height:50,
-                                                          child: VerticalDivider(
-                                                            // width: 14,
-                                                            thickness: 3,
-                                                            color: Color.fromRGBO(205, 133, 133, 1),
-                                                          ),
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Position',
-                                                          style: TextStyle(
-                                                              color: Colors.black54
-                                                          ),
-                                                        ),
-                                                            const SizedBox(height: 10),
-                                                            Text('       ' + mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition!,
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 50
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height:50,
-                                                          child: VerticalDivider(
-                                                            thickness: 3,
-                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
-                                                          ),
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Preferred Foot',
-                                                              style: TextStyle(
-                                                                  color: Colors.black54
-                                                              ),),
-                                                            const SizedBox(height: 10),
-                                                            Text('       ' + mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot!,
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 20
-                                                    ),
-                                                    const Divider(
-                                                      thickness: 2,
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 5
-                                                    ),
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                      children: <Widget>[
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('  Name',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 70,
-                                                              child: Divider(
-                                                                indent: 5,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName!,
-                                                              style: const TextStyle(
-                                                                  color: Color.fromRGBO(150, 129, 129, 1.0),
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                        
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('  Assists',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 70,
-                                                              child: Divider(
-                                                                indent: 5,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(
-                                                                    191, 146,
-                                                                    69, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('      ' + mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].assists.toString(),
-                                                              style: const TextStyle(
-                                                                color: Colors.black54,
-                                                              ),
-                                                              textAlign: TextAlign.right,
-                                                              ),
-                                                          ],
-                                                        ),
-                                                        
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('  Matches',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 70,
-                                                              child: Divider(
-                                                                indent: 15,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(
-                                                                    125, 179,
-                                                                    140, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('   ${mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed} played',
-                                                              style: const TextStyle(
-                                                                  color: Colors.black54
-                                                              ),),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                                )
+                                              ]
                                           ),
                                         ),
                                       ),
-                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
-                                  layout: SwiperLayout.DEFAULT,
+                                    ),
+                                  ),
+
                                 ),
-                              ),
-                              const SizedBox (
-                                height: 50,
-                              ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ]
+                              else ... [
+                                Container(
+                                  height: 330,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: Swiper(
+                                    autoplay: true,
+                                    viewportFraction: 0.8,
+                                    scale: 0.9,
+                                    itemCount: mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList.length,
+                                    itemBuilder: (context, index) =>
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                          child: ClayContainer(
+                                            width: MediaQuery.of(context).size.width * 0.90,
+                                            emboss: true,
+                                            spread: 2,
+                                            color: const Color.fromRGBO(237, 237, 237, 1),
+                                            depth: 20,
+                                            curveType: CurveType.concave,
+                                            customBorderRadius: const BorderRadius.only(
+                                                topRight: Radius.elliptical(70, 70),
+                                                bottomLeft: Radius.circular(10),
+                                                topLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10)
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(15.0),
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(15.0),
+                                                      child: Container(
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              alignment: const Alignment(0, -1),
+                                                              image: CachedNetworkImageProvider(
+                                                                  mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].image!
+                                                              ),
+                                                              fit: BoxFit.cover
+                                                          ),
+                                                          borderRadius: const BorderRadius.only(
+                                                            topLeft: Radius.circular(10),
+                                                            bottomLeft: Radius.circular(10),
+                                                            topRight: Radius.circular(10),
+                                                            bottomRight: Radius.circular(10),
+                                                          ),
+                                                          shape: BoxShape.rectangle,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                    child: Align(
+                                                      alignment: Alignment.centerRight,
+                                                      child: Container(
+                                                        decoration: const BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            color: Colors.white70
+                                                        ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Text(
+                                                            (index+1).toString(),
+                                                            textAlign: TextAlign.center,
+                                                            style: const TextStyle(
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height:50,
+                                                            child: VerticalDivider(
+                                                              // width: 14,
+                                                              thickness: 3,
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Position',
+                                                                style: TextStyle(
+                                                                    color: Colors.black54
+                                                                ),
+                                                              ),
+                                                              const SizedBox(height: 10),
+                                                              Text('       ${mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerPosition?.toUpperCase()}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 50
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height:50,
+                                                            child: VerticalDivider(
+                                                              thickness: 3,
+                                                              color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Preferred Foot',
+                                                                style: TextStyle(
+                                                                    color: Colors.black54
+                                                                ),),
+                                                              const SizedBox(height: 10),
+                                                              Text('       ${mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].preferredFoot!}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 20
+                                                      ),
+                                                      const Divider(
+                                                        thickness: 2,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 5
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('  Name',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 70,
+                                                                child: Divider(
+                                                                  indent: 5,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text(mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].playerName!,
+                                                                style: const TextStyle(
+                                                                  color: Color.fromRGBO(150, 129, 129, 1.0),
+                                                                ),),
+                                                            ],
+                                                          ),
+
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('  Assists',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 70,
+                                                                child: Divider(
+                                                                  indent: 5,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(
+                                                                      191, 146,
+                                                                      69, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('      ${mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].assists}',
+                                                                style: const TextStyle(
+                                                                  color: Colors.black54,
+                                                                ),
+                                                                textAlign: TextAlign.right,
+                                                              ),
+                                                            ],
+                                                          ),
+
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('  Matches',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 70,
+                                                                child: Divider(
+                                                                  indent: 15,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(
+                                                                      125, 179,
+                                                                      140, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('   ${mostAssistsPlayersStatsAndInfoNotifier.mostAssistsPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                                style: const TextStyle(
+                                                                    color: Colors.black54
+                                                                ),),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                    layout: SwiperLayout.DEFAULT,
+                                  ),
+                                ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ],
                             ],
                           ),
+
 
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -805,144 +895,214 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                     ),),
                                 )
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                width: MediaQuery.of(context).size.width,
-                                height: 250,
-                                child: Center(
-                                  child: Swiper(
-                                    autoplay: true,
-                                    viewportFraction: 0.8,
-                                    scale: 0.9,
-                                    itemCount: mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList.length,
-                                    itemBuilder: (context, index) =>
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Stack(
+
+                              if (!mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList.isEmpty) ...[
+                                Center(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    width: MediaQuery.of(context).size.width * 0.6,
+                                    height: 250,
+                                    child:
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ClayContainer(
+                                        width: MediaQuery.of(context).size.width * 0.35,
+                                        emboss: true,
+                                        spread: 2,
+                                        color: const Color.fromRGBO(237, 237, 237, 1),
+                                        depth: 30,
+                                        curveType: CurveType.concave,
+                                        customBorderRadius: const BorderRadius.only(
+                                            topRight: Radius.circular(70),
+                                            bottomLeft: Radius.circular(7),
+                                            topLeft: Radius.circular(7),
+                                            bottomRight: Radius.circular(7)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child:
+                                          Stack(
                                               children: <Widget>[
-
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: ClayContainer(
-                                                       width: MediaQuery.of(context).size.width * 0.35,
-                                                      emboss: true,
-                                                      spread: 2,
-                                                      color: const Color.fromRGBO(237, 237, 237, 1),
-                                                      depth: 30,
-                                                      curveType: CurveType.concave,
-                                                      customBorderRadius: const BorderRadius.only(
-                                                          topRight: Radius.circular(70),
-                                                          bottomLeft: Radius.circular(7),
-                                                          topLeft: Radius.circular(7),
-                                                          bottomRight: Radius.circular(7)
+                                                Center(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        // height: 70,
+                                                          child: Lottie.asset(
+                                                            'assets/football_goal.json',
+                                                            // width: MediaQuery.of(context).size.width * 0.80,
+                                                            height: 150,
+                                                            fit: BoxFit.contain,
+                                                          )
                                                       ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.only(left: 8, right: 8, top: 70),
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: <Widget>[
-                                                            const Text(
-                                                              'Yellow Cards 🟨',
-                                                              style: TextStyle(
-                                                                fontWeight: FontWeight.bold,
-                                                                color: Color.fromRGBO(217, 176, 95, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text(mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].yellowCard.toString()),
+                                                      const SizedBox(height: 20),
+                                                      const Text(
+                                                        "No Goals Scored Yet",
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(205, 133, 133, 1),
+                                                        ),
 
-                                                            const SizedBox(
-                                                                height: 5
-                                                            ),
 
-                                                            Padding(
-                                                              padding: const EdgeInsets.only(left: 40.0),
-                                                              child: Container(
-                                                                decoration: const BoxDecoration(
-                                                                    shape: BoxShape.circle,
-                                                                    color: Colors.white70
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ]
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ]
+                              else ... [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 250,
+                                  child: Center(
+                                    child: Swiper(
+                                      autoplay: true,
+                                      viewportFraction: 0.8,
+                                      scale: 0.9,
+                                      itemCount: mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList.length,
+                                      itemBuilder: (context, index) =>
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Stack(
+                                                children: <Widget>[
+
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: ClayContainer(
+                                                        width: MediaQuery.of(context).size.width * 0.35,
+                                                        emboss: true,
+                                                        spread: 2,
+                                                        color: const Color.fromRGBO(237, 237, 237, 1),
+                                                        depth: 30,
+                                                        curveType: CurveType.concave,
+                                                        customBorderRadius: const BorderRadius.only(
+                                                            topRight: Radius.circular(70),
+                                                            bottomLeft: Radius.circular(7),
+                                                            topLeft: Radius.circular(7),
+                                                            bottomRight: Radius.circular(7)
+                                                        ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.only(left: 8, right: 8, top: 70),
+                                                          child: Column(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: <Widget>[
+                                                              const Text(
+                                                                'Yellow Cards 🟨',
+                                                                style: TextStyle(
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Color.fromRGBO(217, 176, 95, 1.0),
                                                                 ),
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.all(8.0),
-                                                                  child: Text(
-                                                                    (index+1).toString(),
-                                                                    textAlign: TextAlign.center,
+                                                              ),
+                                                              Text(mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].yellowCard.toString()),
+
+                                                              const SizedBox(
+                                                                  height: 5
+                                                              ),
+
+                                                              Padding(
+                                                                padding: const EdgeInsets.only(left: 40.0),
+                                                                child: Container(
+                                                                  decoration: const BoxDecoration(
+                                                                      shape: BoxShape.circle,
+                                                                      color: Colors.white70
+                                                                  ),
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Text(
+                                                                      (index+1).toString(),
+                                                                      textAlign: TextAlign.center,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 15
-                                                            ),
-                                                            Center(
-                                                              child: Text(
+                                                              const SizedBox(
+                                                                  height: 15
+                                                              ),
+                                                              Center(
+                                                                child: Text(
                                                                   mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].playerName!,
                                                                   overflow: TextOverflow.ellipsis,
                                                                   style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: Color.fromRGBO(150, 129, 129, 1.0),
-                                                              ),
-                                                            ),),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            )
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Color.fromRGBO(150, 129, 129, 1.0),
+                                                                  ),
+                                                                ),),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              )
 
-                                                          ],
-                                                        ),
-                                                      )
-                                                  ),
-                                                ),
-                                                ClayContainer(
-                                                  emboss: true,
-                                                  spread: 2,
-                                                  color: const Color.fromRGBO(237, 237, 237, 1),
-                                                  depth: 49,
-                                                  // borderRadius: 75,
-                                                  curveType: CurveType.concave,
-                                                  customBorderRadius: const BorderRadius.all(Radius.circular(40)
-                                                  ),
-                                                  child: Container(
-                                                    width: 70.0,
-                                                    height: 70.0,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.transparent,
-                                                        shape: BoxShape.circle,
-                                                        image: DecorationImage(
-                                                            colorFilter: const ColorFilter.mode(
-                                                                Colors.grey,
-                                                                BlendMode.saturation
-                                                            ),
-                                                            alignment: const Alignment(0, -1),
-                                                            image: CachedNetworkImageProvider(
-                                                                mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].image!
-                                                            ),
-                                                            fit: BoxFit.cover
+                                                            ],
+                                                          ),
                                                         )
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                  ClayContainer(
+                                                    emboss: true,
+                                                    spread: 2,
+                                                    color: const Color.fromRGBO(237, 237, 237, 1),
+                                                    depth: 49,
+                                                    // borderRadius: 75,
+                                                    curveType: CurveType.concave,
+                                                    customBorderRadius: const BorderRadius.all(Radius.circular(40)
+                                                    ),
+                                                    child: Container(
+                                                      width: 70.0,
+                                                      height: 70.0,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.transparent,
+                                                          shape: BoxShape.circle,
+                                                          image: DecorationImage(
+                                                              colorFilter: const ColorFilter.mode(
+                                                                  Colors.grey,
+                                                                  BlendMode.saturation
+                                                              ),
+                                                              alignment: const Alignment(0, -1),
+                                                              image: CachedNetworkImageProvider(
+                                                                  mostFouledYCPlayersStatsAndInfoNotifier.mostFouledYCPlayersStatsAndInfoList[index].image!
+                                                              ),
+                                                              fit: BoxFit.cover
+                                                          )
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
 
-                                            ),
-                                            const SizedBox(width: 20),
+                                              ),
+                                              const SizedBox(width: 20),
 
-                                          ],
-                                        ),
-                                    control: const SwiperControl(
-                                      color: Color.fromRGBO(109, 101, 72, 1.0)
+                                            ],
+                                          ),
+                                      control: const SwiperControl(
+                                          color: Color.fromRGBO(109, 101, 72, 1.0)
+                                      ),
+                                      itemWidth: 250,
+                                      layout: SwiperLayout.STACK,
                                     ),
-                                    itemWidth: 250,
-                                    layout: SwiperLayout.STACK,
                                   ),
                                 ),
-                              ),
-                              const SizedBox (
-                                height: 50,
-                              ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ],
                             ],
                           ),
 
@@ -971,146 +1131,215 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                     ),),
                                 )
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                width: MediaQuery.of(context).size.width,
-                                height: 250,
-                                child: Center(
-                                  child: Swiper(
-                                    autoplay: true,
-                                    viewportFraction: 0.8,
-                                    scale: 0.9,
-                                    itemCount: mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList.length,
-                                    itemBuilder: (context, index) =>
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Stack(
+                              if (!mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList.isEmpty) ...[
+                                Center(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    width: MediaQuery.of(context).size.width * 0.6,
+                                    height: 250,
+                                    child:
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ClayContainer(
+                                        width: MediaQuery.of(context).size.width * 0.35,
+                                        emboss: true,
+                                        spread: 2,
+                                        color: const Color.fromRGBO(237, 237, 237, 1),
+                                        depth: 30,
+                                        curveType: CurveType.concave,
+                                        customBorderRadius: const BorderRadius.only(
+                                            topRight: Radius.circular(70),
+                                            bottomLeft: Radius.circular(7),
+                                            topLeft: Radius.circular(7),
+                                            bottomRight: Radius.circular(7)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child:
+                                          Stack(
                                               children: <Widget>[
-
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: ClayContainer(
-                                                      width: MediaQuery.of(context).size.width * 0.35,
-                                                      emboss: true,
-                                                      spread: 2,
-                                                      color: const Color.fromRGBO(237, 237, 237, 1),
-                                                      depth: 49,
-                                                      curveType: CurveType.concave,
-                                                      customBorderRadius: const BorderRadius.only(
-                                                          topRight: Radius.circular(70),
-                                                          bottomLeft: Radius.circular(7),
-                                                          topLeft: Radius.circular(7),
-                                                          bottomRight: Radius.circular(7)
+                                                Center(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        // height: 70,
+                                                          child: Lottie.asset(
+                                                            'assets/football_goal.json',
+                                                            // width: MediaQuery.of(context).size.width * 0.80,
+                                                            height: 150,
+                                                            fit: BoxFit.contain,
+                                                          )
                                                       ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.only(left: 8, right: 8, top: 70),
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: <Widget>[
-                                                            const Text(
-                                                              'Red Cards 🟥',
-                                                               style: TextStyle(
-                                                                fontWeight: FontWeight.bold,
-                                                                color: Color.fromRGBO(212, 45, 45, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text(mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].redCard.toString()),
+                                                      const SizedBox(height: 20),
+                                                      const Text(
+                                                        "No Goals Scored Yet",
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(205, 133, 133, 1),
+                                                        ),
 
-                                                            const SizedBox(
-                                                                height: 5
-                                                            ),
 
-                                                            Padding(
-                                                              padding: const EdgeInsets.only(left: 40.0),
-                                                              child: Container(
-                                                                decoration: const BoxDecoration(
-                                                                    shape: BoxShape.circle,
-                                                                    color: Colors.white70
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ]
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ]
+                              else ... [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 250,
+                                  child: Center(
+                                    child: Swiper(
+                                      autoplay: true,
+                                      viewportFraction: 0.8,
+                                      scale: 0.9,
+                                      itemCount: mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList.length,
+                                      itemBuilder: (context, index) =>
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Stack(
+                                                children: <Widget>[
+
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: ClayContainer(
+                                                        width: MediaQuery.of(context).size.width * 0.35,
+                                                        emboss: true,
+                                                        spread: 2,
+                                                        color: const Color.fromRGBO(237, 237, 237, 1),
+                                                        depth: 49,
+                                                        curveType: CurveType.concave,
+                                                        customBorderRadius: const BorderRadius.only(
+                                                            topRight: Radius.circular(70),
+                                                            bottomLeft: Radius.circular(7),
+                                                            topLeft: Radius.circular(7),
+                                                            bottomRight: Radius.circular(7)
+                                                        ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.only(left: 8, right: 8, top: 70),
+                                                          child: Column(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: <Widget>[
+                                                              const Text(
+                                                                'Red Cards 🟥',
+                                                                style: TextStyle(
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Color.fromRGBO(212, 45, 45, 1.0),
                                                                 ),
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.all(8.0),
-                                                                  child: Text(
-                                                                    (index+1).toString(),
-                                                                    textAlign: TextAlign.center,
+                                                              ),
+                                                              Text(mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].redCard.toString()),
+
+                                                              const SizedBox(
+                                                                  height: 5
+                                                              ),
+
+                                                              Padding(
+                                                                padding: const EdgeInsets.only(left: 40.0),
+                                                                child: Container(
+                                                                  decoration: const BoxDecoration(
+                                                                      shape: BoxShape.circle,
+                                                                      color: Colors.white70
+                                                                  ),
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Text(
+                                                                      (index+1).toString(),
+                                                                      textAlign: TextAlign.center,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 15
-                                                            ),
-                                                            Center(
-                                                              child: Text(
+                                                              const SizedBox(
+                                                                  height: 15
+                                                              ),
+                                                              Center(
+                                                                child: Text(
                                                                   mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].playerName!,
-                                                                overflow: TextOverflow.ellipsis,
-                                                                style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: Color.fromRGBO(150, 129, 129, 1.0),
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                  style: const TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Color.fromRGBO(150, 129, 129, 1.0),
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            )
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              )
 
-                                                          ],
-                                                        ),
-                                                      )
-                                                  ),
-                                                ),
-                                                ClayContainer(
-                                                  emboss: true,
-                                                  spread: 2,
-                                                  color: const Color.fromRGBO(237, 237, 237, 1),
-                                                  depth: 49,
-                                                  // borderRadius: 75,
-                                                  curveType: CurveType.concave,
-                                                  customBorderRadius: const BorderRadius.all(Radius.circular(40)
-                                                  ),
-                                                  child: Container(
-                                                    width: 70.0,
-                                                    height: 70.0,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.transparent,
-                                                        shape: BoxShape.circle,
-                                                        image: DecorationImage(
-                                                            colorFilter: const ColorFilter.mode(
-                                                                Colors.grey,
-                                                                BlendMode.saturation
-                                                            ),
-                                                            alignment: const Alignment(0, -1),
-                                                            image: CachedNetworkImageProvider(
-                                                                mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].image!
-                                                            ),
-                                                            fit: BoxFit.cover
+                                                            ],
+                                                          ),
                                                         )
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                  ClayContainer(
+                                                    emboss: true,
+                                                    spread: 2,
+                                                    color: const Color.fromRGBO(237, 237, 237, 1),
+                                                    depth: 49,
+                                                    // borderRadius: 75,
+                                                    curveType: CurveType.concave,
+                                                    customBorderRadius: const BorderRadius.all(Radius.circular(40)
+                                                    ),
+                                                    child: Container(
+                                                      width: 70.0,
+                                                      height: 70.0,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.transparent,
+                                                          shape: BoxShape.circle,
+                                                          image: DecorationImage(
+                                                              colorFilter: const ColorFilter.mode(
+                                                                  Colors.grey,
+                                                                  BlendMode.saturation
+                                                              ),
+                                                              alignment: const Alignment(0, -1),
+                                                              image: CachedNetworkImageProvider(
+                                                                  mostFouledRCPlayersStatsAndInfoNotifier.mostFouledRCPlayersStatsAndInfoList[index].image!
+                                                              ),
+                                                              fit: BoxFit.cover
+                                                          )
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
 
-                                            ),
-                                            const SizedBox(width: 20),
+                                              ),
+                                              const SizedBox(width: 20),
 
-                                          ],
-                                        ),
+                                            ],
+                                          ),
 
-                                    control: const SwiperControl(
+                                      control: const SwiperControl(
                                         color: Color.fromRGBO(109, 101, 72, 1.0),
+                                      ),
+                                      itemWidth: 250,
+                                      layout: SwiperLayout.STACK,
                                     ),
-                                    itemWidth: 250,
-                                    layout: SwiperLayout.STACK,
                                   ),
                                 ),
-                              ),
-                              const SizedBox (
-                                height: 40,
-                              ),
+                                const SizedBox (
+                                  height: 40,
+                                ),
+                              ],
                             ],
                           ),
 
@@ -1139,242 +1368,311 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                       ),),
                                   )
                               ),
-                              Container(
-                                height: 330,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: Swiper(
-                                  autoplay: true,
-                                  viewportFraction: 0.8,
-                                  scale: 0.9,
-                                  itemCount: topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList.length,
-                                  itemBuilder: (context, index) =>
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
-                                        child: ClayContainer(
-                                          width: MediaQuery.of(context).size.width * 0.90,
-                                          emboss: true,
-                                          spread: 2,
-                                          color: const Color.fromRGBO(237, 237, 237, 1),
-                                          depth: 20,
-                                          curveType: CurveType.concave,
-                                          customBorderRadius: const BorderRadius.only(
-                                              topRight: Radius.elliptical(70, 70),
-                                              bottomLeft: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Stack(
+
+                              if (!topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList.isEmpty) ...[
+                                Center(
+                                  child: Container(
+                                    height: 330,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child:
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                      child: ClayContainer(
+                                        width: MediaQuery.of(context).size.width * 0.80,
+                                        emboss: true,
+                                        spread: 2,
+                                        color: const Color.fromRGBO(237, 237, 237, 1),
+                                        depth: 20,
+                                        curveType: CurveType.concave,
+                                        customBorderRadius: const BorderRadius.only(
+                                            topRight: Radius.elliptical(70, 70),
+                                            bottomLeft: Radius.circular(10),
+                                            topLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child:
+                                          Stack(
                                               children: <Widget>[
-                                                Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(15.0),
-                                                    child: Container(
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            alignment: const Alignment(0, -1),
-                                                            image: CachedNetworkImageProvider(
-                                                                topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].image!
-                                                            ),
-                                                            fit: BoxFit.cover
-                                                        ),
-                                                        borderRadius: const BorderRadius.only(
-                                                          topLeft: Radius.circular(10),
-                                                          bottomLeft: Radius.circular(10),
-                                                          topRight: Radius.circular(10),
-                                                          bottomRight: Radius.circular(10),
-                                                        ),
-                                                        shape: BoxShape.rectangle,
+                                                Center(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        // height: 70,
+                                                          child: Lottie.asset(
+                                                            'assets/football_goal.json',
+                                                            width: MediaQuery.of(context).size.width * 0.80,
+                                                            height: 200,
+                                                            fit: BoxFit.contain,
+                                                          )
                                                       ),
-                                                    ),
+                                                      const SizedBox(height: 20),
+                                                      const Text(
+                                                        "No Goals Scored Yet",
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(205, 133, 133, 1),
+                                                        ),
+
+
+                                                      )
+                                                    ],
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
-                                                  child: Align(
-                                                    alignment: Alignment.centerRight,
-                                                    child: Container(
-                                                      decoration: const BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: Colors.white70
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Text(
-                                                          (index+1).toString(),
-                                                          textAlign: TextAlign.center,
-                                                          style: const TextStyle(
-                                                            color: Color.fromRGBO(205, 133, 133, 1),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Row(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height:50,
-                                                          child: VerticalDivider(
-                                                            // width: 14,
-                                                            thickness: 3,
-                                                            color: Color.fromRGBO(205, 133, 133, 1),
-                                                          ),
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Position',
-                                                              style: TextStyle(
-                                                                  color: Colors.black54
-                                                              ),
-                                                            ),
-                                                            const SizedBox(height: 10),
-                                                            Text('       ' + topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerPosition!,
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 50
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height:50,
-                                                          child: VerticalDivider(
-                                                            thickness: 3,
-                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
-                                                          ),
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Name',
-                                                              style: TextStyle(
-                                                                  color: Colors.black54
-                                                              ),),
-                                                            const SizedBox(height: 10),
-                                                            Text('       ' + topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerName!,
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: const Color.fromRGBO(150, 129, 129, 1.0),
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 20
-                                                    ),
-                                                    const Divider(
-                                                      thickness: 2,
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 5
-                                                    ),
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                      children: <Widget>[
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Goals Con.',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 70,
-                                                              child: Divider(
-                                                                indent: 5,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('      ' + topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].goalsConcededGkDef.toString()!,
-                                                              style: const TextStyle(
-                                                                  color: Colors.black54
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                        
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Clean Sheets',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 70,
-                                                              child: Divider(
-                                                                indent: 5,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(
-                                                                    191, 146,
-                                                                    69, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('      ' + topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].cleanSheetGk.toString(),
-                                                              style: const TextStyle(
-                                                                color: Colors.black54,
-                                                              ),
-                                                              textAlign: TextAlign.right,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Matches',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 60,
-                                                              child: Divider(
-                                                                indent: 10,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(125, 179, 140, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].matchesPlayed} played',
-                                                              style: const TextStyle(
-                                                                  color: Colors.black54
-                                                              ),),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                                )
+                                              ]
                                           ),
                                         ),
                                       ),
-                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
-                                  layout: SwiperLayout.DEFAULT,
+                                    ),
+                                  ),
+
                                 ),
-                              ),
-                              const SizedBox (
-                                height: 50,
-                              ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ]
+                              else ... [
+                                Container(
+                                  height: 330,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: Swiper(
+                                    autoplay: true,
+                                    viewportFraction: 0.8,
+                                    scale: 0.9,
+                                    itemCount: topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList.length,
+                                    itemBuilder: (context, index) =>
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                          child: ClayContainer(
+                                            width: MediaQuery.of(context).size.width * 0.90,
+                                            emboss: true,
+                                            spread: 2,
+                                            color: const Color.fromRGBO(237, 237, 237, 1),
+                                            depth: 20,
+                                            curveType: CurveType.concave,
+                                            customBorderRadius: const BorderRadius.only(
+                                                topRight: Radius.elliptical(70, 70),
+                                                bottomLeft: Radius.circular(10),
+                                                topLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10)
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(15.0),
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(15.0),
+                                                      child: Container(
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              alignment: const Alignment(0, -1),
+                                                              image: CachedNetworkImageProvider(
+                                                                  topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].image!
+                                                              ),
+                                                              fit: BoxFit.cover
+                                                          ),
+                                                          borderRadius: const BorderRadius.only(
+                                                            topLeft: Radius.circular(10),
+                                                            bottomLeft: Radius.circular(10),
+                                                            topRight: Radius.circular(10),
+                                                            bottomRight: Radius.circular(10),
+                                                          ),
+                                                          shape: BoxShape.rectangle,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                    child: Align(
+                                                      alignment: Alignment.centerRight,
+                                                      child: Container(
+                                                        decoration: const BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            color: Colors.white70
+                                                        ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Text(
+                                                            (index+1).toString(),
+                                                            textAlign: TextAlign.center,
+                                                            style: const TextStyle(
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height:50,
+                                                            child: VerticalDivider(
+                                                              // width: 14,
+                                                              thickness: 3,
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Position',
+                                                                style: TextStyle(
+                                                                    color: Colors.black54
+                                                                ),
+                                                              ),
+                                                              const SizedBox(height: 10),
+                                                              Text('       ${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerPosition?.toUpperCase()}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 50
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height:50,
+                                                            child: VerticalDivider(
+                                                              thickness: 3,
+                                                              color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Name',
+                                                                style: TextStyle(
+                                                                    color: Colors.black54
+                                                                ),),
+                                                              const SizedBox(height: 10),
+                                                              Text('       ${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].playerName!}',
+                                                                style: const TextStyle(
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Color.fromRGBO(150, 129, 129, 1.0),
+                                                                ),),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 20
+                                                      ),
+                                                      const Divider(
+                                                        thickness: 2,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 5
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Goals Con.',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 70,
+                                                                child: Divider(
+                                                                  indent: 5,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('      ${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].goalsConcededGkDef.toString()}',
+                                                                style: const TextStyle(
+                                                                    color: Colors.black54
+                                                                ),),
+                                                            ],
+                                                          ),
+
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Clean Sheets',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 70,
+                                                                child: Divider(
+                                                                  indent: 5,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(
+                                                                      191, 146,
+                                                                      69, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('      ${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].cleanSheetGk}',
+                                                                style: const TextStyle(
+                                                                  color: Colors.black54,
+                                                                ),
+                                                                textAlign: TextAlign.right,
+                                                              ),
+                                                            ],
+                                                          ),
+
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Matches',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 60,
+                                                                child: Divider(
+                                                                  indent: 10,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(125, 179, 140, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('${topGKPlayersStatsAndInfoNotifier.topGKPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                                style: const TextStyle(
+                                                                    color: Colors.black54
+                                                                ),),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                    layout: SwiperLayout.DEFAULT,
+                                  ),
+                                ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ],
                             ],
                           ),
                           
@@ -1474,7 +1772,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                           (index+1).toString(),
                                                           textAlign: TextAlign.center,
                                                           style: const TextStyle(
-                                                            color: const Color.fromRGBO(205, 133, 133, 1),
+                                                            color: Color.fromRGBO(205, 133, 133, 1),
                                                           ),
                                                         ),
                                                       ),
@@ -1504,7 +1802,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                               ),
                                                             ),
                                                             const SizedBox(height: 10),
-                                                            Text('       ' + topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerPosition!,
+                                                            Text('       ${topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerPosition?.toUpperCase()}',
                                                               style: const TextStyle(
                                                                   fontWeight: FontWeight.bold
                                                               ),),
@@ -1532,7 +1830,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                   color: Colors.black54
                                                               ),),
                                                             const SizedBox(height: 10),
-                                                            Text('       ' + topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].preferredFoot!,
+                                                            Text('       ${topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].preferredFoot!}',
                                                               style: const TextStyle(
                                                                   fontWeight: FontWeight.bold
                                                               ),),
@@ -1568,9 +1866,9 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                 color: Color.fromRGBO(130, 185, 208, 1.0),
                                                               ),
                                                             ),
-                                                            Text('   ' + topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerName!,
+                                                            Text('   ${topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].playerName!}',
                                                               style: const TextStyle(
-                                                                  color: const Color.fromRGBO(150, 129, 129, 1.0),
+                                                                  color: Color.fromRGBO(150, 129, 129, 1.0),
                                                               ),),
                                                           ],
                                                         ),
@@ -1592,7 +1890,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                     69, 1.0),
                                                               ),
                                                             ),
-                                                            Text('      ' + topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].goalsConcededGkDef.toString(),
+                                                            Text('      ${topDefensivePlayersStatsAndInfoNotifier.topDefensivePlayersStatsAndInfoList[index].goalsConcededGkDef}',
                                                               style: const TextStyle(
                                                                 color: Colors.black54,
                                                               ),
@@ -1641,6 +1939,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                             ],
                           ),
 
+
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -1666,215 +1965,284 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                       ),),
                                   )
                               ),
-                              Container(
-                                height: 330,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: Swiper(
-                                  autoplay: true,
-                                  viewportFraction: 0.8,
-                                  scale: 0.9,
-                                  itemCount: motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList.length,
-                                  itemBuilder: (context, index) =>
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
-                                        child: ClayContainer(
-                                          width: MediaQuery.of(context).size.width * 0.90,
-                                          emboss: true,
-                                          spread: 2,
-                                          color: const Color.fromRGBO(237, 237, 237, 1),
-                                          depth: 20,
-                                          curveType: CurveType.concave,
-                                          customBorderRadius: const BorderRadius.only(
-                                              topRight: Radius.elliptical(70, 70),
-                                              bottomLeft: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Stack(
+
+                              if (!motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList.isEmpty) ...[
+                                Center(
+                                  child: Container(
+                                    height: 330,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child:
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                      child: ClayContainer(
+                                        width: MediaQuery.of(context).size.width * 0.80,
+                                        emboss: true,
+                                        spread: 2,
+                                        color: const Color.fromRGBO(237, 237, 237, 1),
+                                        depth: 20,
+                                        curveType: CurveType.concave,
+                                        customBorderRadius: const BorderRadius.only(
+                                            topRight: Radius.elliptical(70, 70),
+                                            bottomLeft: Radius.circular(10),
+                                            topLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child:
+                                          Stack(
                                               children: <Widget>[
-                                                Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(15.0),
-                                                    child: Container(
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            alignment: const Alignment(0, -1),
-                                                            image: CachedNetworkImageProvider(
-                                                                (motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].image)!
-                                                            ),
-                                                            fit: BoxFit.cover
-                                                        ),
-                                                        borderRadius: const BorderRadius.only(
-                                                          topLeft: Radius.circular(10),
-                                                          bottomLeft: Radius.circular(10),
-                                                          topRight: Radius.circular(10),
-                                                          bottomRight: Radius.circular(10),
-                                                        ),
-                                                        shape: BoxShape.rectangle,
+                                                Center(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        // height: 70,
+                                                          child: Lottie.asset(
+                                                            'assets/football_goal.json',
+                                                            width: MediaQuery.of(context).size.width * 0.80,
+                                                            height: 200,
+                                                            fit: BoxFit.contain,
+                                                          )
                                                       ),
-                                                    ),
+                                                      const SizedBox(height: 20),
+                                                      const Text(
+                                                        "No Goals Scored Yet",
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(205, 133, 133, 1),
+                                                        ),
+
+
+                                                      )
+                                                    ],
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
-                                                  child: Align(
-                                                    alignment: Alignment.centerRight,
-                                                    child: Container(
-                                                      decoration: const BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: Colors.white70
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Text(
-                                                          (index+1).toString(),
-                                                          textAlign: TextAlign.center,
-                                                          style: const TextStyle(
-                                                            color: Color.fromRGBO(205, 133, 133, 1),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Row(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height:50,
-                                                          child: VerticalDivider(
-                                                            // width: 14,
-                                                            thickness: 3,
-                                                            color: Color.fromRGBO(205, 133, 133, 1),
-                                                          ),
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: <Widget>[
-                                                            const Text('Position',
-                                                              style: TextStyle(
-                                                                  color: Colors.black54
-                                                              ),
-                                                            ),
-                                                            const SizedBox(height: 10),
-                                                            Text('       ' + (motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerPosition)!,
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 50
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height:50,
-                                                          child: VerticalDivider(
-                                                            thickness: 3,
-                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
-                                                          ),
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Preferred Foot',
-                                                              style: TextStyle(
-                                                                  color: Colors.black54
-                                                              ),),
-                                                            const SizedBox(height: 10),
-                                                            Text('       ' + (motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].preferredFoot)!,
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 20
-                                                    ),
-                                                    const Divider(
-                                                      thickness: 2,
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 5
-                                                    ),
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: <Widget>[
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Name',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 70,
-                                                              child: Divider(
-                                                                indent: 5,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('   ' + motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerName!,
-                                                              style: const TextStyle(
-                                                                  color: const Color.fromRGBO(150, 129, 129, 1.0),
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Matches',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 60,
-                                                              child: Divider(
-                                                                indent: 10,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(125, 179, 140, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('${motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].matchesPlayed} played',
-                                                              style: const TextStyle(
-                                                                  color: Colors.black54
-                                                              ),),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                                )
+                                              ]
                                           ),
                                         ),
                                       ),
-                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
-                                  layout: SwiperLayout.DEFAULT,
+                                    ),
+                                  ),
+
                                 ),
-                              ),
-                              const SizedBox (
-                                height: 50,
-                              ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ]
+                              else ... [
+                                Container(
+                                  height: 330,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: Swiper(
+                                    autoplay: true,
+                                    viewportFraction: 0.8,
+                                    scale: 0.9,
+                                    itemCount: motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList.length,
+                                    itemBuilder: (context, index) =>
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                          child: ClayContainer(
+                                            width: MediaQuery.of(context).size.width * 0.90,
+                                            emboss: true,
+                                            spread: 2,
+                                            color: const Color.fromRGBO(237, 237, 237, 1),
+                                            depth: 20,
+                                            curveType: CurveType.concave,
+                                            customBorderRadius: const BorderRadius.only(
+                                                topRight: Radius.elliptical(70, 70),
+                                                bottomLeft: Radius.circular(10),
+                                                topLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10)
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(15.0),
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(15.0),
+                                                      child: Container(
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              alignment: const Alignment(0, -1),
+                                                              image: CachedNetworkImageProvider(
+                                                                  (motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].image)!
+                                                              ),
+                                                              fit: BoxFit.cover
+                                                          ),
+                                                          borderRadius: const BorderRadius.only(
+                                                            topLeft: Radius.circular(10),
+                                                            bottomLeft: Radius.circular(10),
+                                                            topRight: Radius.circular(10),
+                                                            bottomRight: Radius.circular(10),
+                                                          ),
+                                                          shape: BoxShape.rectangle,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                    child: Align(
+                                                      alignment: Alignment.centerRight,
+                                                      child: Container(
+                                                        decoration: const BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            color: Colors.white70
+                                                        ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Text(
+                                                            (index+1).toString(),
+                                                            textAlign: TextAlign.center,
+                                                            style: const TextStyle(
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height:50,
+                                                            child: VerticalDivider(
+                                                              // width: 14,
+                                                              thickness: 3,
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: <Widget>[
+                                                              const Text('Position',
+                                                                style: TextStyle(
+                                                                    color: Colors.black54
+                                                                ),
+                                                              ),
+                                                              const SizedBox(height: 10),
+                                                              Text('       ${motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerPosition?.toUpperCase()}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 50
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height:50,
+                                                            child: VerticalDivider(
+                                                              thickness: 3,
+                                                              color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Preferred Foot',
+                                                                style: TextStyle(
+                                                                    color: Colors.black54
+                                                                ),),
+                                                              const SizedBox(height: 10),
+                                                              Text('       ${(motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].preferredFoot)!}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 20
+                                                      ),
+                                                      const Divider(
+                                                        thickness: 2,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 5
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Name',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 70,
+                                                                child: Divider(
+                                                                  indent: 5,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('   ${motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].playerName!}',
+                                                                style: const TextStyle(
+                                                                  color: Color.fromRGBO(150, 129, 129, 1.0),
+                                                                ),),
+                                                            ],
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Matches',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 60,
+                                                                child: Divider(
+                                                                  indent: 10,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(125, 179, 140, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('${motmPlayersStatsAndInfoNotifier.mOTMPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                                style: const TextStyle(
+                                                                    color: Colors.black54
+                                                                ),),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                    layout: SwiperLayout.DEFAULT,
+                                  ),
+                                ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ],
                             ],
                           ),
 
@@ -1903,245 +2271,315 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                       ),),
                                   )
                               ),
-                              Container(
-                                height: 330,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: Swiper(
-                                  autoplay: true,
-                                  viewportFraction: 0.8,
-                                  scale: 0.9,
-                                  itemCount: cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList.length,
-                                  itemBuilder: (context, index) =>
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
-                                        child: ClayContainer(
-                                          width: MediaQuery.of(context).size.width * 0.90,
-                                          emboss: true,
-                                          spread: 2,
-                                          color: const Color.fromRGBO(237, 237, 237, 1),
-                                          depth: 20,
-                                          curveType: CurveType.concave,
-                                          customBorderRadius: const BorderRadius.only(
-                                              topRight: Radius.elliptical(70, 70),
-                                              bottomLeft: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Stack(
+
+                              if (!cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList.isEmpty) ...[
+                                Center(
+                                  child: Container(
+                                    height: 330,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child:
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                      child: ClayContainer(
+                                        width: MediaQuery.of(context).size.width * 0.80,
+                                        emboss: true,
+                                        spread: 2,
+                                        color: const Color.fromRGBO(237, 237, 237, 1),
+                                        depth: 20,
+                                        curveType: CurveType.concave,
+                                        customBorderRadius: const BorderRadius.only(
+                                            topRight: Radius.elliptical(70, 70),
+                                            bottomLeft: Radius.circular(10),
+                                            topLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child:
+                                          Stack(
                                               children: <Widget>[
-                                                Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(15.0),
-                                                    child: Container(
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            alignment: const Alignment(0, -1),
-                                                            image: CachedNetworkImageProvider(
-                                                                cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].image!
-                                                            ),
-                                                            fit: BoxFit.cover
-                                                        ),
-                                                        borderRadius: const BorderRadius.only(
-                                                          topLeft: Radius.circular(10),
-                                                          bottomLeft: Radius.circular(10),
-                                                          topRight: Radius.circular(10),
-                                                          bottomRight: Radius.circular(10),
-                                                        ),
-                                                        shape: BoxShape.rectangle,
+                                                Center(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        // height: 70,
+                                                          child: Lottie.asset(
+                                                            'assets/football_goal.json',
+                                                            width: MediaQuery.of(context).size.width * 0.80,
+                                                            height: 200,
+                                                            fit: BoxFit.contain,
+                                                          )
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right: 50.0, top: 40),
-                                                  child: Align(
-                                                    alignment: Alignment.centerRight,
-                                                    child: Container(
-                                                      decoration: const BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: Colors.white70
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Text(
-                                                          (index+1).toString(),
-                                                          textAlign: TextAlign.center,
-                                                          style: const TextStyle(
-                                                            color: Color.fromRGBO(205, 133, 133, 1),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Row(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height:50,
-                                                          child: VerticalDivider(
-                                                            // width: 14,
-                                                            thickness: 3,
-                                                            color: Color.fromRGBO(205, 133, 133, 1),
-                                                          ),
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Position',
-                                                              style: TextStyle(
-                                                                  color: Colors.black54
-                                                              ),
-                                                            ),
-                                                            const SizedBox(height: 10),
-                                                            Text('       ${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerPosition!}',
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 50
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height:50,
-                                                          child: VerticalDivider(
-                                                            thickness: 3,
-                                                            color: Color.fromRGBO(97, 143, 223, 1.0),
-                                                          ),
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Preferred Foot',
-                                                              style: TextStyle(
-                                                                  color: Colors.black54
-                                                              ),),
-                                                            const SizedBox(height: 10),
-                                                            Text('       ' + cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].preferredFoot!,
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 20
-                                                    ),
-                                                    const Divider(
-                                                      thickness: 2,
-                                                    ),
-                                                    const SizedBox(
-                                                        height: 5
-                                                    ),
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                      children: <Widget>[
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Name',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 70,
-                                                              child: Divider(
-                                                                indent: 5,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(130, 185, 208, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('   ' + cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerName!,
-                                                              style: const TextStyle(
-                                                                  color: Color.fromRGBO(150, 129, 129, 1.0),
-                                                              ),
-                                                                overflow: TextOverflow.ellipsis
-                                                                ),
-                                                          ],
+                                                      const SizedBox(height: 20),
+                                                      const Text(
+                                                        "No Goals Scored Yet",
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(205, 133, 133, 1),
                                                         ),
 
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('MOTM Count',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),),
-                                                            const SizedBox(
-                                                              width: 70,
-                                                              child: Divider(
-                                                                indent: 5,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(
-                                                                    191, 146,
-                                                                    69, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('      ' + cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].cumMOTMCount.toString(),
-                                                              style: const TextStyle(
-                                                                color: Colors.black54,
-                                                              ),
-                                                              textAlign: TextAlign.right,
-                                                                overflow: TextOverflow.ellipsis
-                                                            ),
-                                                          ],
-                                                        ),
 
-                                                        Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Text('Matches',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),overflow: TextOverflow.ellipsis),
-                                                            const SizedBox(
-                                                              width: 60,
-                                                              child: Divider(
-                                                                indent: 10,
-                                                                thickness: 3,
-                                                                color: Color.fromRGBO(125, 179, 140, 1.0),
-                                                              ),
-                                                            ),
-                                                            Text('${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].matchesPlayed} played',
-                                                              style: const TextStyle(
-                                                                  color: Colors.black54
-                                                              ),overflow: TextOverflow.ellipsis),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ]
                                           ),
                                         ),
                                       ),
-                                  itemWidth: MediaQuery.of(context).size.width * 0.9,
-                                  layout: SwiperLayout.DEFAULT,
+                                    ),
+                                  ),
+
                                 ),
-                              ),
-                              const SizedBox (
-                                height: 50,
-                              ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ]
+                              else ... [
+                                Container(
+                                  height: 330,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: Swiper(
+                                    autoplay: true,
+                                    viewportFraction: 0.8,
+                                    scale: 0.9,
+                                    itemCount: cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList.length,
+                                    itemBuilder: (context, index) =>
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
+                                          child: ClayContainer(
+                                            width: MediaQuery.of(context).size.width * 0.90,
+                                            emboss: true,
+                                            spread: 2,
+                                            color: const Color.fromRGBO(237, 237, 237, 1),
+                                            depth: 20,
+                                            curveType: CurveType.concave,
+                                            customBorderRadius: const BorderRadius.only(
+                                                topRight: Radius.elliptical(70, 70),
+                                                bottomLeft: Radius.circular(10),
+                                                topLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10)
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(15.0),
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(15.0),
+                                                      child: Container(
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              alignment: const Alignment(0, -1),
+                                                              image: CachedNetworkImageProvider(
+                                                                  cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].image!
+                                                              ),
+                                                              fit: BoxFit.cover
+                                                          ),
+                                                          borderRadius: const BorderRadius.only(
+                                                            topLeft: Radius.circular(10),
+                                                            bottomLeft: Radius.circular(10),
+                                                            topRight: Radius.circular(10),
+                                                            bottomRight: Radius.circular(10),
+                                                          ),
+                                                          shape: BoxShape.rectangle,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(right: 50.0, top: 40),
+                                                    child: Align(
+                                                      alignment: Alignment.centerRight,
+                                                      child: Container(
+                                                        decoration: const BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            color: Colors.white70
+                                                        ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Text(
+                                                            (index+1).toString(),
+                                                            textAlign: TextAlign.center,
+                                                            style: const TextStyle(
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height:50,
+                                                            child: VerticalDivider(
+                                                              // width: 14,
+                                                              thickness: 3,
+                                                              color: Color.fromRGBO(205, 133, 133, 1),
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Position',
+                                                                style: TextStyle(
+                                                                    color: Colors.black54
+                                                                ),
+                                                              ),
+                                                              const SizedBox(height: 10),
+                                                              Text('       ${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerPosition?.toUpperCase()}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 50
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height:50,
+                                                            child: VerticalDivider(
+                                                              thickness: 3,
+                                                              color: Color.fromRGBO(97, 143, 223, 1.0),
+                                                            ),
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Preferred Foot',
+                                                                style: TextStyle(
+                                                                    color: Colors.black54
+                                                                ),),
+                                                              const SizedBox(height: 10),
+                                                              Text('       ${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].preferredFoot!}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 20
+                                                      ),
+                                                      const Divider(
+                                                        thickness: 2,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 5
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Name',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 70,
+                                                                child: Divider(
+                                                                  indent: 5,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(130, 185, 208, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('   ${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].playerName!}',
+                                                                  style: const TextStyle(
+                                                                    color: Color.fromRGBO(150, 129, 129, 1.0),
+                                                                  ),
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                            ],
+                                                          ),
+
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('MOTM Count',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),),
+                                                              const SizedBox(
+                                                                width: 70,
+                                                                child: Divider(
+                                                                  indent: 5,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(
+                                                                      191, 146,
+                                                                      69, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('      ${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].cumMOTMCount}',
+                                                                  style: const TextStyle(
+                                                                    color: Colors.black54,
+                                                                  ),
+                                                                  textAlign: TextAlign.right,
+                                                                  overflow: TextOverflow.ellipsis
+                                                              ),
+                                                            ],
+                                                          ),
+
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: <Widget>[
+                                                              const Text('Matches',
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.bold
+                                                                  ),overflow: TextOverflow.ellipsis),
+                                                              const SizedBox(
+                                                                width: 60,
+                                                                child: Divider(
+                                                                  indent: 10,
+                                                                  thickness: 3,
+                                                                  color: Color.fromRGBO(125, 179, 140, 1.0),
+                                                                ),
+                                                              ),
+                                                              Text('${cumMOTMPlayersStatsAndInfoNotifier.cumMOTMPlayersStatsAndInfoList[index].matchesPlayed} played',
+                                                                  style: const TextStyle(
+                                                                      color: Colors.black54
+                                                                  ),overflow: TextOverflow.ellipsis),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    itemWidth: MediaQuery.of(context).size.width * 0.9,
+                                    layout: SwiperLayout.DEFAULT,
+                                  ),
+                                ),
+                                const SizedBox (
+                                  height: 50,
+                                ),
+                              ],
+                              
                             ],
                           ),
 
@@ -2257,201 +2695,80 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   ),
                                                   contentPadding: const EdgeInsets.all(10),
                                                   backgroundColor: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                  content: SizedBox(
-                                                    width: MediaQuery.of(context).size.width,
-                                                    height: MediaQuery.of(context).size.height * 0.6,
-                                                    child:
-                                                    ListView.builder(
-                                                      itemExtent: MediaQuery.of(context).size.height * 0.585,
+                                                  content: ConfettiWidget(
+                                                    createParticlePath: drawStar,
+                                                    confettiController: _controllerTopCenter,
+                                                    blastDirection: -pi / 2,
+                                                    maxBlastForce: 50, // set a lower max blast force
+                                                    minBlastForce: 20, // set a lower min blast force
+                                                    emissionFrequency: 0.35,
+                                                    blastDirectionality: BlastDirectionality.explosive,
+                                                    numberOfParticles: 50, // a lot of particles at once
+                                                    gravity: 1,
+                                                    child: SizedBox(
+                                                      width: MediaQuery.of(context).size.width,
+                                                      height: MediaQuery.of(context).size.height * 0.6,
+                                                      child:
+                                                      ListView.builder(
+                                                        itemExtent: MediaQuery.of(context).size.height * 0.585,
 
-                                                      shrinkWrap: true,
-                                                      itemCount: playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList.length,
-                                                      itemBuilder: (context, index) =>
+                                                        shrinkWrap: true,
+                                                        itemCount: playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList.length,
+                                                        itemBuilder: (context, index) =>
 
-                                                          Stack(
-                                                            alignment: AlignmentDirectional.topStart,
-                                                            // fit: StackFit.loose,
-                                                            children: [
-                                                              Align(
-                                                                alignment: Alignment.centerLeft,
-                                                                child: SizedBox(
-                                                                  width: MediaQuery.of(context).size.width * .43,
-                                                                  height: MediaQuery.of(context).size.height * 2,
-                                                                  child: Image(
-                                                                    height: double.infinity,
-                                                                    width: double.infinity,
-                                                                    image: CachedNetworkImageProvider(
-                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].image!,
-                                                                      scale: 0.2,
+                                                            Stack(
+                                                              alignment: AlignmentDirectional.topStart,
+                                                              // fit: StackFit.loose,
+                                                              children: [
+                                                                Align(
+                                                                  alignment: Alignment.centerLeft,
+                                                                  child: SizedBox(
+                                                                    width: MediaQuery.of(context).size.width * .43,
+                                                                    height: MediaQuery.of(context).size.height * 2,
+                                                                    child: Image(
+                                                                      height: double.infinity,
+                                                                      width: double.infinity,
+                                                                      image: CachedNetworkImageProvider(
+                                                                        playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].image!,
+                                                                        scale: 0.2,
+                                                                      ),
+                                                                      fit: BoxFit.cover,
+                                                                      color: Colors.grey,
+                                                                      colorBlendMode: BlendMode.softLight,
+                                                                      alignment: const Alignment(0.4, -1),
                                                                     ),
-                                                                    fit: BoxFit.cover,
-                                                                    color: Colors.grey,
-                                                                    colorBlendMode: BlendMode.softLight,
-                                                                    alignment: const Alignment(0.4, -1),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              Align(
-                                                                alignment: Alignment.centerRight,
-                                                                child: SizedBox(
-                                                                  // color: Colors.green,
-                                                                  height: MediaQuery.of(context).size.height,
-                                                                  // height: 500,
-                                                                  width: MediaQuery.of(context).size.width,
-                                                                  child: Image.asset(
-                                                                    "assets/images/back_field.png",
-                                                                    fit: BoxFit.cover,
+                                                                Align(
+                                                                  alignment: Alignment.centerRight,
+                                                                  child: SizedBox(
+                                                                    // color: Colors.green,
+                                                                    height: MediaQuery.of(context).size.height,
+                                                                    // height: 500,
+                                                                    width: MediaQuery.of(context).size.width,
+                                                                    child: Image.asset(
+                                                                      "assets/images/back_field.png",
+                                                                      fit: BoxFit.cover,
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              Align(
-                                                                alignment: Alignment.topRight,
-                                                                child: Column(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: const EdgeInsets.only(right: 40),
-                                                                      child: Image.asset(
-                                                                        "assets/images/MVP_Blooded_3.png",
-                                                                        width: MediaQuery.of(context).size.width * 0.35,
+                                                                Align(
+                                                                  alignment: Alignment.topRight,
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.only(right: 40),
+                                                                        child: Image.asset(
+                                                                          "assets/images/MVP_Blooded_3.png",
+                                                                          width: MediaQuery.of(context).size.width * 0.35,
 
+                                                                        ),
                                                                       ),
-                                                                    ),
 
 
-                                                                    if (playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toLowerCase() == 'gk') ...[
-                                                                      Column(
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding: const EdgeInsets.only(right: 10),
-                                                                            child: SizedBox(
-                                                                              width: MediaQuery.of(context).size.width * 0.35,
-                                                                              child: Text(
-                                                                                playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerName!.replaceAll(" ", "\n"),
-                                                                                style: GoogleFonts.rubikMicrobe(
-                                                                                    color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                    fontSize: 30,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    height: 0.81
-                                                                                ),
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          const SizedBox(height: 40),
-                                                                          Column(
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(right: 10),
-                                                                                child: SizedBox(
-                                                                                  width: MediaQuery.of(context).size.width * 0.35,
-                                                                                  child: Text(
-                                                                                    playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].goalsConcededGkDef.toString(),
-                                                                                    style: GoogleFonts.rubikMicrobe(
-                                                                                        color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                        fontSize: 30,
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontStyle: FontStyle.italic
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(right: 10),
-                                                                                child: SizedBox(
-                                                                                  width: MediaQuery.of(context).size.width * 0.35,
-                                                                                  child: Text(
-                                                                                    'Goals Conceded',
-                                                                                    style: GoogleFonts.arimo(
-                                                                                      color: Colors.white70,
-                                                                                      fontSize: 14,
-                                                                                      fontWeight: FontWeight.w200,
-
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              const SizedBox(height: 15),
-                                                                            ],
-                                                                          ),
-                                                                          Column(
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(right: 10),
-                                                                                child: SizedBox(
-                                                                                  width: MediaQuery.of(context).size.width * 0.35,
-                                                                                  child: Text(
-                                                                                    playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].cleanSheetGk.toString(),
-                                                                                    style: GoogleFonts.rubikMicrobe(
-                                                                                        color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                        fontSize: 30,
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontStyle: FontStyle.italic
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(right: 10),
-                                                                                child: SizedBox(
-                                                                                  width: MediaQuery.of(context).size.width * 0.35,
-                                                                                  child: Text(
-                                                                                    'Clean Sheets',
-                                                                                    style: GoogleFonts.arimo(
-                                                                                      color: Colors.white70,
-                                                                                      fontSize: 14,
-                                                                                      fontWeight: FontWeight.w200,
-
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              const SizedBox(height: 15),
-                                                                            ],
-                                                                          ),
-                                                                          Column(
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(right: 10),
-                                                                                child: SizedBox(
-                                                                                  width: MediaQuery.of(context).size.width * 0.35,
-                                                                                  child: Text(
-                                                                                    playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].matchesPlayed.toString(),
-                                                                                    style: GoogleFonts.rubikMicrobe(
-                                                                                        color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                        fontSize: 30,
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                        fontStyle: FontStyle.italic
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(right: 10),
-                                                                                child: SizedBox(
-                                                                                  width: MediaQuery.of(context).size.width * 0.35,
-                                                                                  child: Text(
-                                                                                    'Matches Played',
-                                                                                    style: GoogleFonts.arimo(
-                                                                                      color: Colors.white70,
-                                                                                      fontSize: 14,
-                                                                                      fontWeight: FontWeight.w200,
-
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              const SizedBox(height: 80),
-                                                                            ],
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ]
-                                                                    else if(
-                                                                    playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toLowerCase()  == 'cb' ||
-                                                                    playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toLowerCase()  == 'lb' ||
-                                                                    playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toLowerCase()  == 'rb')...[
+                                                                      if (playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toLowerCase() == 'gk') ...[
                                                                         Column(
                                                                           children: [
                                                                             Padding(
@@ -2462,7 +2779,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                                   playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerName!.replaceAll(" ", "\n"),
                                                                                   style: GoogleFonts.rubikMicrobe(
                                                                                       color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                      fontSize: 25,
+                                                                                      fontSize: 30,
                                                                                       fontWeight: FontWeight.bold,
                                                                                       height: 0.81
                                                                                   ),
@@ -2471,41 +2788,6 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                               ),
                                                                             ),
                                                                             const SizedBox(height: 40),
-                                                                            Column(
-                                                                              children: [
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.only(right: 10),
-                                                                                  child: SizedBox(
-                                                                                    width: MediaQuery.of(context).size.width * 0.35,
-                                                                                    child: Text(
-                                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toUpperCase(),
-                                                                                      style: GoogleFonts.rubikMicrobe(
-                                                                                          color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                          fontSize: 30,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontStyle: FontStyle.italic
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.only(right: 10),
-                                                                                  child: SizedBox(
-                                                                                    width: MediaQuery.of(context).size.width * 0.35,
-                                                                                    child: Text(
-                                                                                      'Player Position',
-                                                                                      style: GoogleFonts.arimo(
-                                                                                        color: Colors.white70,
-                                                                                        fontSize: 14,
-                                                                                        fontWeight: FontWeight.w200,
-
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                const SizedBox(height: 15),
-                                                                              ],
-                                                                            ),
                                                                             Column(
                                                                               children: [
                                                                                 Padding(
@@ -2548,7 +2830,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                                   child: SizedBox(
                                                                                     width: MediaQuery.of(context).size.width * 0.35,
                                                                                     child: Text(
-                                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].matchesPlayed.toString(),
+                                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].cleanSheetGk.toString(),
                                                                                       style: GoogleFonts.rubikMicrobe(
                                                                                           color: const Color.fromRGBO(184, 106, 65, 1.0),
                                                                                           fontSize: 30,
@@ -2563,100 +2845,7 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                                   child: SizedBox(
                                                                                     width: MediaQuery.of(context).size.width * 0.35,
                                                                                     child: Text(
-                                                                                      'Matches Played',
-                                                                                      style: GoogleFonts.arimo(
-                                                                                        color: Colors.white70,
-                                                                                        fontSize: 14,
-                                                                                        fontWeight: FontWeight.w200,
-
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                const SizedBox(height: 80),
-                                                                              ],
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                    ]
-                                                                    else ...[
-                                                                        Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.only(right: 10),
-                                                                              child: SizedBox(
-                                                                                width: MediaQuery.of(context).size.width * 0.35,
-                                                                                child: Text(
-                                                                                  playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerName!.replaceAll(" ", "\n"),
-                                                                                  style: GoogleFonts.rubikMicrobe(
-                                                                                      color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                      fontSize: 25,
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                      height: 0.81
-                                                                                  ),
-                                                                                  overflow: TextOverflow.ellipsis,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            const SizedBox(height: 40),
-                                                                            Column(
-                                                                              children: [
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.only(right: 10),
-                                                                                  child: SizedBox(
-                                                                                    width: MediaQuery.of(context).size.width * 0.35,
-                                                                                    child: Text(
-                                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].goalsScored.toString(),
-                                                                                      style: GoogleFonts.rubikMicrobe(
-                                                                                          color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                          fontSize: 30,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontStyle: FontStyle.italic
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.only(right: 10),
-                                                                                  child: SizedBox(
-                                                                                    width: MediaQuery.of(context).size.width * 0.35,
-                                                                                    child: Text(
-                                                                                      'Goals Scored',
-                                                                                      style: GoogleFonts.arimo(
-                                                                                        color: Colors.white70,
-                                                                                        fontSize: 14,
-                                                                                        fontWeight: FontWeight.w200,
-
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                const SizedBox(height: 15),
-                                                                              ],
-                                                                            ),
-                                                                            Column(
-                                                                              children: [
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.only(right: 10),
-                                                                                  child: SizedBox(
-                                                                                    width: MediaQuery.of(context).size.width * 0.35,
-                                                                                    child: Text(
-                                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].assists.toString(),
-                                                                                      style: GoogleFonts.rubikMicrobe(
-                                                                                          color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                          fontSize: 30,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          fontStyle: FontStyle.italic
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.only(right: 10),
-                                                                                  child: SizedBox(
-                                                                                    width: MediaQuery.of(context).size.width * 0.35,
-                                                                                    child: Text(
-                                                                                      'Assists Provided',
+                                                                                      'Clean Sheets',
                                                                                       style: GoogleFonts.arimo(
                                                                                         color: Colors.white70,
                                                                                         fontSize: 14,
@@ -2706,191 +2895,451 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                                             ),
                                                                           ],
                                                                         ),
-                                                                    ],
+                                                                      ]
+                                                                      else if(
+                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toLowerCase()  == 'cb' ||
+                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toLowerCase()  == 'lb' ||
+                                                                      playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toLowerCase()  == 'rb')...[
+                                                                          Column(
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.only(right: 10),
+                                                                                child: SizedBox(
+                                                                                  width: MediaQuery.of(context).size.width * 0.35,
+                                                                                  child: Text(
+                                                                                    playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerName!.replaceAll(" ", "\n"),
+                                                                                    style: GoogleFonts.rubikMicrobe(
+                                                                                        color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                        fontSize: 25,
+                                                                                        fontWeight: FontWeight.bold,
+                                                                                        height: 0.81
+                                                                                    ),
+                                                                                    overflow: TextOverflow.ellipsis,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              const SizedBox(height: 40),
+                                                                              Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerPosition.toString().toUpperCase(),
+                                                                                        style: GoogleFonts.rubikMicrobe(
+                                                                                            color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                            fontSize: 30,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontStyle: FontStyle.italic
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        'Player Position',
+                                                                                        style: GoogleFonts.arimo(
+                                                                                          color: Colors.white70,
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.w200,
 
-                                                                    // Column(
-                                                                    //   children: [
-                                                                    //     Padding(
-                                                                    //       padding: const EdgeInsets.only(right: 10),
-                                                                    //       child: Container(
-                                                                    //         width: MediaQuery.of(context).size.width * 0.35,
-                                                                    //         child: Text(
-                                                                    //           playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerName!.replaceAll(" ", "\n"),
-                                                                    //           style: GoogleFonts.rubikMicrobe(
-                                                                    //               color: Color.fromRGBO(184, 106, 65, 1.0),
-                                                                    //               fontSize: 30,
-                                                                    //             fontWeight: FontWeight.bold,
-                                                                    //             height: 0.81
-                                                                    //           ),
-                                                                    //           overflow: TextOverflow.ellipsis,
-                                                                    //         ),
-                                                                    //       ),
-                                                                    //     ),
-                                                                    //     const SizedBox(height: 40),
-                                                                    //     Column(
-                                                                    //       children: [
-                                                                    //         Padding(
-                                                                    //           padding: const EdgeInsets.only(right: 10),
-                                                                    //           child: Container(
-                                                                    //             width: MediaQuery.of(context).size.width * 0.35,
-                                                                    //             child: Text(
-                                                                    //               playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].goalsScored.toString(),
-                                                                    //               style: GoogleFonts.rubikMicrobe(
-                                                                    //                   color: Color.fromRGBO(184, 106, 65, 1.0),
-                                                                    //                   fontSize: 30,
-                                                                    //                   fontWeight: FontWeight.bold,
-                                                                    //                   fontStyle: FontStyle.italic
-                                                                    //               ),
-                                                                    //             ),
-                                                                    //           ),
-                                                                    //         ),
-                                                                    //         Padding(
-                                                                    //           padding: const EdgeInsets.only(right: 10),
-                                                                    //           child: Container(
-                                                                    //             width: MediaQuery.of(context).size.width * 0.35,
-                                                                    //             child: Text(
-                                                                    //               'Goals Scored',
-                                                                    //               style: GoogleFonts.arimo(
-                                                                    //                 color: Colors.white70,
-                                                                    //                 fontSize: 14,
-                                                                    //                 fontWeight: FontWeight.w200,
-                                                                    //
-                                                                    //               ),
-                                                                    //             ),
-                                                                    //           ),
-                                                                    //         ),
-                                                                    //         const SizedBox(height: 15),
-                                                                    //       ],
-                                                                    //     ),
-                                                                    //     Column(
-                                                                    //       children: [
-                                                                    //         Padding(
-                                                                    //           padding: const EdgeInsets.only(right: 10),
-                                                                    //           child: Container(
-                                                                    //             width: MediaQuery.of(context).size.width * 0.35,
-                                                                    //             child: Text(
-                                                                    //               playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].assists.toString(),
-                                                                    //               style: GoogleFonts.rubikMicrobe(
-                                                                    //                   color: Color.fromRGBO(184, 106, 65, 1.0),
-                                                                    //                   fontSize: 30,
-                                                                    //                   fontWeight: FontWeight.bold,
-                                                                    //                   fontStyle: FontStyle.italic
-                                                                    //               ),
-                                                                    //             ),
-                                                                    //           ),
-                                                                    //         ),
-                                                                    //         Padding(
-                                                                    //           padding: const EdgeInsets.only(right: 10),
-                                                                    //           child: Container(
-                                                                    //             width: MediaQuery.of(context).size.width * 0.35,
-                                                                    //             child: Text(
-                                                                    //               'Assists Provided',
-                                                                    //               style: GoogleFonts.arimo(
-                                                                    //                 color: Colors.white70,
-                                                                    //                 fontSize: 14,
-                                                                    //                 fontWeight: FontWeight.w200,
-                                                                    //
-                                                                    //               ),
-                                                                    //             ),
-                                                                    //           ),
-                                                                    //         ),
-                                                                    //         const SizedBox(height: 15),
-                                                                    //       ],
-                                                                    //     ),
-                                                                    //     Column(
-                                                                    //       children: [
-                                                                    //         Padding(
-                                                                    //           padding: const EdgeInsets.only(right: 10),
-                                                                    //           child: Container(
-                                                                    //             width: MediaQuery.of(context).size.width * 0.35,
-                                                                    //             child: Text(
-                                                                    //               playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].matchesPlayed.toString(),
-                                                                    //               style: GoogleFonts.rubikMicrobe(
-                                                                    //                   color: Color.fromRGBO(184, 106, 65, 1.0),
-                                                                    //                   fontSize: 30,
-                                                                    //                   fontWeight: FontWeight.bold,
-                                                                    //                   fontStyle: FontStyle.italic
-                                                                    //               ),
-                                                                    //             ),
-                                                                    //           ),
-                                                                    //         ),
-                                                                    //         Padding(
-                                                                    //           padding: const EdgeInsets.only(right: 10),
-                                                                    //           child: Container(
-                                                                    //             width: MediaQuery.of(context).size.width * 0.35,
-                                                                    //             child: Text(
-                                                                    //               'Matches Played',
-                                                                    //               style: GoogleFonts.arimo(
-                                                                    //                 color: Colors.white70,
-                                                                    //                 fontSize: 14,
-                                                                    //                 fontWeight: FontWeight.w200,
-                                                                    //
-                                                                    //               ),
-                                                                    //             ),
-                                                                    //           ),
-                                                                    //         ),
-                                                                    //         const SizedBox(height: 80),
-                                                                    //       ],
-                                                                    //     ),
-                                                                    //   ],
-                                                                    // ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  const SizedBox(height: 15),
+                                                                                ],
+                                                                              ),
+                                                                              Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].goalsConcededGkDef.toString(),
+                                                                                        style: GoogleFonts.rubikMicrobe(
+                                                                                            color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                            fontSize: 30,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontStyle: FontStyle.italic
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        'Goals Conceded',
+                                                                                        style: GoogleFonts.arimo(
+                                                                                          color: Colors.white70,
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.w200,
 
-                                                                    Column(
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.only(right: 10),
-                                                                          child: SizedBox(
-                                                                            width: MediaQuery.of(context).size.width * 0.65,
-                                                                            child: Text(
-                                                                              "PLAYER OF THE MONTH",
-                                                                              style: GoogleFonts.orbitron(
-                                                                                  color: const Color.fromRGBO(184, 106, 65, 1.0),
-                                                                                  fontSize: 18,
-                                                                                  fontWeight: FontWeight.bold,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  const SizedBox(height: 15),
+                                                                                ],
                                                                               ),
-                                                                              textAlign: TextAlign.center,
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.only(top: 4),
-                                                                          child: SizedBox(
-                                                                            width: MediaQuery.of(context).size.width * 0.65,
-                                                                            child: Text(
-                                                                              'Presented By',
-                                                                              style: GoogleFonts.arimo(
-                                                                                  color: Colors.white70,
-                                                                                  fontSize: 14,
-                                                                                  fontWeight: FontWeight.w200,
+                                                                              Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].matchesPlayed.toString(),
+                                                                                        style: GoogleFonts.rubikMicrobe(
+                                                                                            color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                            fontSize: 30,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontStyle: FontStyle.italic
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        'Matches Played',
+                                                                                        style: GoogleFonts.arimo(
+                                                                                          color: Colors.white70,
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.w200,
+
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  const SizedBox(height: 80),
+                                                                                ],
                                                                               ),
-                                                                              textAlign: TextAlign.center,
-                                                                            ),
+                                                                            ],
                                                                           ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.only(top: 5),
-                                                                          child: SizedBox(
-                                                                            width: MediaQuery.of(context).size.width * 0.65,
-                                                                            child: Text(
-                                                                              'ICDAT Innovations Inc.',
-                                                                              style: GoogleFonts.gloriaHallelujah(
-                                                                                  color: Colors.white70,
-                                                                                  fontSize: 15,
-                                                                                  fontWeight: FontWeight.bold,
+                                                                      ]
+                                                                      else ...[
+                                                                          Column(
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.only(right: 10),
+                                                                                child: SizedBox(
+                                                                                  width: MediaQuery.of(context).size.width * 0.35,
+                                                                                  child: Text(
+                                                                                    playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerName!.replaceAll(" ", "\n"),
+                                                                                    style: GoogleFonts.rubikMicrobe(
+                                                                                        color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                        fontSize: 25,
+                                                                                        fontWeight: FontWeight.bold,
+                                                                                        height: 0.81
+                                                                                    ),
+                                                                                    overflow: TextOverflow.ellipsis,
+                                                                                  ),
+                                                                                ),
                                                                               ),
-                                                                              textAlign: TextAlign.center,
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                            ),
+                                                                              const SizedBox(height: 40),
+                                                                              Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].goalsScored.toString(),
+                                                                                        style: GoogleFonts.rubikMicrobe(
+                                                                                            color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                            fontSize: 30,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontStyle: FontStyle.italic
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        'Goals Scored',
+                                                                                        style: GoogleFonts.arimo(
+                                                                                          color: Colors.white70,
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.w200,
+
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  const SizedBox(height: 15),
+                                                                                ],
+                                                                              ),
+                                                                              Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].assists.toString(),
+                                                                                        style: GoogleFonts.rubikMicrobe(
+                                                                                            color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                            fontSize: 30,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontStyle: FontStyle.italic
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        'Assists Provided',
+                                                                                        style: GoogleFonts.arimo(
+                                                                                          color: Colors.white70,
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.w200,
+
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  const SizedBox(height: 15),
+                                                                                ],
+                                                                              ),
+                                                                              Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].matchesPlayed.toString(),
+                                                                                        style: GoogleFonts.rubikMicrobe(
+                                                                                            color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                            fontSize: 30,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontStyle: FontStyle.italic
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(right: 10),
+                                                                                    child: SizedBox(
+                                                                                      width: MediaQuery.of(context).size.width * 0.35,
+                                                                                      child: Text(
+                                                                                        'Matches Played',
+                                                                                        style: GoogleFonts.arimo(
+                                                                                          color: Colors.white70,
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.w200,
+
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  const SizedBox(height: 80),
+                                                                                ],
+                                                                              ),
+                                                                            ],
                                                                           ),
-                                                                        ),
                                                                       ],
-                                                                    ),
-                                                                  ],
+
+                                                                      // Column(
+                                                                      //   children: [
+                                                                      //     Padding(
+                                                                      //       padding: const EdgeInsets.only(right: 10),
+                                                                      //       child: Container(
+                                                                      //         width: MediaQuery.of(context).size.width * 0.35,
+                                                                      //         child: Text(
+                                                                      //           playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].playerName!.replaceAll(" ", "\n"),
+                                                                      //           style: GoogleFonts.rubikMicrobe(
+                                                                      //               color: Color.fromRGBO(184, 106, 65, 1.0),
+                                                                      //               fontSize: 30,
+                                                                      //             fontWeight: FontWeight.bold,
+                                                                      //             height: 0.81
+                                                                      //           ),
+                                                                      //           overflow: TextOverflow.ellipsis,
+                                                                      //         ),
+                                                                      //       ),
+                                                                      //     ),
+                                                                      //     const SizedBox(height: 40),
+                                                                      //     Column(
+                                                                      //       children: [
+                                                                      //         Padding(
+                                                                      //           padding: const EdgeInsets.only(right: 10),
+                                                                      //           child: Container(
+                                                                      //             width: MediaQuery.of(context).size.width * 0.35,
+                                                                      //             child: Text(
+                                                                      //               playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].goalsScored.toString(),
+                                                                      //               style: GoogleFonts.rubikMicrobe(
+                                                                      //                   color: Color.fromRGBO(184, 106, 65, 1.0),
+                                                                      //                   fontSize: 30,
+                                                                      //                   fontWeight: FontWeight.bold,
+                                                                      //                   fontStyle: FontStyle.italic
+                                                                      //               ),
+                                                                      //             ),
+                                                                      //           ),
+                                                                      //         ),
+                                                                      //         Padding(
+                                                                      //           padding: const EdgeInsets.only(right: 10),
+                                                                      //           child: Container(
+                                                                      //             width: MediaQuery.of(context).size.width * 0.35,
+                                                                      //             child: Text(
+                                                                      //               'Goals Scored',
+                                                                      //               style: GoogleFonts.arimo(
+                                                                      //                 color: Colors.white70,
+                                                                      //                 fontSize: 14,
+                                                                      //                 fontWeight: FontWeight.w200,
+                                                                      //
+                                                                      //               ),
+                                                                      //             ),
+                                                                      //           ),
+                                                                      //         ),
+                                                                      //         const SizedBox(height: 15),
+                                                                      //       ],
+                                                                      //     ),
+                                                                      //     Column(
+                                                                      //       children: [
+                                                                      //         Padding(
+                                                                      //           padding: const EdgeInsets.only(right: 10),
+                                                                      //           child: Container(
+                                                                      //             width: MediaQuery.of(context).size.width * 0.35,
+                                                                      //             child: Text(
+                                                                      //               playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].assists.toString(),
+                                                                      //               style: GoogleFonts.rubikMicrobe(
+                                                                      //                   color: Color.fromRGBO(184, 106, 65, 1.0),
+                                                                      //                   fontSize: 30,
+                                                                      //                   fontWeight: FontWeight.bold,
+                                                                      //                   fontStyle: FontStyle.italic
+                                                                      //               ),
+                                                                      //             ),
+                                                                      //           ),
+                                                                      //         ),
+                                                                      //         Padding(
+                                                                      //           padding: const EdgeInsets.only(right: 10),
+                                                                      //           child: Container(
+                                                                      //             width: MediaQuery.of(context).size.width * 0.35,
+                                                                      //             child: Text(
+                                                                      //               'Assists Provided',
+                                                                      //               style: GoogleFonts.arimo(
+                                                                      //                 color: Colors.white70,
+                                                                      //                 fontSize: 14,
+                                                                      //                 fontWeight: FontWeight.w200,
+                                                                      //
+                                                                      //               ),
+                                                                      //             ),
+                                                                      //           ),
+                                                                      //         ),
+                                                                      //         const SizedBox(height: 15),
+                                                                      //       ],
+                                                                      //     ),
+                                                                      //     Column(
+                                                                      //       children: [
+                                                                      //         Padding(
+                                                                      //           padding: const EdgeInsets.only(right: 10),
+                                                                      //           child: Container(
+                                                                      //             width: MediaQuery.of(context).size.width * 0.35,
+                                                                      //             child: Text(
+                                                                      //               playerOfTheMonthStatsAndInfoNotifier.playerOfTheMonthStatsAndInfoList[index].matchesPlayed.toString(),
+                                                                      //               style: GoogleFonts.rubikMicrobe(
+                                                                      //                   color: Color.fromRGBO(184, 106, 65, 1.0),
+                                                                      //                   fontSize: 30,
+                                                                      //                   fontWeight: FontWeight.bold,
+                                                                      //                   fontStyle: FontStyle.italic
+                                                                      //               ),
+                                                                      //             ),
+                                                                      //           ),
+                                                                      //         ),
+                                                                      //         Padding(
+                                                                      //           padding: const EdgeInsets.only(right: 10),
+                                                                      //           child: Container(
+                                                                      //             width: MediaQuery.of(context).size.width * 0.35,
+                                                                      //             child: Text(
+                                                                      //               'Matches Played',
+                                                                      //               style: GoogleFonts.arimo(
+                                                                      //                 color: Colors.white70,
+                                                                      //                 fontSize: 14,
+                                                                      //                 fontWeight: FontWeight.w200,
+                                                                      //
+                                                                      //               ),
+                                                                      //             ),
+                                                                      //           ),
+                                                                      //         ),
+                                                                      //         const SizedBox(height: 80),
+                                                                      //       ],
+                                                                      //     ),
+                                                                      //   ],
+                                                                      // ),
+
+                                                                      Column(
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.only(right: 10),
+                                                                            child: SizedBox(
+                                                                              width: MediaQuery.of(context).size.width * 0.65,
+                                                                              child: Text(
+                                                                                "PLAYER OF THE MONTH",
+                                                                                style: GoogleFonts.orbitron(
+                                                                                    color: const Color.fromRGBO(184, 106, 65, 1.0),
+                                                                                    fontSize: 18,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                                textAlign: TextAlign.center,
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.only(top: 4),
+                                                                            child: SizedBox(
+                                                                              width: MediaQuery.of(context).size.width * 0.65,
+                                                                              child: Text(
+                                                                                'Presented By',
+                                                                                style: GoogleFonts.arimo(
+                                                                                    color: Colors.white70,
+                                                                                    fontSize: 14,
+                                                                                    fontWeight: FontWeight.w200,
+                                                                                ),
+                                                                                textAlign: TextAlign.center,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.only(top: 5),
+                                                                            child: SizedBox(
+                                                                              width: MediaQuery.of(context).size.width * 0.65,
+                                                                              child: Text(
+                                                                                'ICDAT Innovations Inc.',
+                                                                                style: GoogleFonts.gloriaHallelujah(
+                                                                                    color: Colors.white70,
+                                                                                    fontSize: 15,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                                textAlign: TextAlign.center,
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                              ],
+                                                            ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -3010,6 +3459,11 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
     getMOTMPlayersStatsAndInfo(motmPlayersStatsAndInfoNotifier);
     getCumMOTMPlayersStatsAndInfo(cumMOTMPlayersStatsAndInfoNotifier);
 
+
+    _controllerTopCenter =
+        ConfettiController(duration: const Duration(seconds: 10));
+
+
     super.initState();
 
     SystemChrome.setPreferredOrientations([
@@ -3018,5 +3472,41 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
     ]);
 
   }
+
+
+  @override
+  void dispose() {
+    _controllerTopCenter.dispose();
+    super.dispose();
+  }
+
+
+  /// A custom Path to paint stars.
+  Path drawStar(Size size) {
+    // Method to convert degree to radians
+    double degToRad(double deg) => deg * (pi / 180.0);
+
+    const numberOfPoints = 5;
+    final halfWidth = size.width / 2;
+    final externalRadius = halfWidth;
+    final internalRadius = halfWidth / 2.5;
+    final degreesPerStep = degToRad(360 / numberOfPoints);
+    final halfDegreesPerStep = degreesPerStep / 2;
+    final path = Path();
+    final fullAngle = degToRad(360);
+    path.moveTo(size.width, halfWidth);
+
+    for (double step = 0; step < fullAngle; step += degreesPerStep) {
+      path.lineTo(halfWidth + externalRadius * cos(step),
+          halfWidth + externalRadius * sin(step));
+      path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+          halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+    }
+    path.close();
+    return path;
+  }
+
+
+
 
 }
