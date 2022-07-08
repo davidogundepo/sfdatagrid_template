@@ -111,7 +111,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                         iconColor: Colors.white30,
                         iconActiveColor: Color.fromRGBO(247, 246, 242, 1),
                         rippleColor: Colors.blueGrey,
-                        text: 'Table'
+                        text: 'A.P.T.'
                       ),
                       const GButton(
                           gap: 12,

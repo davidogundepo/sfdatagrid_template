@@ -1,12 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class TrainingsAndGamesReels {
 
   String? id;
   String? image;
-  DocumentReference? reference;
 
-  TrainingsAndGamesReels.fromMap(Map<String, dynamic> data, {this.reference}) {
+  TrainingsAndGamesReels.fromMap(Map<String, dynamic> data) {
     id = data['id'];
     image = data['image'];
   }

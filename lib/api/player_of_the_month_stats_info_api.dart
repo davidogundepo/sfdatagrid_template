@@ -8,7 +8,7 @@ getPlayerOfTheMonthStatsAndInfo(PlayerOfTheMonthStatsAndInfoNotifier playerOfThe
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('PlayersTable')
       .where('player_of_the_month', whereIn: ['yes','Yes','YES', 'yES', 'yeS', 'YEs', 'yEs', 'YeS'])
-      .limit(10)
+      .limit(1)
       .get();
 
   List<PlayersStatsAndInfo> playerOfTheMonthStatsAndInfoList = [];

@@ -359,6 +359,15 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                               Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
+                                  'A.P.T. - All Players Table',
+                                  style: TextStyle(
+                                      color: Colors.white70
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
                                   'ID - Identification',
                                   style: TextStyle(
                                       color: Colors.white70
@@ -449,7 +458,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                               Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
-                                  'CB - Central Back',
+                                  'CB - Center Back',
                                   style: TextStyle(
                                       color: Colors.white70
                                   ),
@@ -548,7 +557,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                               Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
-                                  'CF - Central Forward',
+                                  'CF - Center Forward',
                                   style: TextStyle(
                                       color: Colors.white70
                                   ),

@@ -71,6 +71,7 @@ dev_dependencies:
   flutter_swiper_null_safety: ^1.0.2
   clay_containers: ^0.3.2
   confetti: ^0.7.0
+  parallax_rain: ^1.1.0
 
 
 # For information on the generic Dart part of this file, see the
