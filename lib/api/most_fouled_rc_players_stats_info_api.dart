@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../model/PlayersStatsAndInfo.dart';
+import '../model/players_stats_and_info.dart';
 import '../notifier/most_fouled_rc_players_stats_info_notifier.dart';
 
 

@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:sfdatagrid_template/api/cum_motm_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/motm_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/notifier/cum_motm_players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/motm_players_stats_info_notifier.dart';
+import '../api/cum_motm_players_stats_info_api.dart';
+import '../api/motm_players_stats_info_api.dart';
+import '../notifier/cum_motm_players_stats_info_notifier.dart';
+import '../notifier/motm_players_stats_info_notifier.dart';
 import '../api/most_assists_players_stats_info_api.dart';
 import '../api/most_fouled_rc_players_stats_info_api.dart';
 import '../api/most_fouled_yc_players_stats_info_api.dart';
@@ -26,8 +26,9 @@ import 'players_stats_info_page.dart';
 import 'players_table_page.dart';
 import 'season_timeline_page.dart';
 import 'trainings_games_reels_page.dart';
-
 import 'package:provider/provider.dart';
+
+
 
 late TrainingsAndGamesReelsNotifier trainingsAndGamesReelsNotifier;
 late PlayerOfTheMonthStatsAndInfoNotifier playerOfTheMonthStatsAndInfoNotifier;
@@ -125,9 +126,9 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                       const GButton(
                         gap: 12,
                         icon: Icons.leaderboard,
-                        textColor: const Color.fromRGBO(247, 246, 242, 1),
+                        textColor: Color.fromRGBO(247, 246, 242, 1),
                         iconColor: Colors.white30,
-                        iconActiveColor: const Color.fromRGBO(247, 246, 242, 1),
+                        iconActiveColor: Color.fromRGBO(247, 246, 242, 1),
                         text: 'Timeline',
                         rippleColor: Colors.blueGrey,
                       ),

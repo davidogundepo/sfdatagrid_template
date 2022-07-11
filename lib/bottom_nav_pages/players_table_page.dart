@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sfdatagrid_template/main.dart';
+import '../main.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
 
 
 Color? backgroundColor = const Color.fromRGBO(34, 40, 49, 1);
@@ -350,7 +349,7 @@ class _PlayersTablePageState extends State<PlayersTablePage> {
                           color: Colors.white70
                         ),
                       ),
-                      content: Container(
+                      content: SizedBox(
                         height: MediaQuery.of(context).size.width * 0.70,
                         child: SingleChildScrollView(
                           child: Column(

@@ -1,15 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:sfdatagrid_template/api/trainings_games_reels_api.dart';
-import 'package:sfdatagrid_template/notifier/trainings_games_reels_notifier.dart';
-import 'package:transparent_image/transparent_image.dart';
+import '../api/trainings_games_reels_api.dart';
+import '../notifier/trainings_games_reels_notifier.dart';
 import'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../main.dart';
-import 'bottom_navigator.dart';
 import 'package:line_icons/line_icons.dart';
 
 
@@ -33,7 +29,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
     getTrainingsAndGamesReels(trainingsAndGamesReelsNotifier);
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(27, 36, 48, 1),
+      backgroundColor: const Color.fromRGBO(27, 36, 48, 1),
       body: SafeArea(
         child: Stack(
           children: <Widget>[
@@ -63,20 +59,20 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
                   Hero(
                     tag: 'trainingsAndGamesReelsPageButton',
                     child: Card(
-                      color: Color.fromRGBO(27, 36, 48, 1),
+                      color: const Color.fromRGBO(27, 36, 48, 1),
                       elevation: 10,
                       shape: kBackButtonShape,
                       child: InkWell(
-                        highlightColor: Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
+                        highlightColor: const Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
                         borderRadius: const BorderRadius.only(topRight: Radius.circular(30)),
                         onTap: (){},
                         child: IconButton(
                           alignment: Alignment.center,
-                          splashColor: Color.fromRGBO(255, 141, 41, 0.7),
+                          splashColor: const Color.fromRGBO(255, 141, 41, 0.7),
                           splashRadius: 80,
-                          color: Color.fromRGBO(255, 141, 41, 0.7),
+                          color: const Color.fromRGBO(255, 141, 41, 0.7),
                           icon: InkWell(
-                              highlightColor: Color.fromRGBO(255, 141, 41, 0.7),
+                              highlightColor: const Color.fromRGBO(255, 141, 41, 0.7),
                               borderRadius: const BorderRadius.only(topRight: Radius.circular(15)),
                               onTap: (){
                                 Navigator.of(context).pop(false);
@@ -99,7 +95,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
                     tag: 'title',
                     transitionOnUserGestures: true,
                     child: Card(
-                      color: Color.fromRGBO(27, 36, 48, 1),
+                      color: const Color.fromRGBO(27, 36, 48, 1),
                         elevation: 10,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -108,7 +104,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
 
                         ),
                         child: InkWell(
-                          highlightColor: Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
+                          highlightColor: const Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
                           borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30)),
                           onTap: (){},
                           child: SizedBox(
@@ -152,9 +148,9 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
     return Container(
       decoration: BoxDecoration(
             color: Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
           border: Border.all(
-            color: Color.fromRGBO(255, 141, 41, 1),
+            color: const Color.fromRGBO(255, 141, 41, 1),
             width: 2
           ),
         ),
@@ -172,7 +168,7 @@ class TrainingsAndGamesReelsPage extends StatelessWidget implements PreferredSiz
         ),
         child: InkWell(
           onTap: () {},
-          highlightColor: Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
+          highlightColor: const Color.fromRGBO(255, 141, 41, 0.7).withAlpha(90),
           borderRadius: BorderRadius.circular(15),
         ),
       ),

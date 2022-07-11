@@ -1,5 +1,3 @@
-
-
 class CoachesReviewsComment {
 
   String? id;

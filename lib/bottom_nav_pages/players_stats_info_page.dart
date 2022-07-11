@@ -1,19 +1,15 @@
-import 'dart:ui';
 import 'dart:math';
-import 'package:flutter/material.dart';
 import 'package:parallax_rain/parallax_rain.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:sfdatagrid_template/api/coaches_reviews_comment_api.dart';
-import 'package:sfdatagrid_template/api/cum_motm_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/api/founders_reviews_comment_api.dart';
-import 'package:sfdatagrid_template/api/motm_players_stats_info_api.dart';
-import 'package:sfdatagrid_template/notifier/coaches_reviews_comment_notifier.dart';
-import 'package:sfdatagrid_template/notifier/cum_motm_players_stats_info_notifier.dart';
-import 'package:sfdatagrid_template/notifier/motm_players_stats_info_notifier.dart';
+import '../api/coaches_reviews_comment_api.dart';
+import '../api/cum_motm_players_stats_info_api.dart';
+import '../api/founders_reviews_comment_api.dart';
+import '../api/motm_players_stats_info_api.dart';
+import '../notifier/coaches_reviews_comment_notifier.dart';
+import '../notifier/cum_motm_players_stats_info_notifier.dart';
+import '../notifier/motm_players_stats_info_notifier.dart';
 import '../api/top_defensive_players_stats_info_api.dart';
 import '../api/top_gk_players_stats_info_api.dart';
 import '../api/most_assists_players_stats_info_api.dart';
@@ -2700,82 +2696,93 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                           itemBuilder: (context, index) =>
                                               Padding(
                                                 padding: const EdgeInsets.only(top: 18, bottom: 18, left: 8, right: 8),
-                                                child: Stack(
-
-                                                  children: [
-
-                                                    ClayContainer(
-                                                      width: MediaQuery.of(context).size.width * 0.90,
-                                                      emboss: true,
-                                                      spread: 2,
-                                                      color: const Color.fromRGBO(237, 237, 237, 1),
-                                                      depth: 20,
-                                                      curveType: CurveType.concave,
-                                                      customBorderRadius: const BorderRadius.only(
-                                                          topRight: Radius.elliptical(70, 70),
-                                                          bottomLeft: Radius.circular(10),
-                                                          topLeft: Radius.circular(10),
-                                                          bottomRight: Radius.circular(10)
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(15.0),
-                                                        child: Stack(
-                                                          children: <Widget>[
-
-                                                            Padding(
-                                                              padding: const EdgeInsets.only(right: 50.0, top: 40),
-                                                              child: Align(
-                                                                alignment: Alignment.centerRight,
+                                                child: ClayContainer(
+                                                  width: MediaQuery.of(context).size.width * 0.90,
+                                                  emboss: true,
+                                                  spread: 2,
+                                                  color: const Color.fromRGBO(237, 237, 237, 1),
+                                                  depth: 20,
+                                                  curveType: CurveType.concave,
+                                                  customBorderRadius: const BorderRadius.only(
+                                                      topRight: Radius.elliptical(70, 70),
+                                                      bottomLeft: Radius.circular(10),
+                                                      topLeft: Radius.circular(10),
+                                                      bottomRight: Radius.circular(10)
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: SingleChildScrollView(
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: [
+                                                              Align(
+                                                                alignment: Alignment.topLeft,
                                                                 child: Container(
-                                                                  decoration: const BoxDecoration(
-                                                                      shape: BoxShape.circle,
-                                                                      color: Colors.white70
-                                                                  ),
-                                                                  child: Padding(
-                                                                    padding: const EdgeInsets.all(8.0),
-                                                                    child: Text(
-                                                                      (index+1).toString(),
-                                                                      textAlign: TextAlign.center,
-                                                                      style: const TextStyle(
-                                                                        color: Color.fromRGBO(205, 133, 133, 1),
-                                                                      ),
+                                                                  width: 100.0,
+                                                                  height: 100.0,
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
+                                                                        alignment: const Alignment(0, -1),
+                                                                        image: CachedNetworkImageProvider(
+                                                                            coachesReviewsCommentNotifier.coachesReviewsCommentList[index].image!
+                                                                        ),
+                                                                        fit: BoxFit.cover
                                                                     ),
+                                                                    shape: BoxShape.circle,
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            Column(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: <Widget>[
-
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Align(
-                                                      alignment: Alignment.topLeft,
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(15.0),
-                                                        child: Container(
-                                                          width: 100.0,
-                                                          height: 100.0,
-                                                          decoration: BoxDecoration(
-                                                            image: DecorationImage(
-                                                                alignment: const Alignment(0, -1),
-                                                                image: CachedNetworkImageProvider(
-                                                                    coachesReviewsCommentNotifier.coachesReviewsCommentList[index].image!
+                                                              const SizedBox(
+                                                                  width: 15,
+                                                              ),
+                                                              Text(
+                                                                  "Coach ${coachesReviewsCommentNotifier.coachesReviewsCommentList[index].name!.replaceAll(" ", "\n")}",
+                                                                style: GoogleFonts.kottaOne(
+                                                                    color: const Color.fromRGBO(65, 63, 63, 1.0),
+                                                                    fontSize: 25,
+                                                                    // fontWeight: FontWeight.bold,
+                                                                    // height: 0.81
                                                                 ),
-                                                                fit: BoxFit.cover
-                                                            ),
-                                                            shape: BoxShape.circle,
+                                                                overflow: TextOverflow.ellipsis,
+                                                              )
+                                                            ],
                                                           ),
-                                                        ),
+                                                          const Divider(
+                                                            thickness: 2,
+                                                          ),
+                                                          Column (
+                                                           children: [
+                                                             Text(
+                                                               "Month Review  [${coachesReviewsCommentNotifier.coachesReviewsCommentList[index].date!}]",
+                                                               style: GoogleFonts.iceberg(
+                                                                 color: const Color.fromRGBO(65, 63, 63, 1.0),
+                                                                 fontSize: 15,
+                                                               ), textAlign: TextAlign.start
+                                                             ),
+                                                             const SizedBox(height: 5),
+                                                               
+                                                             Text(
+                                                               '"${coachesReviewsCommentNotifier.coachesReviewsCommentList[index].comment!}"',
+                                                               style: GoogleFonts.iceberg(
+                                                                 color: const Color.fromRGBO(
+                                                                     121, 117, 117,
+                                                                     1.0),
+                                                                 fontSize: 13,
+                                                                   fontStyle: FontStyle.italic
+                                                               ),
+                                                                 textAlign: TextAlign.justify
+                                                             )
+
+                                                           ],
+                                                            )
+                                                        ],
                                                       ),
                                                     ),
-                                                  ]
+                                                  ),
                                                 ),
                                               ),
                                           itemWidth: MediaQuery.of(context).size.width * 0.9,
@@ -2911,64 +2918,76 @@ class _PlayersStatsAndInfoPageState extends State<PlayersStatsAndInfoPage> {
                                                   ),
                                                   child: Padding(
                                                     padding: const EdgeInsets.all(15.0),
-                                                    child: Stack(
-                                                      children: <Widget>[
-                                                        Align(
-                                                          alignment: Alignment.topRight,
-                                                          child: Padding(
-                                                            padding: const EdgeInsets.all(15.0),
-                                                            child: Container(
-                                                              width: 100.0,
-                                                              height: 100.0,
-                                                              decoration: BoxDecoration(
-                                                                image: DecorationImage(
-                                                                    alignment: const Alignment(0, -1),
-                                                                    image: CachedNetworkImageProvider(
-                                                                        foundersReviewsCommentNotifier.foundersReviewsCommentList[index].image!
+                                                    child: SingleChildScrollView(
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: [
+                                                              Align(
+                                                                alignment: Alignment.topLeft,
+                                                                child: Container(
+                                                                  width: 100.0,
+                                                                  height: 100.0,
+                                                                  decoration: BoxDecoration(
+                                                                    image: DecorationImage(
+                                                                        alignment: const Alignment(0, -1),
+                                                                        image: CachedNetworkImageProvider(
+                                                                            foundersReviewsCommentNotifier.foundersReviewsCommentList[index].image!
+                                                                        ),
+                                                                        fit: BoxFit.cover
                                                                     ),
-                                                                    fit: BoxFit.cover
-                                                                ),
-                                                                borderRadius: const BorderRadius.only(
-                                                                  topLeft: Radius.circular(10),
-                                                                  bottomLeft: Radius.circular(10),
-                                                                  topRight: Radius.circular(10),
-                                                                  bottomRight: Radius.circular(10),
-                                                                ),
-                                                                shape: BoxShape.rectangle,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding: const EdgeInsets.only(right: 50.0, top: 40),
-                                                          child: Align(
-                                                            alignment: Alignment.centerRight,
-                                                            child: Container(
-                                                              decoration: const BoxDecoration(
-                                                                  shape: BoxShape.circle,
-                                                                  color: Colors.white70
-                                                              ),
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: Text(
-                                                                  (index+1).toString(),
-                                                                  textAlign: TextAlign.center,
-                                                                  style: const TextStyle(
-                                                                    color: Color.fromRGBO(205, 133, 133, 1),
+                                                                    shape: BoxShape.circle,
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
+                                                              const SizedBox(
+                                                                width: 15,
+                                                              ),
+                                                              Text(
+                                                                foundersReviewsCommentNotifier.foundersReviewsCommentList[index].name!.replaceAll(" ", "\n"),
+                                                                style: GoogleFonts.kottaOne(
+                                                                  color: const Color.fromRGBO(65, 63, 63, 1.0),
+                                                                  fontSize: 25,
+                                                                  // fontWeight: FontWeight.bold,
+                                                                  // height: 0.81
+                                                                ),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              )
+                                                            ],
                                                           ),
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
+                                                          const Divider(
+                                                            thickness: 2,
+                                                          ),
+                                                          Column (
+                                                            children: [
+                                                              Text(
+                                                                  "Month Review  [${foundersReviewsCommentNotifier.foundersReviewsCommentList[index].date!}]",
+                                                                  style: GoogleFonts.iceberg(
+                                                                    color: const Color.fromRGBO(65, 63, 63, 1.0),
+                                                                    fontSize: 15,
+                                                                  ), textAlign: TextAlign.start
+                                                              ),
+                                                              const SizedBox(height: 5),
 
-                                                          ],
-                                                        ),
-                                                      ],
+                                                              Text(
+                                                                  '"${foundersReviewsCommentNotifier.foundersReviewsCommentList[index].comment!}"',
+                                                                  style: GoogleFonts.iceberg(
+                                                                      color: const Color.fromRGBO(
+                                                                          121, 117, 117,
+                                                                          1.0),
+                                                                      fontSize: 13,
+                                                                      fontStyle: FontStyle.italic
+                                                                  ),
+                                                                  textAlign: TextAlign.justify
+                                                              )
+
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),

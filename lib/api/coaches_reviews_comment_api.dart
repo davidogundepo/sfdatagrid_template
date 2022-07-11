@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../model/CoachesReviewsComment.dart';
+import '../model/coaches_reviews_comment.dart';
 import '../notifier/coaches_reviews_comment_notifier.dart';
 
 

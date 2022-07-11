@@ -1,7 +1,7 @@
 
 import 'dart:collection';
 import 'package:flutter/cupertino.dart';
-import '../model/PlayersStatsAndInfo.dart';
+import '../model/players_stats_and_info.dart';
 
 
 class PlayerOfTheMonthStatsAndInfoNotifier with ChangeNotifier {

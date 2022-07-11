@@ -1,7 +1,7 @@
 
 import 'dart:collection';
 import 'package:flutter/cupertino.dart';
-import '../model/TrainingsAndGamesReels.dart';
+import '../model/trainings_and_games_reels.dart';
 
 
 class TrainingsAndGamesReelsNotifier with ChangeNotifier {

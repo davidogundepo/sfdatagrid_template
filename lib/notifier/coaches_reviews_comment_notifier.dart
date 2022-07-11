@@ -1,7 +1,7 @@
 
 import 'dart:collection';
 import 'package:flutter/cupertino.dart';
-import '../model/CoachesReviewsComment.dart';
+import '../model/coaches_reviews_comment.dart';
 
 
 class CoachesReviewsCommentNotifier with ChangeNotifier {

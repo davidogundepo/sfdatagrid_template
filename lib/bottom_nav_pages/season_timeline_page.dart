@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -11,9 +9,7 @@ import '../main.dart';
 
 Color colorBack = const Color.fromRGBO(58, 56, 69, 1);
 Color? appBarColor = const Color.fromRGBO(136, 121, 176, 1);
-// Color colorBack = const Color.fromRGBO(58, 56, 69, 1);
 
-late _SeasonTimelineState ss;
 
 class SeasonTimeline extends StatefulWidget {
   const SeasonTimeline({Key? key}) : super(key: key);
@@ -181,7 +177,7 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                                     isVisible: true,
                                   useSeriesColor: true
                                 ),
-                                dashArray: <double>[5,5]
+                                dashArray: const <double>[5,5]
                               )
                             ],
                           )
@@ -360,30 +356,27 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
                             ],
 
                           ),
-                          Container(
-
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text(
-                                  'Days Left',
-                                  style: TextStyle(
-                                      color: Colors.white60,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500
-                                  ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const <Widget>[
+                              Text(
+                                'Days Left',
+                                style: TextStyle(
+                                    color: Colors.white60,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500
                                 ),
-                                Text(
-                                  '12',
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic
-                                  ),
-                                )
-                              ],
-                            ),
+                              ),
+                              Text(
+                                '12',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic
+                                ),
+                              )
+                            ],
                           )
                         ],
                       ),
@@ -478,8 +471,6 @@ class _SeasonTimelineState extends State<SeasonTimeline> {
         enable: true,
         color: Colors.lightBlue
     );
-
-    ss = _SeasonTimelineState();
 
     super.initState();
 
